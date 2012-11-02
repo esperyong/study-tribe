@@ -1,0 +1,34 @@
+Django==1.4.2
+
+#psycopg2==2.4.5
+
+#search engine
+Whoosh==2.4.1
+mmseg==1.3.0
+
+#tag cloud
+django-taggit==0.9.3
+django-taggit-templatetags
+django-templatetag-sugar
+
+#account register
+django-userena==1.1.2
+easy_thumbnails==1.0.3
+PIL==1.1.7
+django-simple-captcha==0.3.4
+
+#permission
+django-guardian==1.0.4
+
+#tools
+yolk==0.4.3
+
+#migrate
+South==0.7.6
+
+#manage js and css
+django-sekizai==0.6.1
+
+#Rest
+djangorestframework
+
