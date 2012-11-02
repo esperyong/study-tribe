@@ -21,8 +21,8 @@ parts/
 build/
 *.sqlite
 *.mo
-*project
-*classpath
+.project
+.classpath
 lib/
 logs/
 *installed.cfg
