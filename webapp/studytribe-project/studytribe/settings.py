@@ -1,4 +1,10 @@
-# Django settings for studytribe project.
+# -*- coding: utf-8 -*-
+# Django settings for lingle project.
+import os
+
+gettext = lambda s: s
+
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -9,26 +15,28 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_DIR, 'studytribe.sqlite'),
     }
 }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
-# In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+# On Unix systems, a value of None will cause Django to use the same
+# timezone as the operating system.
+# If running in a Windows environment this must be set to the same as your
+# system time zone.
+TIME_ZONE = 'Asia/Shanghai'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-CN'
+
 
 SITE_ID = 1
 
@@ -43,42 +51,14 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+MEDIA_URL = '/media/'
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
 
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
-
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '6@fdy59wt#3v%7_5z_p0py=96v*6bzctiz((%f5)2qrwuot_9$'
+SECRET_KEY = 'lvn&amp;4ozp28fvr%(h0frug8$nvg$ih8n^7dwe3nsch(p$_yi$!1'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -100,12 +80,10 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'studytribe.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'studytribe.wsgi.application'
+#WSGI_APPLICATION = 'lingle.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_DIR, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -115,12 +93,33 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
+    #'taggit',
+    'userena',
+    'guardian',
+    'captcha',
+    'studytribe',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
+ACCOUNT_ACTIVATION_DAYS = 7
+
+ANONYMOUS_USER_ID = '-1'
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.request",
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+)
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -149,3 +148,25 @@ LOGGING = {
         },
     }
 }
+
+#user profile
+#AUTH_PROFILE_MODULE = 'accounts.LingleUserProfile'
+
+#The host to use for sending email.
+EMAIL_HOST = 'smtp.introns.cn'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'service@introns.cn'
+DEFAULT_FROM_EMAIL = 'service@introns.cn'
+EMAIL_HOST_PASSWORD = 'hawk911119'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'userena.backends.UserenaAuthenticationBackend',
+)
+#if use https
+#USERENA_USE_HTTPS = True
+
+
+USERENA_ACTIVATION_REQUIRED=True
+
