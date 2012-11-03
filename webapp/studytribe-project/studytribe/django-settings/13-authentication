@@ -1,0 +1,13 @@
+#user profile
+#AUTH_PROFILE_MODULE = 'accounts.StudyTribeUserProfile'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'userena.backends.UserenaAuthenticationBackend',
+)
+
+#if use https
+#USERENA_USE_HTTPS = True
+USERENA_ACTIVATION_REQUIRED=True
+
