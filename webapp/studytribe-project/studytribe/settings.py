@@ -8,7 +8,7 @@ except NameError:
     STUDY_TRIBE_ROOT = os.path.dirname(__file__)
 
 conf_files_path = os.path.join(STUDY_TRIBE_ROOT, 
-                               'settings', 
+                               'django-settings', 
                                '*.conf')
 
 conf_files = glob.glob(conf_files_path)
