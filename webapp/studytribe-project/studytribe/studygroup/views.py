@@ -1,21 +1,27 @@
 # -*- coding:utf-8 -*-
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from studytribe.studygroup.models import StudyGroup
 from studytribe.studygroup.serializers import StudyGroupSerializer
+from rest_framework import mixins
+from rest_framework import generics
+from rest_framework.views import APIView
+from django.http import Http404
 
-@api_view(['GET', 'POST'])
-def studygroup_list(request,format=None):
+class StudyGroupListRes(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        generics.MultipleObjectAPIView):
+    model = StudyGroup
+    serializer_class = StudyGroupSerializer
     """
-    List all code studygroup,or create a new studygroup
+    List all studygroup,or create a new studygroup
     """
-    if request.method == 'GET':
+    def get(self,request,format=None):
         groups = StudyGroup.objects.all()
         serializer = StudyGroupSerializer(instance=groups)
         return Response(serializer.data)
 
-    elif request.method == 'POST':
+    def post(self,request,format=None):
         serializer = StudyGroupSerializer(request.DATA)
         if serializer.is_valid():
             serializer.save()
@@ -23,22 +29,25 @@ def studygroup_list(request,format=None):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
     
-@api_view(['GET', 'PUT','DELETE'])
-def studygroup_detail(request,pk,format=None):
+class StudyGroupRes(APIView):
     """
     Retrieve,update or delete a studygroup
     """
-    try:
-        studygroup = StudyGroup.objects.get(pk=pk)
-    except StudyGroup.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    def get_object(self,pk):
+        try:
+            return StudyGroup.objects.get(pk=pk)
+        except StudyGroup.DoesNotExist:
+            return Http404
 
-    if request.method == 'GET':
+    def get(self,request,pk,format=None):
+        studygroup = self.get_object(pk)
         serializer = StudyGroupSerializer(instance=studygroup)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
+    def put(self,request,pk,format=None):
+        studygroup = self.get_object(pk)
         serializer = StudyGroupSerializer(request.DATA,instance=studygroup)
         if serializer.is_valid(): 
             serializer.save()
@@ -46,8 +55,10 @@ def studygroup_detail(request,pk,format=None):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
+    def delete(self,request,pk,format=None):
+        studygroup = self.get_object(pk)
         studygroup.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 
