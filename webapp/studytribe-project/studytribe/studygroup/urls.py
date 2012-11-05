@@ -7,7 +7,8 @@ from studytribe.studygroup import views
 urlpatterns = patterns('',
     url(r'^$', views.StudyTribeListRes.as_view()),
     url(r'^(?P<pk>[0-9]+)/$', views.StudyTribeRes.as_view()),
-    url(r'^studygroups/$', views.StudyGroupListRes.as_view()),
+    url(r'^(?P<tribe_id>[0-9]+)/studygroups/$', 
+            views.StudyGroupListRes.as_view()),
     url(r'^studygroups/(?P<pk>[0-9]+)/$', views.StudyGroupRes.as_view())
 )
 

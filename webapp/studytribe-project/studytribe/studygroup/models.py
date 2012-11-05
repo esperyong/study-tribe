@@ -7,7 +7,7 @@ class StudyTribe(models.Model):
     """
     学习部落
     """
-    name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=100)
 
 
 class StudyGroup(models.Model):
@@ -15,7 +15,7 @@ class StudyGroup(models.Model):
     班级
     """
     tribe = models.ForeignKey(StudyTribe,related_name='groups')
-    name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
