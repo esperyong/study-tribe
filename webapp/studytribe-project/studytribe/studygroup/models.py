@@ -23,37 +23,62 @@ class Topic(models.Model):
     """
     学习话题(讨论)
     """
-    pass
+    study_group = models.ForeignKey(StudyTribe,related_name='topics')
+    title = models.CharField(max_length=500)
+    body = models.TextField(max_length=2000)
 
 class Comment(models.Model):
     """
     评论
     """
-    pass
+    class Meta:
+        abstract = True
+    title = models.CharField(max_length=500)
+    body = models.TextField(max_length=2000)
+
+class TopicComment(Comment):
+    """
+    学习话题
+    """
+    topic = models.ForeignKey(Topic,related_name='comments')
     
 class Studyware(models.Model):
     """
     学习资料
     """
-    pass
+    created = models.DateTimeField(auto_now_add=True)
+
+class StudywareComment(Comment):
+    """
+    学习资料的评论
+    """
+    studyware = models.ForeignKey(Studyware,related_name='comments')
 
 class AssignmentList(models.Model):
     """
     作业列表
     """
-    pass
+    name = models.CharField(max_length=50) 
 
 class Assignment(models.Model):
     """
     作业
     """
-    pass
+    alist = models.ForeignKey(AssignmentList,related_name='assignments')
+    title = models.CharField(max_length=100) 
+    content = models.CharField(max_length=500) 
 
 class Article(models.Model):
     """
     文章
     """
     pass
+
+class ArticleComment(Comment):
+    """
+    文章的评论
+    """
+    article = models.ForeignKey(Article,related_name='comments')
 
 class Syllabus(models.Model):
     """
