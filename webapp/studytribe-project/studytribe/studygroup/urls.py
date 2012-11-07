@@ -9,8 +9,12 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>[0-9]+)/$', views.StudyTribeRes.as_view()),
     url(r'^(?P<tribe_id>[0-9]+)/studygroups/$', 
             views.StudyGroupListRes.as_view()),
-    url(r'^studygroups/(?P<pk>[0-9]+)/$', views.StudyGroupRes.as_view())
+    url(r'^studygroups/(?P<pk>[0-9]+)/$', views.StudyGroupRes.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+
+urlpatterns += patterns('studytribe',  
+    url(r'^studygroups/','studygroup.views.study_group_list',name='study-group-list'),
+)
 

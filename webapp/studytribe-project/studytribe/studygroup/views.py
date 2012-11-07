@@ -6,10 +6,30 @@ from rest_framework import generics
 from studytribe.studygroup.permissions import IsOwnerOrReadOnly
 from rest_framework import permissions
 
+#for template dev
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_protect
+
+
+@csrf_protect
+def study_group_list(request):
+    context = {}
+    return render_to_response("studytribe/studygroup/base.html",
+                              context,
+                              context_instance=RequestContext(request))
+
+
+
+
+
 """
 StudyTribe:学习部落
 """
 class StudyTribeListRes(generics.ListCreateAPIView):
+    template_name = "studytribe/studygroup/base.html"
     model = models.StudyTribe
     serializer_class = serializers.StudyTribeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -41,5 +61,6 @@ class StudyGroupRes(generics.RetrieveUpdateDestroyAPIView):
                           IsOwnerOrReadOnly,)
     model = models.StudyGroup
     serializer_class = serializers.StudyGroupSerializer
+
 
 
