@@ -1,32 +1,38 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block head-block %}
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container-fluid">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-        <a class="brand" href="#">Lingle</a>
-        <div class="nav-collapse">
-          <ul class="nav pull-left">
-            <li class="divider-vertical"></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i><b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">{% trans "My Links" %}</a></li>
-                <li><a href="#">{% trans "My Feed" %}</a></li>
-                <li><a href="#">{% trans "Inbox" %}</a></li>
-                <li><a href="#">{% trans "Settings" %}</a></li>
-                <li><a href="#">{% trans "Logout" %}</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
+<div class="container">
+    <div class="topnav">
+        <a href="#">项目</a>
+        <a href="#">日程</a>
+        <a href="#">故事</a>
+        <a href="#">进展</a>
+        <a href="#">团队</a>
     </div>
-  </div>
+    <div class="navbar">
+        <div class="container">
+            <a class="brand" href="#"></a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                	<li><img src="{{ STATIC_URL }}assets/studytribe/img/logo.png"/></li>
+                    <li><a href="#" class="b">Basecamp</a></li>
+                     <li class=" divider-vertical"></li>
+                    <li class="active2"><a href="#">项目工程</a></li>
+                    <li><a href="#">日程安排</a></li>
+                    <li><a href="#">所有故事</a></li>
+                    <li><a href="#">项目进展</a></li>
+                    <li class=" divider-vertical"></li>
+                    <li><a href="#">我的团队</a></li>
+                    <li><a href="#">123木头人</a></li>
+                </ul>
+                <div class="input-prepend">
+                	<span class="add-on"><i class="icon-search"></i></span>
+                    <input type="text" size="16" id="prependedInput" class="search-query2 span4" placeholder="搜索"/>
+              	</div>
+              </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
 

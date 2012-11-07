@@ -1,0 +1,112 @@
+@charset "UTF-8";
+/* CSS Document */
+img,ul,li,h3{ margin:0; padding:0;}
+.clear{ clear:both;}
+.txtc{ text-align:center;}
+li{ list-style-type:none;}
+.b{ font-weight:bold;}
+body{ background:url(../img/background.png);}
+.topnav{ display:block; text-align:right; line-height:30px; height:30px;}
+.topnav a{ color:#666; font-size:12px; padding:5px;}
+.divider-vertical{border-right: 1px solid #ccc; border-left: 1px solid #f2f2f2;}
+.search-query2 { margin-bottom: 0; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;}
+
+.navbar .nav > .active2 > a{
+    background-color: #E5E5E5;
+    border: 1px solid #EFEFEF;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
+    color: #555555;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.addproject { background:url(../img/add.png) no-repeat;  width:80px; height:90px; display:block;}
+.addtext{ padding-left:12px; color:#666;}
+.listtype{ margin:0; padding:0; margin-top:30px;}
+.listtype li{width:20px; height:16px; float:left; margin-left:5px; background:url(../img/list_type.png);}
+.listtype li a{ display:block; }
+.listtype  .card{ background-position:0 0;}
+.listtype .cardtext{ background-position:-27px -22px;}
+.listtype .list{ background-position:-54px -22px;}
+
+.projectcard{ width:210px; height:235px; float:left; padding:15px; margin:0 20px 20px 0; text-align:left; border-radius:3px; background-color:#FFF; box-shadow:0 0 6px rgba(0,0,0,0.3);}
+.projectcard h3{ font-size:16px; color:#000; line-height:18px;}
+.projectcard p{ color:#999; font-size:12px;}
+.projectcard .people{ position:relative; left:10px; top:80px;}
+.projectcard .people img{ border-radius:50%;}
+
+
+.container-fluid{ padding:0 40px;}
+.leftcon{ width:15%; float:left; padding:20px;}
+.rightcon{ width:80%; float:left; margin-left:20px; display:inline;}
+h4{ border-bottom:1px solid #ccc;}
+h4>span,.set{ float:right; font-size:12px; color:#069;}
+.ckbox{ display:inline-block; width:16px; height:14px; border:2px solid #FFF; border:-radius:2px; background-color:#F90; margin:0 4px -2px 0;}
+
+.projectslist{ margin-top:50px;}
+.projectslist>span{ display:block;}
+.projectslist>span>.ckbox{ display:inline-block; width:16px; height:14px; border:2px solid #FFF; border:-radius:2px; background-color:#ccc; margin:0 4px -2px 0;}
+.projectslist>span>.ckboxactiv{ display:inline-block; width:16px; height:14px; border:2px solid #FFF; border:-radius:2px; background-color:#F90; margin:0 4px -2px 0;}
+
+.calendarscon{ border:1px solid #CCC; border:-radius:4px; background:#FFF; box-shadow:0 0 6px rgba(0, 0, 0, 0.3); padding:20px; text-align:center;}
+.calendarscon label{ display:inline-block;}
+.calendar_grid .week,.calendar_grid .grid_date_content{ display:table; table-layout:fixed; width:100%; }
+.calendar_grid .week .days{ display:table-row;}
+.calendar_grid .week .days .day{ display:table-cell; width:14.20%; text-align:center; padding:5px 0; font-size:11px;}
+.calendar_grid .grid_dates_content .grid{ border-right:1px solid #CCC; border-top:1px solid #CCC; text-align:left;  height:90px; width:14.20%; padding-bottom:10px; overflow:hidden;}
+.calendar_grid .grid_dates_content .grid .date{ text-align:right; padding:6px 8px 0 0; font-size:11px;}
+.calendar_grid .grid_dates_content .grid .events{ padding:0 8px 0 15px; overflow:hidden; font-size:11px;}
+.calendar_grid .grid_dates_content .grid .events span{ margin-left:5px;}
+
+.event_container .eventdate{ width:100px; height:100px; text-align:center; display:block; border:7px solid #ccc; background:#FFF; border-radius:50%; margin:0 auto;}
+.event_container .eventdate p{ font-size:18px; color:#477b96; font-weight:bold; margin-top:20px;}
+.event_container .eventdate span{  font-size:11px; color:#666;}
+
+.event_container .projectname{ border-bottom:7px solid #ccc;  font-weight:bold; padding-bottom:2px; padding-top:2px; width:100%; font-size:14px;}
+.event_container .projectname a{ color:#000;}
+
+.event_container .left{ border-right:7px solid #ccc;}
+.event_container .right{ border-left:7px solid #ccc;  margin-left:50%;}
+.event_container .eventcon{ width:50%; }
+.event_container .eventcon .eventtext{ width:400px;}
+.event_container .avatar{ width:50px; padding-top:12px; float:left;}
+.event_container .avatar img{ border-radius:50%; width:48px; height:48px;}
+
+.event_container .event { width:320px; padding:12px; float:right;}
+.event_container .event span{ color:#000; font-weight:bold;}
+.event_container .event a{ color:#477b96; cursor:pointer;}
+.event_container .eventcon .time{ font-size:11px; color:#666; padding:12px 5px 0 0; float:right;}
+.event_container div[class="eventcon right"] .eventtext{ float:right;}
+.event_container div[class="eventcon right"] div[class="time"]{ float:left; }
+.event_container div[class="eventcon right"] div[class="projectname"],.event_container div[class="eventcon right"] div[class="time"]{ padding-left:5px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

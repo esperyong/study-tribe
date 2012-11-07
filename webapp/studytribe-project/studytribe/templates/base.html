@@ -19,7 +19,7 @@
         {% block head-block %}
         {% endblock %}
         </div>
-        <div class="container-fluid">
+        <div class="container">
           {% block body-block %}
           {% endblock %}
           <hr>
@@ -40,15 +40,7 @@
 {% addtoblock "css" %}
     <link href="{{ STATIC_URL }}assets/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
+    <link href="{{ STATIC_URL }}assets/studytribe/css/main.css" rel="stylesheet">
 {% endaddtoblock %}
 {% addtoblock "js" %}
 <script src="{{ STATIC_URL }}assets/jquery/jquery.js"></script>

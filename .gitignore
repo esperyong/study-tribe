@@ -9,7 +9,7 @@
 *.al
 *.so
 *.so.[0-9]*
-*DS_Store/
+*DS_Store
 *.rej
 bin/
 develop-eggs/
@@ -28,4 +28,3 @@ logs/
 *installed.cfg
 venv
 indexdir/
-
