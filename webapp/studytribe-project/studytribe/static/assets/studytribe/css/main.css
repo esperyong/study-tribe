@@ -6,7 +6,13 @@ img,ul,li,h3{ margin:0; padding:0;}
 li{ list-style-type:none;}
 .b{ font-weight:bold;}
 body{ background:url(../img/background.png);}
-.topnav{ display:block; text-align:right; line-height:30px; height:30px;}
+.topnav{
+    display:block; 
+    text-align:right; 
+    line-height:30px; 
+    height:30px;
+    margin-right:180px;
+}
 .topnav a{ color:#666; font-size:12px; padding:5px;}
 .divider-vertical{border-right: 1px solid #ccc; border-left: 1px solid #f2f2f2;}
 
