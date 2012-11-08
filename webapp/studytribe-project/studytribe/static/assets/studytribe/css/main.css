@@ -58,7 +58,9 @@ body{ background:url(../img/background.png);}
 
 .container-fluid{ padding:0 40px;}
 .leftcon{ width:15%; float:left; padding:20px;}
-.rightcon{ width:80%; float:left; margin-left:20px; display:inline;}
+.rightcon{ width:79%; float:left; margin-left:20px; display:inline;}
+.rightcon .calendarscon .headerright { width:120px;}
+.rightcon .calendarscon .headerright a{ float:left;}
 h4{ border-bottom:1px solid #ccc;}
 h4>span,.set{ float:right; font-size:12px; color:#069;}
 .ckbox{ display:inline-block; width:16px; height:14px; border:2px solid #FFF; border:-radius:2px; background-color:#F90; margin:0 4px -2px 0;}
@@ -73,7 +75,7 @@ h4>span,.set{ float:right; font-size:12px; color:#069;}
 .calendar_grid .week,.calendar_grid .grid_date_content{ display:table; table-layout:fixed; width:100%; }
 .calendar_grid .week .days{ display:table-row;}
 .calendar_grid .week .days .day{ display:table-cell; width:14.20%; text-align:center; padding:5px 0; font-size:11px;}
-.calendar_grid .grid_dates_content .grid{ border-right:1px solid #CCC; border-top:1px solid #CCC; text-align:left;  height:90px; width:14.20%; padding-bottom:10px; overflow:hidden;}
+.calendar_grid .grid_dates_content .grid{ border-right:1px solid #CCC; border-top:1px solid #CCC; text-align:left;  height:90px; width:14.1%; padding-bottom:10px; overflow:hidden;}
 .calendar_grid .grid_dates_content .grid .date{ text-align:right; padding:6px 8px 0 0; font-size:11px;}
 .calendar_grid .grid_dates_content .grid .events{ padding:0 8px 0 15px; overflow:hidden; font-size:11px;}
 .calendar_grid .grid_dates_content .grid .events span{ margin-left:5px;}
