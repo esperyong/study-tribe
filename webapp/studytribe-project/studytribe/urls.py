@@ -17,8 +17,10 @@ urlpatterns = patterns('',
     url(r'^api-auth/', 
         include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include('studytribe.studygroup.urls')),
-    #url(r'^', include('studytribe.studycalendar.urls')),
-    #url(r'^', include('studytribe.studyfootmark.urls')),
+    url(r'^', include('studytribe.studyfootmark.urls')),
+    url(r'^', include('studytribe.studycalendar.urls')),
+    url(r'^', include('studytribe.everythings.urls')),
+    url(r'^', include('studytribe.tribemember.urls')),
     #url(r'^', include('studytribe.tribemember.urls')),
 
 )
