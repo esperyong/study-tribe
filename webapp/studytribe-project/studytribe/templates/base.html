@@ -42,6 +42,11 @@
 {% addtoblock "js" %}
 <script src="{{ STATIC_URL }}assets/jquery/jquery.js"></script>
 <script src="{{ STATIC_URL }}assets/bootstrap/js/bootstrap.js"></script>
+{% if debug %}
+<script src="{{ STATIC_URL }}assets/backbone/js/backbone.js"></script>
+{% else %}
+<script src="{{ STATIC_URL }}assets/backbone/js/backbone-min.js"></script>
+{% endif %}
 {% endaddtoblock %}
 
 

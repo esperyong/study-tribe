@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_protect
 @csrf_protect
 def footmark(request):
     context = {}
-    return render_to_response("studytribe/studyfootmark/base.html",
+    return render_to_response("studytribe/studyfootmark/footmark.html",
                               context,
                               context_instance=RequestContext(request))
 
