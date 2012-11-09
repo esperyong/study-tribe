@@ -61,5 +61,11 @@
         </div>
     </div>
 {% endblock %}
+{% block body-block %}
+  <div class="container">
+    {% block body-block-static %}
+    {% endblock %}
+  </div>
+{% endblock %}
 
 

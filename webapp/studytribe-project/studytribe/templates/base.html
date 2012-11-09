@@ -19,19 +19,16 @@
         {% block head-block %}
         {% endblock %}
         </div>
-        <div class="container">
-          {% block body-block %}
-          {% endblock %}
-          {% block footer-block %}
-            <hr>
-            <footer class="footer">
-              <div class="container-fluid">
-                <p>&copy; Esperyong 2012</p>
-              </div>
-            </footer>
-          {% endblock %}
-        </div><!--/.fluid-container-->
-    
+        {% block body-block %}
+        {% endblock %}
+        {% block footer-block %}
+          <hr>
+          <footer class="footer">
+            <div class="container-fluid">
+              <p>&copy; Esperyong 2012</p>
+            </div>
+          </footer>
+        {% endblock %}
     </div>
     {% render_block "js" %}
   </body>
