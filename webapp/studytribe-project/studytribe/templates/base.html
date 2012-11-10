@@ -41,8 +41,14 @@
 {% endaddtoblock %}
 {% addtoblock "js" %}
 <script src="{{ STATIC_URL }}assets/jquery/jquery.js"></script>
+{% if debug %}
 <script src="{{ STATIC_URL }}assets/bootstrap/js/bootstrap.js"></script>
+<script src="{{ STATIC_URL }}assets/backbone/js/backbone.js"></script>
+<script src="{{ STATIC_URL }}assets/backbone/js/underscore.js"></script>
+{% else %}
+<script src="{{ STATIC_URL }}assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}assets/backbone/js/backbone-min.js"></script>
+<script src="{{ STATIC_URL }}assets/backbone/js/underscore-min.js"></script>
+{% endif %}
 {% endaddtoblock %}
-
-
 
