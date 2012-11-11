@@ -38,7 +38,7 @@ class Comment(models.Model):
 
 class TopicComment(Comment):
     """
-    学习话题
+    学习话题评论
     """
     topic = models.ForeignKey(Topic,related_name='comments')
     
@@ -50,7 +50,7 @@ class Studyware(models.Model):
 
 class StudywareComment(Comment):
     """
-    学习资料的评论
+    学习资料评论
     """
     studyware = models.ForeignKey(Studyware,related_name='comments')
 
