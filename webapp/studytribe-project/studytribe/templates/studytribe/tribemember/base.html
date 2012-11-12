@@ -2,5 +2,44 @@
 {% load i18n %}
 {% block titleblock %}{% trans "main" %}{% endblock %}
 {% block body-block-static %}
-hello
+<div class="tribemember">
+	<div class="row">
+    	<div class="addpeople span2">
+        	<a href="#"><span>添加成员</span></a>
+        </div>
+        <div class="span7">
+        	<div class="row">
+                <a class="person" href="#">
+                    <img src="/static/assets/studytribe/img/logo.png">
+                    <p>xiaoying</p>
+                </a>
+                <a class="person" href="#">
+                    <img src="/static/assets/studytribe/img/logo.png">
+                    <p>xiaoying</p>
+                </a>
+                <a class="person" href="#">
+                    <img src="/static/assets/studytribe/img/logo.png">
+                    <p>xiaoying</p>
+                </a>
+              </div>
+              <p class="superpowers"><a href="#">Grant admin and other superpowers</a></p>
+        </div>
+  </div>
+  <hr />
+  <div class="row">
+  		<div class="addcompany span2">
+        	<a href="#"><span>创建团队</span></a>
+        </div>
+        <div class="span7">
+        	<section>
+            	<header>COMPANIES</header>
+                <article>
+                	<h3><a href="#">organization</a> <span>1 person</span></h3>
+                    <img src="/static/assets/studytribe/img/logo.png">
+                    <a href="#">Add a group/department inside organization </a>
+                </article>
+            </section>
+        </div>
+  </div>
+</div>
 {% endblock %}
