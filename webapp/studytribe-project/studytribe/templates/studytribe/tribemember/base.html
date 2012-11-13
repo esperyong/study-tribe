@@ -1,10 +1,11 @@
 {% extends "studytribe/base.html" %}
+{% load sekizai_tags %}
 {% load i18n %}
 {% block titleblock %}{% trans "main" %}{% endblock %}
 {% block body-block-static %}
 <div class="tribemember">
 	<div class="row">
-    	<div class="addpeople span2">
+    	<div id="add-member-btn" class="addpeople span2">
         	<a href="#"><span>添加成员</span></a>
         </div>
         <div class="span7">
@@ -36,6 +37,28 @@
                     </article>
                   </section>
               </div>
+
+        	<section class="companymain">
+              <article class="invite invite-form" style="display:none;">
+                      <header>
+                          <h4>邀请新人到您的学习部落</h4>
+                          <p>输入每个人的电子邮件地址：</p>
+                      </header>
+                       <div class="invitees">
+                          <span class="add-on"><i class="st-icon-user"></i></span>
+                          <input id="inputIcon" type="text" style="margin-bottom:0;">
+                      </div>
+                      <div class="invitees">
+                          <span class="add-on"><i class="st-icon-user"></i></span>
+                          <input id="inputIcon" type="text" style="margin-bottom:0;">
+                      </div>
+                      <div class="invitees">
+                          <span class="add-on"><i class="st-icon-user"></i></span>
+                          <input id="inputIcon" type="text" style="margin-bottom:0;">
+                      </div>
+                      <div class="create"><button class="btn">创建班级</button><a id="cancelcreate" href="#">取消</a></div>
+              </article>
+            </section>
               <p class="superpowers"><a href="#">Grant admin and other superpowers</a></p>
         </div>
   </div>
@@ -47,21 +70,21 @@
         <div class="span7">
         	<section class="companymain">
             	<header>COMPANIES</header>
-                <article class="invite expanded" style=" display:none;">
+                <article class="invite invite-form" style="display:none;">
                         <header>
                             <h4>邀请新人到您的学习部落</h4>
                             <p>输入每个人的电子邮件地址：</p>
                         </header>
                          <div class="invitees">
-                            <span class="add-on"><i class="icon-myuser"></i></span>
+                            <span class="add-on"><i class="icon-user-inactive"></i></span>
                             <input id="inputIcon" type="text" style="margin-bottom:0;">
                         </div>
                         <div class="invitees">
-                            <span class="add-on"><i class="icon-myuser"></i></span>
+                            <span class="add-on"><i class="icon-user-inactive"></i></span>
                             <input id="inputIcon" type="text" style="margin-bottom:0;">
                         </div>
                         <div class="invitees">
-                            <span class="add-on"><i class="icon-myuser"></i></span>
+                            <span class="add-on"><i class="icon-user-inactive"></i></span>
                             <input id="inputIcon" type="text" style="margin-bottom:0;">
                         </div>
                         <div class="create"><button class="btn">创建班级</button><a id="cancelcreate" href="#">取消</a></div>
@@ -75,17 +98,20 @@
         </div>
   </div>
 </div>
-
-
-{% block js-add-block %}
+{% addtoblock "jss" %}
  <script>
 	$(document).ready(function(){
-	  $("#addcompanybtn").bind("click",function(){
-		$(".expanded").slideToggle();
+	  $("#add-member-btn").bind("click",function(){
+		$(".invite-form").slideToggle();
 	  });
 	});
+
+	//$(document).ready(function(){
+	//  $("#addcompanybtn").bind("click",function(){
+	//	$(".expanded").slideToggle();
+	//  });
+	//});
 </script>
- {% endblock %}
- 
+ {% endaddtoblock %}
 {% endblock %}
 
