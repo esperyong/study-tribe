@@ -62,56 +62,17 @@
               <p class="superpowers"><a href="#">Grant admin and other superpowers</a></p>
         </div>
   </div>
-  <hr />
-  <div class="row company">
-  		<div class="addcompany span2">
-        	<a id="addcompanybtn" href="#"><span>创建团队</span></a>
-        </div>
-        <div class="span7">
-        	<section class="companymain">
-            	<header>COMPANIES</header>
-                <article class="invite invite-form" style="display:none;">
-                        <header>
-                            <h4>邀请新人到您的学习部落</h4>
-                            <p>输入每个人的电子邮件地址：</p>
-                        </header>
-                         <div class="invitees">
-                            <span class="add-on"><i class="icon-user-inactive"></i></span>
-                            <input id="inputIcon" type="text" style="margin-bottom:0;">
-                        </div>
-                        <div class="invitees">
-                            <span class="add-on"><i class="icon-user-inactive"></i></span>
-                            <input id="inputIcon" type="text" style="margin-bottom:0;">
-                        </div>
-                        <div class="invitees">
-                            <span class="add-on"><i class="icon-user-inactive"></i></span>
-                            <input id="inputIcon" type="text" style="margin-bottom:0;">
-                        </div>
-                        <div class="create"><button class="btn">创建班级</button><a id="cancelcreate" href="#">取消</a></div>
-                </article>
-                <article>
-                	<h3><a href="#">organization</a> <span>1 person</span></h3>
-                    <img src="/static/assets/studytribe/img/logo.png">
-                    <footer>Add a group/department inside organization </footer>
-                </article>
-            </section>
-        </div>
-  </div>
 </div>
+    
+</script>
 {% addtoblock "jss" %}
- <script>
+  <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
 	  $("#add-member-btn").bind("click",function(){
 		$(".invite-form").slideToggle();
 	  });
 	});
-
-	//$(document).ready(function(){
-	//  $("#addcompanybtn").bind("click",function(){
-	//	$(".expanded").slideToggle();
-	//  });
-	//});
-</script>
- {% endaddtoblock %}
+  </script>
+{% endaddtoblock %}
 {% endblock %}
 
