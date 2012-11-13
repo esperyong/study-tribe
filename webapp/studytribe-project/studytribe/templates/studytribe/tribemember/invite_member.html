@@ -2,12 +2,87 @@
 {% load i18n %}
 {% block titleblock %}{% trans "main" %}{% endblock %}
 {% block body-block-static %}
-<div class="addpeoplecon">
-	<div class="step">
-    	<span>Step1</span>
-    </div>
-    <div class="row">
-    	<section></section>
+<div style="width:960px; margin:0 auto;">
+    <div class="addpeoplecon">
+        <div class="step">
+            <span>Step1</span>
+        </div>
+          <div class="row">
+            <section class="invite">
+            	<header>
+                	<h4>邀请新人到您的学习部落</h4>
+                    <p>输入每个人的电子邮件地址：</p>
+                </header>
+                 <div class="invitees">
+                    <span class="add-on"><i class="icon-myuser"></i></span>
+                    <input id="inputIcon" type="text" style="margin-bottom:0;">
+                </div>
+                <div class="invitees">
+                    <span class="add-on"><i class="icon-myuser"></i></span>
+                    <input id="inputIcon" type="text" style="margin-bottom:0;">
+                </div>
+                <div class="invitees">
+                    <span class="add-on"><i class="icon-myuser"></i></span>
+                    <input id="inputIcon" type="text" style="margin-bottom:0;">
+                </div>
+            </section>
+        </div>
+        <div class="vertical"></div>
+        <div class="step">
+            <span>Step2</span>
+        </div>
+        <div class="row">
+            <section class="invite">
+            	<header>
+                	<h4>哪些项目可以让这些人查阅？</h4>
+                    <p>添加的所有项目</p>
+                </header>
+                    <label class="checkbox">
+                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 探索大本营
+                    </label>
+                     <label class="checkbox">
+                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 我的第一个项目
+                    </label>
+                     <label class="checkbox">
+                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 茁茁
+                    </label>
+                 <header>
+                    <h4>哪些日历可以让这些人查阅？</h4>
+                    <p>添加的所有日历</p>
+                 </header>
+                 	<label class="checkbox">
+                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 我的日历名称
+                    </label>
+            </section>
+        </div>
+        <div class="vertical"></div>
+         <div class="step">
+            <span>Step3</span>
+        </div>
+        <div class="row">
+            <section class="invite">
+            	<header>
+                	<h4>哪些项目可以让这些人查阅？</h4>
+                </header>
+                    <label class="checkbox">
+                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 可以创建新的班级
+                    </label>
+                     <label class="checkbox">
+                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 管理员
+                    </label>
+                    <footer>管理员可以创建项目，从项目中删除任何一个从你的大本营帐户，删除用户，和管理权力授予其他人。我们建议只授予管理员的权力，你真的相信的人。</footer>
+            </section>
+        </div>
+        <div class="vertical"></div>
+         <div class="step">
+            <span>Step4</span>
+        </div>
+        <div class="row">
+            <section class="invite">
+            		<button class="btn btn-large btn-block btn-success" type="button" style="width:70%;">Send the invitation</button>
+                    <footer>每个人将得到一个电子邮件链接到你的帐户。</footer>
+            </section>
+        </div>
     </div>
 </div>
 {% endblock %}
