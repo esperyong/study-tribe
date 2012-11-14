@@ -31,7 +31,9 @@
         {% endblock %}
     </div>
     {% render_block "js" %}
-    {% render_block "jss" %}
+
+    {% block js-add-block %}
+    {% endblock %}
   </body>
 </html>
 

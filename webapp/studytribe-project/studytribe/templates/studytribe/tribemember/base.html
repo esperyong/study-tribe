@@ -42,11 +42,30 @@
   <hr />
   <div class="row company">
   		<div class="addcompany span2">
-        	<a href="#"><span>创建团队</span></a>
+        	<a id="addcompanybtn" href="#"><span>创建团队</span></a>
         </div>
         <div class="span7">
         	<section class="companymain">
             	<header>COMPANIES</header>
+                <article class="invite expanded" style=" display:none;">
+                        <header>
+                            <h4>邀请新人到您的学习部落</h4>
+                            <p>输入每个人的电子邮件地址：</p>
+                        </header>
+                         <div class="invitees">
+                            <span class="add-on"><i class="icon-myuser"></i></span>
+                            <input id="inputIcon" type="text" style="margin-bottom:0;">
+                        </div>
+                        <div class="invitees">
+                            <span class="add-on"><i class="icon-myuser"></i></span>
+                            <input id="inputIcon" type="text" style="margin-bottom:0;">
+                        </div>
+                        <div class="invitees">
+                            <span class="add-on"><i class="icon-myuser"></i></span>
+                            <input id="inputIcon" type="text" style="margin-bottom:0;">
+                        </div>
+                        <div class="create"><button class="btn">创建班级</button><a id="cancelcreate" href="#">取消</a></div>
+                </article>
                 <article>
                 	<h3><a href="#">organization</a> <span>1 person</span></h3>
                     <img src="/static/assets/studytribe/img/logo.png">
@@ -56,4 +75,17 @@
         </div>
   </div>
 </div>
+
+
+{% block js-add-block %}
+ <script>
+	$(document).ready(function(){
+	  $("#addcompanybtn").bind("click",function(){
+		$(".expanded").slideToggle();
+	  });
+	});
+</script>
+ {% endblock %}
+ 
 {% endblock %}
+
