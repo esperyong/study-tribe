@@ -1,0 +1,95 @@
+{% extends "studytribe/base.html" %}
+{% load i18n %}
+{% block titleblock %}{% trans "main" %}{% endblock %}
+
+{% block body-block-static %}
+<div class="projects_details">
+	<header>
+    	<h3>我的项目名称</h3>
+        <p>我的项目描述这里是我的项目描述我的项目描述！</p>
+		<div class="project_toolbar">
+            <div class="group">
+                <a href="#">7 讨论</a>
+                <a href="#">13 个待办事项</a>
+                <a href="#">12 文件</a>
+                <a href="#">4 文本文档</a>
+                <a href="#">日历项</a>
+            </div>
+    	</div>
+	</header>
+    <div class="sheet_body">
+    	<section class="discussions">
+        	<header>
+            	<a>讨论</a>
+                <button class="btn">开始一个新讨论</button>
+            </header>
+            <table class="discussionslist" width="100%" border="0"a cellspacing="0" cellpadding="0">
+                 <tr>
+                        <td>
+                            <a href="#"><img src="img/user.jpg"></a>
+                        </td>
+                        <td><a href="#">xiaoying</a></td>
+                        <td><a href="#">讨论项目的可实施方案</a> - <a href="#">这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述</a></td>
+                        <td><a href="#">10月31日</a></td>
+                        <td><a href="#"></a></td>
+                  </tr>
+							  <tr>
+                        <td>
+                            <a href="#"><img src="img/user.jpg"></a>
+                        </td>
+                        <td><a href="#">xiaoying</a></td>
+                        <td><a href="#">讨论项目的可实施方案</a> - <a href="#">这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述</a></td>
+                        <td><a href="#">10月31日</a></td>
+                        <td><a href="#"><span class="pill">２</span></a></td>
+                  </tr>
+                 <tr>
+                        <td>
+                            <a href="#"><img src="img/user.jpg"></a>
+                        </td>
+                        <td><a href="#">xiaoying</a></td>
+                        <td><a href="#">讨论项目的可实施方案</a> - <a href="#">这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述</a></td>
+                        <td><a href="#">10月31日</a></td>
+                        <td><a href="#"></a></td>
+                  </tr>
+                 <tr>
+                        <td>
+                            <a href="#"><img src="img/user.jpg"></a>
+                        </td>
+                        <td><a href="#">xiaoying</a></td>
+                        <td><a href="#">讨论项目的可实施方案</a> - <a href="#">这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述</a></td>
+                        <td><a href="#">10月31日</a></td>
+                        <td><a href="#"></a></td>
+                  </tr>
+                 <tr>
+                        <td>
+                            <a href="#"><img src="img/user.jpg"></a>
+                        </td>
+                        <td><a href="#">xiaoying</a></td>
+                        <td><a href="#">讨论项目的可实施方案</a> - <a href="#">这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述</a></td>
+                        <td><a href="#">10月31日</a></td>
+                        <td><a href="#"></a></td>
+                  </tr> 	
+			</table>
+            <a class="more">更多討論</a>
+        </section>
+        <section class="to-do">
+        	<header>
+            	<a>讨论</a>
+                <button class="btn">添加待办事项</button>
+            </header>
+            <article>
+            	<header>
+                	<h4>開發９個界面</h4>
+                </header>
+                <ul>
+                	<li><label><input type="checkbox"> 第一個界面</label></li>
+                    <li><label><input type="checkbox"> 第二個界面</label></li>
+                </ul>
+            </acticle>
+            <a class="more">添加待办事项</a>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+
