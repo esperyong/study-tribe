@@ -20,5 +20,9 @@ urlpatterns += patterns('studytribe',
     url(r'^tribemember/invite-people/$',direct_to_template,
                   {'template': 'studytribe/tribemember/invite_member.html'},
                   name='invite-tribe-member'),
+     url(r'^studygroup/projects_details/$',direct_to_template,
+                  {'template': 'studytribe/studygroup/projects_details.html'},
+                  name='projects_details'),
+
 )
 
