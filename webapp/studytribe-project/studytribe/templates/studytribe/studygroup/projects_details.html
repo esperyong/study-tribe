@@ -23,6 +23,32 @@
             	<a>讨论</a>
                 <button class="btn">开始一个新讨论</button>
             </header>
+            <article class="expanded">
+            	<div class="bubble">
+                	<form>
+                    	<header class="text_entry">
+                        	<h4>主 题 :</h4>
+                            <div class="bodycon">
+                            	<div class="body pull-left">内 容 :</div>
+                                <div class="context pull-left">
+                                    <div class="btn-group">
+                                        <button class="btn">加粗 (<strong> B </strong>)</button>
+                                        <button class="btn">倾斜 (<em> I </em>)</button>
+                                        <button class="btn">无序 ( Bullets )</button>
+                                        <button class="btn">有序 ( Numbers )</button>
+                                        <button class="btn">换行 ( Quote )</button>
+                                    </div>
+                                    <div class="textbox">
+                                    <textarea></textarea>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                         </header>
+                        <footer></footer>
+                    </form>
+                </div>
+            </article>
             <table class="discussionslist" width="100%" border="0"a cellspacing="0" cellpadding="0">
                  <tr>
                         <td>
@@ -77,18 +103,167 @@
             	<a>讨论</a>
                 <button class="btn">添加待办事项</button>
             </header>
-            <article>
-            	<header>
-                	<h4>開發９個界面</h4>
-                </header>
-                <ul>
-                	<li><label><input type="checkbox"> 第一個界面</label></li>
-                    <li><label><input type="checkbox"> 第二個界面</label></li>
-                </ul>
-            </acticle>
-            <a class="more">添加待办事项</a>
-        </section>
+            <ul class="to-do-lists">
+            	<li class="list">
+                	<article>
+                        <header>
+                            <h4><a href="＃">開發９個界面</a></h4>
+                        </header>
+                        <ul>
+                            <li><label><input type="checkbox"> <a href="#">第一個界面</a></label></li>
+                            <li><label><input type="checkbox"> <a href="#">第二個界面</a></label></li>
+                            <a class="more">添加待办事项</a>
+                        </ul>
+                    </acticle>
+                </li>
+                <li class="list">
+                	<article>
+                        <header>
+                            <h4><a href="#">待办事项基础知识</a></h4>
+                        </header>
+                        <ul>
+                            <li><label><input type="checkbox"> <a href="#">点击这里……</a></label></li>
+                            <li><label><input type="checkbox"> <a href="#">点这这个盒子……</a></label></li>
+                            <a class="more">添加待办事项</a>
+                        </ul>
+                     </acticle>
+                </li>
+                <li class="list">
+                	<article>
+                        <header>
+                            <h4><a href="#">一些快速的东西，探索在学习部落</a></h4>
+
+                        </header>
+                        <ul>
+                            <li><label><input type="checkbox"> <a href="#">单击项目的名称（"学习部落"），在左上角的项目重新命名或更改说明。然后单击它一改再改到别的东西</a></label></li>
+                            <li><label><input type="checkbox"> <a href="#">上传一个文件到这个项目只需拖动文件到您的网页浏览器（一个图片，Word文档，PDF等等），下降到这个项目中的任何地方</a></label></li>
+                            <li><label><input type="checkbox"> <a href="#">探索大本营的堆叠接口的完全独特的网页。点击这里给我看它是如何工作的</a></label></li>
+                            <li><label><input type="checkbox"> <a href="#">点击"邀请更多的人"的链接在右上角邀请其他人加入这个项目</a></label></li>
+                            <a class="more">添加待办事项</a>
+                        </ul>
+                     </acticle>
+                </li>
+            </ul>
+         </section>
+         <section class="files">
+        	<header>
+            	<a>文件</a>
+                <button class="btn">更新文件</button>
+            </header>
+            <ul class="fileslist">
+                     	<li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/glyphicons-halflings.png" width="469" height="159"></td>
+                        <td>
+                        	<h4><a href="#">这里是文件名字</a><button class="btn">label…</button></h4>
+                            <a href="#">下载</a> or <a href="#">Go to image and discussion</a>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+				<li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/user.jpg" width="307" height="308"></td>
+                        <td>
+                        	<h4><a href="#">这里是文件名字</a><button class="btn">label…</button></h4>
+                            <a href="#">下载</a> or <a href="#">Go to image and discussion</a>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+      			     	<li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/glyphicons-halflings.png" width="469" height="159"></td>
+                        <td>
+                        	<h4><a href="#">这里是文件名字</a><button class="btn">label…</button></h4>
+                            <a href="#">下载</a> or <a href="#">Go to image and discussion</a>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+                     	<li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/glyphicons-halflings.png" width="469" height="159"></td>
+                        <td>
+                        	<h4><a href="#">这里是文件名字</a><button class="btn">label…</button></h4>
+                            <a href="#">下载</a> or <a href="#">Go to image and discussion</a>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+                     	<li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/glyphicons-halflings.png" width="469" height="159"></td>
+                        <td>
+                        	<h4><a href="#">这里是文件名字</a><button class="btn">label…</button></h4>
+                            <a href="#">下载</a> or <a href="#">Go to image and discussion</a>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+            </ul>
+         </section>
+         <section class="text_documents">
+        	<header>
+            	<a>文本文档</a>
+                <button class="btn">新建文本</button>
+            </header>
+            <ul class="textlist">
+                  <li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/text.png" width="86" height="100"></td>
+                        <td>
+                        	<a class="name" href="#">这里是文件名字</a>
+                            <p>10月31日xiaoying</p>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+                  <li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/text.png" width="86" height="100"></td>
+                        <td>
+                        	<a class="name" href="#">这里是文件名字</a>
+                            <p>10月31日xiaoying</p>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+                  <li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/text.png" width="86" height="100"></td>
+                        <td>
+                        	<a class="name" href="#">这里是文件名字</a>
+                            <p>10月31日xiaoying</p>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+                  <li>
+               		<table width="50%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><img src="img/text.png" width="86" height="100"></td>
+                        <td>
+                        	<a class="name" href="#">这里是文件名字</a>
+                            <p>10月31日xiaoying</p>
+                        </td>
+                      </tr>
+                    </table>
+                </li>
+            </ul>
+         </section>
     </div>
+    <footer>
+    	<a class="projects_set" href="#"><i class="icon-wrench"></i>项目设置</a>
+    </footer>
 </div>
 {% endblock %}
 
