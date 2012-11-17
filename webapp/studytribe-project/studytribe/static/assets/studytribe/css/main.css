@@ -139,13 +139,18 @@ h4>span,.set{ float:right; font-size:12px; color:#069;}
 .projects_details .sheet_body section .more{color:#477B96;}
 
 
-.projects_details .discussions article[class="expanded"] .bubble{ background-color:#FAFAFA; border:1px solid #E5E5E5; border-radius:10px; padding:9px 12px 12px 9px; }
+.projects_details .discussions article[class="expanded"] .bubble{ background-color:#FAFAFA; border:1px solid #E5E5E5; border-radius:10px; padding:9px 12px; margin-bottom:10px; }
 .projects_details .discussions article[class="expanded"] .bubble .text_entry{ background:#FFF; height:auto; border:1px solid #CCC; border-radius:5px; box-shadow:0 2px 0 #DDDDDD; color:#A9A9A9; padding:10px;}
 .projects_details .discussions article[class="expanded"] .bubble .text_entry h4{ color:#A9A9A9; border-bottom:1px solid #A9A9A9; font-weight:400; font-size:14px;}
 .projects_details .discussions article[class="expanded"] .bubble .text_entry .context{ padding:0 20px; width:90%;}
 .projects_details .discussions article[class="expanded"] .bubble .text_entry .context .btn-group .btn{font-size:12px; color:#666;}
 .projects_details .discussions article[class="expanded"] .bubble .text_entry .context .textbox{ margin:10px 0; }
-.projects_details .discussions article[class="expanded"] .bubble .text_entry .context .textbox textarea{ border:; width:100%;}
+.projects_details .discussions article[class="expanded"] .bubble .text_entry .context .textbox textarea{ border:; width:100%; border:none; box-shadow:none;}
+.projects_details .discussions article[class="expanded"] .bubble .text_entry .context .textbox .attachments{ min-height:80px;font-size:12px; border:1px dashed #CCC;border-radius:3px; width:100%; padding:4px 6px;}
+.projects_details .discussions article[class="expanded"] .bubble .text_entry .context .textbox .attachments a{ color:#477B96; font-size:12px;}
+.projects_details .discussions article[class="expanded"] .bubble form{ margin:0; padding:0;}
+.projects_details .discussions article[class="expanded"] .bubble footer .btn{ padding:2px 20px;}
+.projects_details .discussions article[class="expanded"] .bubble footer .cancel{ text-decoration:underline; color:#000;}
 
 .projects_details .discussionslist tr td{ padding:4px; text-align:center; vertical-align:top;}
 .projects_details .discussionslist tr td a{ color:#000; text-decoration:none;}
@@ -170,7 +175,9 @@ h4>span,.set{ float:right; font-size:12px; color:#069;}
 .projects_details .to-do .to-do-lists .list:not(:first-child){ margin-top:40px;}
 .projects_details .to-do .to-do-lists li label a{ color:#000;}
 .projects_details .to-do .to-do-lists li label a:hover{color:#477B96; text-decoration:underline; cursor:pointer;}
-
+.projects_details .to-do .nubbin{ width:55px; height:22px; overflow:hidden; background-color:#FFF; border-top-left-radius:20px;border-bottom-left-radius: 20px; box-shadow: -1px 0 1px rgba(0, 0, 0, 0.2); font-size:12px; text-align:left; min-width:40px; padding-left:5px; margin-left:-65px; margin-top:-2px;}
+.projects_details .to-do .nubbin .edit{ color:#000; padding:0 5px; line-height:22px;}
+.projects_details .to-do .unassigned{ color:#666;border-radius:10px; margin-left:5px; width:70px; height:16px; line-height:16px; font-size:11px; text-align:center; cursor:pointer; background-color:#E2E9F8;}
 
 .projects_details .files .fileslist table td:first-child{ width:122px; text-align:right; vertical-align:middle;}
 .projects_details .files .fileslist table td:first-child img{max-width:120px;border:1px solid #ccc;}
