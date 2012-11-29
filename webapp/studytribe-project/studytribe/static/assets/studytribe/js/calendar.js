@@ -5,7 +5,7 @@
 function hidden_cal_list(event){
   $("#show-cal-list-btn").children("i").removeClass().addClass("icon-arrow-right");
   $("#show-cal-list-btn").children("span").text("显示日历列表");
-  $("#calendar").removeClass("span9").addClass("span11").siblings("#calendar-config").hide();
+  $("#calendar").removeClass("span9").addClass("span11").siblings("#calendar-list").hide();
 }
 
 /**
@@ -14,7 +14,7 @@ function hidden_cal_list(event){
 function show_cal_list(event){
   $("#show-cal-list-btn").children("i").removeClass().addClass("icon-arrow-left");
   $("#show-cal-list-btn").children("span").text("隐藏日历列表");
-  $("#calendar").removeClass("span11").addClass("span9").siblings("#calendar-config").show();
+  $("#calendar").removeClass("span11").addClass("span9").siblings("#calendar-list").show();
 }
 
 /**
