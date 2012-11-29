@@ -30,18 +30,39 @@ body{ background:url(../img/background.png);}
 
 
 .container-fluid{ padding:0 40px;}
+
+/*CSS begin*/
 .leftcon{ width:15%; float:left; padding:20px;}
 .rightcon{ width:79%; float:left; margin-left:20px; display:inline;}
 .rightcon .calendarscon .headerright { width:120px;}
 .rightcon .calendarscon .headerright a{ float:left;}
 h4{ border-bottom:1px solid #ccc;}
 h4>span,.set{ float:right; font-size:12px; color:#069;}
-.ckbox{ display:inline-block; width:16px; height:14px; border:2px solid #FFF; border:-radius:2px; background-color:#F90; margin:0 4px -2px 0;}
+/*CSS end*/
 
-.projectslist{ margin-top:50px;}
-.projectslist>span{ display:block;}
-.projectslist>span>.ckbox{ display:inline-block; width:16px; height:14px; border:2px solid #FFF; border:-radius:2px; background-color:#ccc; margin:0 4px -2px 0;}
-.projectslist>span>.ckboxactiv{ display:inline-block; width:16px; height:14px; border:2px solid #FFF; border:-radius:2px; background-color:#F90; margin:0 4px -2px 0;}
+.ckbox{ 
+    display:inline-block; 
+    width:16px; 
+    height:14px; 
+    border:2px solid #FFF; 
+    border:-radius:2px; 
+    background-color:#F90; 
+    margin:0 4px -2px 0;
+}
+
+.calendar-list{ margin-top:50px;}
+
+.calendar-list>span{ display:block;}
+
+.calendar-list>span>.ckbox{ 
+    display:inline-block; 
+    width:16px; 
+    height:14px; 
+    border:2px solid #FFF; 
+    border:-radius:2px; 
+    background-color:#ccc; 
+    margin:0 4px -2px 0;
+}
 
 .calendarscon{ border:1px solid #CCC; border:-radius:4px; background:#FFF; box-shadow:0 0 6px rgba(0, 0, 0, 0.3); padding:20px; text-align:center;}
 .calendarscon label{ display:inline-block;}

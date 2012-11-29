@@ -1,19 +1,28 @@
 {% extends "studytribe/base.html" %}
+{% load sekizai_tags %}
 {% load i18n %}
 {% block titleblock %}{% trans "main" %}{% endblock %}
 {% block body-block %}
 <div class="container-fluid">
-        <div class="row">
+        <div class="row-fluid">
             {% block side-bar %}
-              <div class="leftcon">
+              <div id="calendar-config" class="span2">
                 {% include "studytribe/studycalendar/tparts/calendar-config.html" %}
               </div>
             {% endblock %}
             {% block content-right %}
-              <div class="rightcon">
+              <div id="calendar" class="span9">
                 {% include "studytribe/studycalendar/tparts/calendar.html" %}
               </div>
             {% endblock %} 
     </div> 
 </div>
+{% addtoblock "jss" %}
+{% if debug %}
+<script src="{{ STATIC_URL }}assets/studytribe/js/calendar.js"></script>
+{% else %}
+<script src="{{ STATIC_URL }}assets/studytribe/js/calendar-min.js"></script>
+{% endif %}
+{% endaddtoblock %}
 {% endblock %}
+
