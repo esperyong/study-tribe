@@ -1,17 +1,10 @@
 # -*- coding:utf-8 -*-
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.views.decorators.csrf import csrf_protect
+from django.views.generic import TemplateView
+from django.utils.decorators import classonlymethod
 
-@csrf_protect
-def study_calendar(request):
-    context = {}
-    return render_to_response("studytribe/studycalendar/base.html",
-                              context,
-                              context_instance=RequestContext(request))
+class StudyCalendarView(TemplateView):
+    template_name = "studytribe/studycalendar/base.html"
 
-
-
-
+class MyTemplateView(object):
+    def as_view(cls,**initkargs):
+        pass

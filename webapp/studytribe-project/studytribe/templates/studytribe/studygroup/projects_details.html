@@ -40,12 +40,18 @@
                                     </div>
                                     <div class="textbox">
                                     <textarea></textarea>
+                                    <div class="attachments">
+                                   	  <img class="pull-left" src="img/attachments.png" width="18" height="18">
+                                      <div>附加文件拖拽到下面，或者从<a href="#">你的电脑中选择…</a></div>
                                     </div>
+                                  </div>
                                 </div>
                                 <div class="clear"></div>
                             </div>
                          </header>
-                        <footer></footer>
+                        <footer>
+                        	<button class="btn">提交讨论</button> or <a class="cancel" href="#">取消</a>
+                        </footer>
                     </form>
                 </div>
             </article>
@@ -110,7 +116,12 @@
                             <h4><a href="＃">開發９個界面</a></h4>
                         </header>
                         <ul>
-                            <li><label><input type="checkbox"> <a href="#">第一個界面</a></label></li>
+                            <li>
+                            	<div class="nubbin pull-left"><i class="icon-trash"></i><a class="edit" href="#">编辑</a></div>
+                                <label class="pull-left"><input type="checkbox"> <a href="#">第一個界面</a></label>
+                                <div class="unassigned pull-left">未指定</div>
+                                <div class="clear"></div>
+                             </li>
                             <li><label><input type="checkbox"> <a href="#">第二個界面</a></label></li>
                             <a class="more">添加待办事项</a>
                         </ul>
@@ -266,5 +277,4 @@
     </footer>
 </div>
 {% endblock %}
-
 
