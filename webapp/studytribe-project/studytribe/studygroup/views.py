@@ -7,7 +7,6 @@ from studytribe.studygroup.permissions import IsOwnerOrReadOnly
 from rest_framework import permissions
 
 #for template dev
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -20,11 +19,6 @@ def study_group_list(request):
     return render_to_response("studytribe/studygroup/base.html",
                               context,
                               context_instance=RequestContext(request))
-
-
-
-
-
 """
 StudyTribe:学习部落
 """

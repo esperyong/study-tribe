@@ -26,9 +26,30 @@ function init_show_cal_list_btn(){
 }
 
 /**
+ * 初始化日历列表
+ */
+function init_cal_list(){
+    //a.默认不显示日历设置按钮,鼠标悬浮上去则显示
+    $("ul#cal-list-content>li span.set")
+        .hide()
+        .parent("li")
+        .hover(
+            function(){
+              $(this).children("span").fadeIn('fast'); 
+            },
+            function(){
+              $(this).children("span").fadeOut('fast'); 
+            }
+        );
+    //b.默认不显示日历设置按钮,鼠标悬浮上去则显示
+}
+
+/**
  * 教学日历Html UI 初始化函数 
  */
 jQuery(document).ready(function($){
     init_show_cal_list_btn();
+    init_cal_list();
 });
+
 
