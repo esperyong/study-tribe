@@ -1,6 +1,7 @@
 {% extends "studytribe/base.html" %}
 {% load sekizai_tags %}
 {% load i18n %}
+{% load includetags %}
 {% block titleblock %}{% trans "main" %}{% endblock %}
 {% block body-block %}
 <div class="container-fluid">
@@ -17,6 +18,9 @@
             {% endblock %} 
     </div> 
 </div>
+
+{% include_js 'liuyong' %}
+{% current_time 'liuyong' %}
 {% addtoblock "jss" %}
 {% if debug %}
 <script src="{{ STATIC_URL }}assets/studytribe/js/calendar.js"></script>

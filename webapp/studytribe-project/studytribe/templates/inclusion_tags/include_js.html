@@ -1,0 +1,6 @@
+{% if debug %}
+<script src="{{ STATIC_URL }}assets/studytribe/js/{{jsname}}.js"></script>
+{% else %}
+<script src="{{ STATIC_URL }}assets/studytribe/js/{{jsname}}-min.js"></script>
+{% endif %}
+

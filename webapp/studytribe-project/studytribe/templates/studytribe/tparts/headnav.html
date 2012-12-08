@@ -1,0 +1,61 @@
+{% url study-calendar as study_calendar %}
+{% url study-footmark as study_footmark %}
+{% url study-group-list as study_group_list %}
+{% url everythings as everythings %}
+{% url member as member %}
+{% url me mid=1 as me %}
+    <div class="container">
+        <div class="topnav">
+            <a href="#">项目</a>
+            <a href="#">日程</a>
+            <a href="#">故事</a>
+            <a href="#">进展</a>
+            <a href="#">团队</a>
+        </div>
+    	<div style="position: static;" class="navbar">
+           <div class="navbar-inner">
+             <div class="container">
+               <a data-target=".navbar-inverse-collapse" data-toggle="collapse" class="btn btn-navbar">
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+               </a>
+               <a href="#" class="brand" style="padding:0 20px;"><img src="{{ STATIC_URL }}assets/studytribe/img/logo.png"/>学习部落</a>
+               <div class="nav-collapse collapse navbar-inverse-collapse">
+                   <ul class="nav">
+                     <li class=" divider-vertical"></li>	
+                     <li {% ifequal request.path study_group_list %}class="active"{% endifequal %}>
+                         <a href="{{study_group_list}}">我的班级</a>
+                     </li>
+                     <li {% ifequal request.path study_calendar %}class="active"{% endifequal %}>
+                         <a href="{{study_calendar}}">教学日历</a>
+                     </li>
+                     <li {% ifequal request.path everythings %}class="active"{% endifequal %}>
+                         <a href="{{everythings}}">一目了然</a>
+                     </li>
+                     <li {% ifequal request.path study_footmark %}class="active"{% endifequal %}>
+                         <a href="{{study_footmark}}">学习足迹</a>
+                     </li>
+                     <li class="divider-vertical"></li>
+                     <li {% ifequal request.path member %}class="active"{% endifequal %}>
+                         <a href="{{member}}">其他部落成员</a>
+                     </li>
+                     <li {% ifequal request.path me %}class="active"{% endifequal %}>
+                         <a href="{{me}}">我</a>
+                     </li>
+                   </ul>
+                   <div class="btn-group pull-left">
+                     <form class="form-search" style="margin-bottom:0;">
+                       <div class="input-prepend">
+                           <button type="submit" class="btn btnaddstyle" style="border-radius:3px 0 0 3px; border-right:none;"><i class="icon-search"></i></button>
+                           <input type="text" size="16" id="prependedInput" class="input-medium" placeholder="搜索"/>
+                       </div>
+                     </form>
+
+                   </div>
+               </div><!-- /.nav-collapse -->
+             </div>
+           </div><!-- /navbar-inner -->
+        </div>
+    </div>
+

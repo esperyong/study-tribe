@@ -2,9 +2,9 @@
 
 from django.conf.urls import patterns, url
 from rest_framework.urlpatterns import format_suffix_patterns
-from studytribe.studygroup import views 
+from studytribe.studyfootmark import views 
 
-urlpatterns = patterns('studytribe',  
-    url(r'^studyfootmark/','studyfootmark.views.footmark',name='study-footmark'),
+urlpatterns = patterns('',  
+    url(r'^studyfootmark/',views.StudyFootmarkView.as_view(),name='study-footmark'),
 )
 
