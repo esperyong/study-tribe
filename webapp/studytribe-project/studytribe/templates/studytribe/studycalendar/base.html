@@ -4,29 +4,22 @@
 {% load includetags %}
 {% block titleblock %}{% trans "main" %}{% endblock %}
 {% block body-block %}
-<div class="container-fluid">
-        <div class="row-fluid">
-            {% block side-bar %}
-              <div id="calendar-list" class="span2">
-                {% include "studytribe/studycalendar/tparts/calendar-list.html" %}
-              </div>
-            {% endblock %}
-            {% block content-right %}
-              <div id="calendar" class="span9">
-                {% include "studytribe/studycalendar/tparts/calendar.html" %}
-              </div>
-            {% endblock %} 
-    </div> 
-</div>
-
-{% include_js 'liuyong' %}
-{% current_time 'liuyong' %}
-{% addtoblock "jss" %}
-{% if debug %}
-<script src="{{ STATIC_URL }}assets/studytribe/js/calendar.js"></script>
-{% else %}
-<script src="{{ STATIC_URL }}assets/studytribe/js/calendar-min.js"></script>
-{% endif %}
-{% endaddtoblock %}
+  <div class="container-fluid">
+          <div class="row-fluid">
+              {% block side-bar %}
+                <div id="calendar-list" class="span2">
+                  {% include "studytribe/studycalendar/tparts/calendar-list.html" %}
+                </div>
+              {% endblock %}
+              {% block content-right %}
+                <div id="calendar" class="span9">
+                  {% include "studytribe/studycalendar/tparts/calendar.html" %}
+                </div>
+              {% endblock %} 
+      </div> 
+  </div>
+  {% addtoblock "jss" %}
+    {% include_js 'calendar' %}
+  {% endaddtoblock %}
 {% endblock %}
 

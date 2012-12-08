@@ -29,6 +29,8 @@ body{ background:url(../img/background.png);}
 .projectcard .people img{ border-radius:50%;}
 
 
+.waiting { background:url(../img/waiting.gif) no-repeat;  display:block;}
+
 .container-fluid{ padding:0 40px;}
 
 /*CSS begin*/

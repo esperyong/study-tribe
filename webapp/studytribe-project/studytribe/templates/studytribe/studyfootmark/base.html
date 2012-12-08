@@ -1,19 +1,15 @@
 {% extends "studytribe/base.html" %}
+{% load sekizai_tags %}
 {% load i18n %}
+{% load includetags %}
 {% block titleblock %}{% trans "main" %}{% endblock %}
 
-{% block body-block %}
-
+{% block body-block-static %}
     {% include "studytribe/studyfootmark/tparts/footmark.html" %}
-    
     {% addtoblock "jss" %}
-    {% if debug %}
-      <script src="{{ STATIC_URL }}assets/studytribe/js/footmark.js"></script>
-    {% else %}
-      <script src="{{ STATIC_URL }}assets/studytribe/js/footmark-min.js"></script>
-    {% endif %}
+      {% include_js 'scrollspy' path='assets/jquery/scrollspy/' %}
+      {% include_js 'footmark' %}
     {% endaddtoblock %}
-
 {% endblock %}
 
 {% block footer-block %}
