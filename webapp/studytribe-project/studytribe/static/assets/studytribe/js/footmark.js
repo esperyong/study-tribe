@@ -1,16 +1,17 @@
 //footmark
 jQuery(document).ready(function($){
 
-    var $loading_div = $('<div id="loading-img"></div>')
-                        .addClass('waiting')
-                        .hide()
-                        .insertAfter('div.footmark-container');
+    //var $loading_div = $('<div id="loading-img"></div>')
+    //                    .addClass('waiting')
+    //                    .hide()
+    //                    .insertAfter('div.footmark-container');
 
+    $('#waiting').css({height:60});
     var bottom = function(){
         console.log('scroll to bottom!');
-        $loading_div.show().delay(1000).hide();
+        //$loading_div.show().delay(1000).hide();
         //waiting 3 second
-        $loading_div.removeClass('loading');
+//$loading_div.removeClass('loading');
         content = ['<div class="eventbox">',
                    '<div class="time">12:57am</div>',
                    '<div class="eventtext">',
@@ -23,9 +24,9 @@ jQuery(document).ready(function($){
                    '</div>',
                    '<div class="clear"></div>',
                    '</div>',
-                   '<div class="clear"></div>',
                    '</div>'].join('');
-       $('div.event_container:last div.eventcon:last').append(content);
+
+        $('div.event_container:last div.eventcon:last').append(content);
     }
 
     var buffer = 5;
