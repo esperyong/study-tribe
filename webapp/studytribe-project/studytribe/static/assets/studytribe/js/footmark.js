@@ -1,4 +1,6 @@
 //footmark
+(function($){
+
 jQuery(document).ready(function($){
 
     //var $loading_div = $('<div id="loading-img"></div>')
@@ -8,10 +10,7 @@ jQuery(document).ready(function($){
 
     $('#waiting').css({height:60});
     var bottom = function(){
-        console.log('scroll to bottom!');
-        //$loading_div.show().delay(1000).hide();
-        //waiting 3 second
-//$loading_div.removeClass('loading');
+
         content = ['<div class="eventbox">',
                    '<div class="time">12:57am</div>',
                    '<div class="eventtext">',
@@ -52,3 +51,6 @@ jQuery(document).ready(function($){
     
 
 });
+
+})(jQuery);
+
