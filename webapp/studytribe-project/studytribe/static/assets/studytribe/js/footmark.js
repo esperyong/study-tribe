@@ -29,21 +29,26 @@ jQuery(document).ready(function($){
         $('div.event_container:last div.eventcon:last').append(content);
     }
 
-    var buffer = 5;
-    $(window).scroll(function(e){
-        var scroll_top = $(window).scrollTop();
+    $window = $(window);
+    var handleBottom = function(){
+        var scroll_top = $window.scrollTop();
+        var win_height = $window.height();
         var doc_height = $(document).height();
-        var win_height = $(window).height();
-        var diff = doc_height - win_height;
-        if(Math.abs(scroll_top - diff) < buffer){
-                bottom();
-                console.log(scroll_top);
-                console.log(doc_height);
-                console.log(win_height);
-                console.log(diff);
+        if(scroll_top + win_height >= doc_height){
+            bottom();
+        }
+    }
+
+    //event throttling
+    var timer = 0;
+    $window.scroll(function(e){
+        if(!timer){
+            timer = setTimeout(function(){
+                        handleBottom();
+                        timer = 0;
+                    },250);
         }
     });
-
     
 
 });
