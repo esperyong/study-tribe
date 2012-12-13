@@ -29,6 +29,7 @@ jQuery(document).ready(function($){
     }
 
     $window = $(window);
+
     var handleBottom = function(){
         var scroll_top = $window.scrollTop();
         var win_height = $window.height();
@@ -38,17 +39,8 @@ jQuery(document).ready(function($){
         }
     }
 
-    //event throttling
-    var timer = 0;
-    $window.scroll(function(e){
-        if(!timer){
-            timer = setTimeout(function(){
-                        handleBottom();
-                        timer = 0;
-                    },250);
-        }
-    });
-    
+    //throttedScroll event 
+    $window.bind('throttledScroll',handleBottom);    
 
 });
 
