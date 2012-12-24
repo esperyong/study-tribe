@@ -5,7 +5,7 @@ from studytribe.studygroup import views
 from django.views.generic.simple import direct_to_template
 
 urlpatterns = patterns('',
-    url(r'^$', views.StudyTribeListRes.as_view()),
+    #url(r'^$', views.StudyTribeListRes.as_view()),
     url(r'^(?P<pk>[0-9]+)/$', views.StudyTribeRes.as_view()),
     url(r'^(?P<tribe_id>[0-9]+)/studygroups/$', 
             views.StudyGroupListRes.as_view()),

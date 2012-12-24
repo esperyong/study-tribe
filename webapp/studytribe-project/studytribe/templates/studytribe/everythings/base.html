@@ -1,7 +1,6 @@
 {% extends "studytribe/base.html" %}
 {% load sekizai_tags %}
 {% load i18n %}
-{% block titleblock %}{% trans "main" %}{% endblock %}
 {% block body-block-static %}
 {% addtoblock "jss" %}
 <script type="text/javascript" charset="utf-8">
@@ -12,7 +11,7 @@
             child: ''
         },
         initialize: function(){
-            alert("Welcome to this world");
+            //alert("Welcome to this world");
         }
     });
     
@@ -21,7 +20,7 @@
     var age = person.get("age"); // 67
     var name = person.get("name"); // "Thomas"
     var child = person.get("child"); // 'Ryan'
-    alert(age);
+    //alert(age);
 </script>
 {% endaddtoblock %}
 {% endblock %}

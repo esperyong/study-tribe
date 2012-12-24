@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load sekizai_tags %}
+{% load i18n %}
+{% load includetags %}
+
+{% block head-block %}
+{% endblock %}
+
+{% block body-block %}
+
+  <div class="container">
+  </div>
+
+{% addtoblock "css" %}
+  {% include_css 'login_or_signup' %}
+{% endaddtoblock %}
+
+{% endblock %}
+
+{% block footer-block %}
+{% endblock %}
+

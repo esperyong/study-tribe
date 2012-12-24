@@ -1,0 +1,6 @@
+{% if debug %}
+<link rel="stylesheet" href="{{ STATIC_URL }}{{path}}{{cssname}}.css" type="text/css" media="screen" charset="utf-8">
+{% else %}
+<link rel="stylesheet" href="{{ STATIC_URL }}{{path}}{{cssname}}-min.css" type="text/css" media="screen" charset="utf-8">
+{% endif %}
+
