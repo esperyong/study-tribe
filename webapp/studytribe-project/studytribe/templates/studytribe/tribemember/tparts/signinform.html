@@ -1,0 +1,30 @@
+{% load i18n %}
+<form id="signinform" action="{{ signin_view }}" method="post" class="form-horizontal">
+  {% csrf_token %}
+  <legend>{% trans "Enter Your Tribes,Study with teacher and other family!" %}</legend>
+  <fieldset>
+    {{ signinform.non_field_errors }}
+    {% for field in signinform %}
+      <div class="control-group">
+          {% if field.name == 'remember_me' %}
+            <label class="checkbox">
+              {{ field }}{{ field.label }}
+            <label>
+          {% else %}
+              {{ field }}
+          {% endif %}
+          {% if field.errors %}
+              {% for error in field.errors %}
+                {{ error }}
+              {% endfor %}
+          {% endif %}
+      </div>
+    {% endfor %}
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-large">
+            {% trans "Enter StudyTribe Now!" %}
+        </button>
+    </div>
+  </fieldset>
+</form>
+
