@@ -34,12 +34,12 @@ def signup_or_signin(request,sign_type='signup'):
         return signup( request,
                 signup_form=signup_form,
                 template_name=template_name,
-                extra_context={'signinform':signin_form} )
+                extra_context={'signinform':signin_form,'signup':True} )
     else:
         return signin( request,
                 auth_form=signin_form,
                 template_name=template_name,
-                extra_context={'signupform':signup_form} )
+                extra_context={'signupform':signup_form,'signin':True} )
 
 #几乎原样照抄userena的signup和login,view的代码,加上可以定制form在context中名字的代码
 #因为在首页当中需要在一个页面中打印两个form表单,分别是loginform和signupform;
