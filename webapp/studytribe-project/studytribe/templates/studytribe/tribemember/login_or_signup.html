@@ -8,8 +8,60 @@
 
 {% block body-block %}
 
-  <div class="container">
+<div class="container hero-unit shadowly">
+  <div class="row">
+      <div class="span6">
+          <h1>欢迎来到学习部落</h1>
+          <p>成长源自关注</p>
+      </div>
   </div>
+  
+  <div class="row">
+    <div class="span6">
+        <div class="span6 well">
+          <form id="loginform">
+          </form>
+        </div>
+        <div class="span6 well">
+        <form id="signupform" action="{% url  %}" method="post" class="form-horizontal">
+          {% csrf_token %}
+          <legend>{% trans "Create our Internet!" %}</legend>
+          <fieldset>
+            {{ signupform.non_field_errors }}
+            {% for field in signupform %}
+              <div class="control-group">
+                  {% if field.errors %}
+                    <div class="alert alert-error">
+                      {% for error in field.errors %}
+                        {{ error }}
+                      {% endfor %}
+                    </div>
+                    {{ field }}
+                  {% elif request.method == 'GET' %}
+                        {{ field }}
+                  {% else %}
+                        {{ field }}<i class="icon-ok"></i>
+                  {% endif %}
+              </div>
+            {% endfor %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success btn-large">
+                    {% trans "Join StudyTribe Now!" %}
+                </button>
+            </div>
+          </fieldset>
+        </form>
+        </div>
+    </div>
+    <div class="span6">
+    	<img class="main-promote" src="{{STATIC_URL}}assets/studytribe/img/login-main.png" />
+    </div>
+  </div>
+
+  <p class="footerstyle" style="font-size:12px;">
+      &copy; Esperyong 2012-2013
+  </p>
+</div>
 
 {% addtoblock "css" %}
   {% include_css 'login_or_signup' %}
