@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^', include('studytribe.studycalendar.urls')),
     url(r'^', include('studytribe.everythings.urls')),
     url(r'^', include('studytribe.tribemember.urls')),
+    url(r'^captcha/', include('captcha.urls')),
+
 
 )
 

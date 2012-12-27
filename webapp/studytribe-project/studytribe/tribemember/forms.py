@@ -58,7 +58,7 @@ def identification_field_factory(label, error_required):
                            max_length=75,
                            error_messages={'required': _("%(error)s") % {'error': error_required}})
 
-class StudyTribeLoginForm(AuthenticationForm):
+class StudyTribeSigninForm(AuthenticationForm):
     """
     A custom form where the identification can be a e-mail address or username.
 

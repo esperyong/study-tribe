@@ -7,6 +7,9 @@
 {% endblock %}
 
 {% block body-block %}
+{% url studytribe_sign_main 'signup' as signup_view %}
+{% url studytribe_sign_main 'signin' as signin_view %}
+{% url studytribe_sign_main as main_view %}
 
 <div class="container hero-unit shadowly">
   <div class="row">
@@ -19,38 +22,64 @@
   <div class="row">
     <div class="span6">
         <div class="span6 well">
-          <form id="loginform">
+          <form id="signinform" action="{{ signin_view }}" method="post" class="form-horizontal">
+            {% csrf_token %}
+            <legend>{% trans "Enter Your Tribes,Study with teacher and other family!" %}</legend>
+            <fieldset>
+              {{ signinform.non_field_errors }}
+              {% for field in signinform %}
+                <div class="control-group">
+                    {% if field.errors %}
+                      <div class="alert alert-error">
+                        {% for error in field.errors %}
+                          {{ error }}
+                        {% endfor %}
+                      </div>
+                      {{ field }}
+                    {% elif request.method == 'GET' %}
+                          {{ field }}
+                    {% else %}
+                          {{ field }}<i class="icon-ok"></i>
+                    {% endif %}
+                </div>
+              {% endfor %}
+              <div class="form-actions">
+                  <button type="submit" class="btn btn-success btn-large">
+                      {% trans "Enter StudyTribe Now!" %}
+                  </button>
+              </div>
+            </fieldset>
           </form>
         </div>
         <div class="span6 well">
-        <form id="signupform" action="{% url  %}" method="post" class="form-horizontal">
-          {% csrf_token %}
-          <legend>{% trans "Create our Internet!" %}</legend>
-          <fieldset>
-            {{ signupform.non_field_errors }}
-            {% for field in signupform %}
-              <div class="control-group">
-                  {% if field.errors %}
-                    <div class="alert alert-error">
-                      {% for error in field.errors %}
-                        {{ error }}
-                      {% endfor %}
-                    </div>
-                    {{ field }}
-                  {% elif request.method == 'GET' %}
-                        {{ field }}
-                  {% else %}
-                        {{ field }}<i class="icon-ok"></i>
-                  {% endif %}
+          <form id="signupform" action="{{ signup_view }}" method="post" class="form-horizontal">
+            {% csrf_token %}
+            <legend>{% trans "Join StudyTribe Now!" %}</legend>
+            <fieldset>
+              {{ signupform.non_field_errors }}
+              {% for field in signupform %}
+                <div class="control-group">
+                    {% if field.errors %}
+                      <div class="alert alert-error">
+                        {% for error in field.errors %}
+                          {{ error }}
+                        {% endfor %}
+                      </div>
+                      {{ field }}
+                    {% elif request.method == 'GET' %}
+                          {{ field }}
+                    {% else %}
+                          {{ field }}<i class="icon-ok"></i>
+                    {% endif %}
+                </div>
+              {% endfor %}
+              <div class="form-actions">
+                  <button type="submit" class="btn btn-success btn-large">
+                      {% trans "Join StudyTribe Now!" %}
+                  </button>
               </div>
-            {% endfor %}
-            <div class="form-actions">
-                <button type="submit" class="btn btn-success btn-large">
-                    {% trans "Join StudyTribe Now!" %}
-                </button>
-            </div>
-          </fieldset>
-        </form>
+            </fieldset>
+          </form>
         </div>
     </div>
     <div class="span6">

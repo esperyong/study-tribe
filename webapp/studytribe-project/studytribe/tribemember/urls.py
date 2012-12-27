@@ -11,7 +11,10 @@ urlpatterns = patterns('studytribe',
 
     url(r'^member/(?P<mid>[0-9]+)/$','tribemember.views.tribe_member',name='me'),
 
-    url(r'^([signup|login])/$',
+    url(r'^(signup|signin)/$',
+       memberviews.signup_or_signin,
+       name='studytribe_sign_main'),
+    url(r'^$',
        memberviews.signup_or_signin,
        name='studytribe_sign_main'),
 

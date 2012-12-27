@@ -8,12 +8,14 @@ from userena.decorators import secure_required
 from userena.views import ExtraContextTemplateView
 from userena import settings as userena_settings
 from userena import signals as userena_signals
+from userena.utils import signin_redirect, get_profile_model
 from userena.forms import (SignupForm, SignupFormOnlyEmail, AuthenticationForm,
                            ChangeEmailForm, EditProfileForm)
-from studytribe.tribe import forms
+from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
+from studytribe.tribemember import forms
 
 SIGNUP_FORM_NAME = 'signupform'
-LOGIN_FORM_NAME = 'loginform'
+SIGNIN_FORM_NAME = 'signinform'
 
 @csrf_protect
 def tribe_member(request,mid=None):
@@ -25,19 +27,19 @@ def tribe_member(request,mid=None):
 
 def signup_or_signin(request,sign_type='signup'):
     print sign_type
-    signup_form = forms.StudyTribeSignupForm()
-    login_form = forms.StudyTribeLoginForm()
+    signup_form = forms.StudyTribeSignupForm
+    signin_form = forms.StudyTribeSigninForm
     template_name = 'studytribe/tribemember/login_or_signup.html'
     if sign_type == 'signup':
-        signup( request,
+        return signup( request,
                 signup_form=signup_form,
                 template_name=template_name,
-                extra_context={'loginform':login_form})
+                extra_context={'signinform':signin_form} )
     else:
-        signin( request,
-                auth_form=login_form,
+        return signin( request,
+                auth_form=signin_form,
                 template_name=template_name,
-                extra_context={'signupform':signup_form})
+                extra_context={'signupform':signup_form} )
 
 #几乎原样照抄userena的signup和login,view的代码,加上可以定制form在context中名字的代码
 #因为在首页当中需要在一个页面中打印两个form表单,分别是loginform和signupform;
@@ -80,7 +82,7 @@ def signin(request,
            template_name='studytribe/tribemember/signin_form.html',
            redirect_field_name=REDIRECT_FIELD_NAME,
            redirect_signin_function=signin_redirect, 
-           formname=SIGNUP_FORM_NAME,
+           formname=SIGNIN_FORM_NAME,
            extra_context=None):
 
     form = auth_form
