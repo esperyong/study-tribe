@@ -1,4 +1,5 @@
 {% load i18n %}
+{% url studytribe_sign_main 'signin' as signin_view %}
 <form id="signinform" action="{{ signin_view }}" method="post" class="form-horizontal">
   {% csrf_token %}
   <legend>{% trans "Enter Your Tribes,Study with teacher and other family!" %}</legend>

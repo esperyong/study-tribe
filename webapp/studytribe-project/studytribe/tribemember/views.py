@@ -29,7 +29,7 @@ def signup_or_signin(request,sign_type='signup'):
     print sign_type
     signup_form = forms.StudyTribeSignupForm
     signin_form = forms.StudyTribeSigninForm
-    template_name = 'studytribe/tribemember/login_or_signup.html'
+    template_name = 'studytribe/tribemember/signin_or_signup.html'
     if sign_type == 'signup':
         return signup( request,
                 signup_form=signup_form,
