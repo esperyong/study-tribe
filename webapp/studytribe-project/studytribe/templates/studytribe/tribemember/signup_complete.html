@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block body-block %}
+<div class="container hero-unit">
+  <div class="row">
+      <div class="span6">
+          <h2>欢迎新部落成员</h2>
+{% if userena_activation_required %}
+<p>{% blocktrans %}You have been sent an e-mail with an activation link to the supplied email.{% endblocktrans %}</p>
+<p>{% blocktrans %}We will store your signup information for {{ userena_activation_days }} days on our server. {% endblocktrans %}</p>
+{% else  %}
+<p>{% blocktrans %}You can now use the supplied credentials to signin.{% endblocktrans %}</p>
+{% endif %}
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer-block %}
+{% endblock %}

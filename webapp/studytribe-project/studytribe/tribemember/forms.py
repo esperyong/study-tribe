@@ -4,7 +4,7 @@ from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django import forms
 
-USERNAME_RE = r'^[\.\w]+$'
+USERNAME_RE= r'^\S+$'
 
 def set_captcha_widgets(widgets):
     if widgets:

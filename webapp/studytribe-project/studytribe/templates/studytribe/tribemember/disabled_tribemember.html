@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block body-block %}
+<div class="container hero-unit">
+  <div class="row">
+      <div class="span6">
+        <h2>{% trans "Your account has been disabled" %}</h2>
+        <dl>
+            <dt>{% trans "It seems your account has been disabled." %}</li>
+            <dd>这有可能是以下原因导致:
+              <ul>
+                  <li>帐号还没有激活,请您检查一下您的注册邮箱地址,找到激活邮件,里面有激活地址,点击它即可。</li>
+                  <li>
+                    <address>
+                      因为某种原因,导致被管理员禁用,请联系部落酋长:
+                      <a href="mailto:service@esperyong.com">
+                          service@esperyong.com
+                      </a>
+                    </address>
+                  </li>
+              </ul>
+            </dd>
+            <dd>{% trans "If you feel that injustice has been done to you, feel free to contact the administrators to find out why" %}</dd>
+        </dl>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer-block %}
+{% endblock %}

@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect, get_object_or_404
+
 from userena.decorators import secure_required
 from userena.views import ExtraContextTemplateView
 from userena import settings as userena_settings
@@ -11,7 +15,7 @@ from userena import signals as userena_signals
 from userena.utils import signin_redirect, get_profile_model
 from userena.forms import (SignupForm, SignupFormOnlyEmail, AuthenticationForm,
                            ChangeEmailForm, EditProfileForm)
-from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
+
 from studytribe.tribemember import forms
 
 SIGNUP_FORM_NAME = 'signupform'
@@ -26,7 +30,6 @@ def tribe_member(request,mid=None):
 
 
 def signup_or_signin(request,sign_type='signup'):
-    print sign_type
     signup_form = forms.StudyTribeSignupForm
     signin_form = forms.StudyTribeSigninForm
     template_name = 'studytribe/tribemember/signin_or_signup.html'
