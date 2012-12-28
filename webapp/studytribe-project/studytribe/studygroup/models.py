@@ -1,5 +1,8 @@
 # coding: utf-8
 from django.db import models
+from django.contrib.auth.models import User
+from userena.signals import activation_complete
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -8,6 +11,18 @@ class StudyTribe(models.Model):
     学习部落
     """
     name = models.CharField(max_length=100)
+    owner = models.OneToOneField(User,related_name='owned_tribe')
+    class Meta:
+        permissions = (
+          ('enter_tribe', 'Can Enter Tribe.'),
+          ('remove_tribe', 'Can Remove Tribe.'),
+          ('change_tribe_grade', 'Can Change Tribe Grade,Upgrade or Downgrade.'),
+        )
+
+@receiver(activation_complete)
+def after_activation_complete_will_happen(sender,**kwargs):
+    user = kwargs['user']
+    print user
 
 
 class StudyGroup(models.Model):

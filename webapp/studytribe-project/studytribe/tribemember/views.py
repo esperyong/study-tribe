@@ -30,7 +30,7 @@ def tribe_member(request,mid=None):
                               context,
                               context_instance=RequestContext(request))
 
-
+@secure_required
 def signup_or_signin(request,sign_type='signup'):
     signup_form = forms.StudyTribeSignupForm
     signin_form = forms.StudyTribeSigninForm
@@ -125,5 +125,4 @@ def signin(request,
     })
     return ExtraContextTemplateView.as_view(template_name=template_name,
                                             extra_context=extra_context)(request)
-
 
