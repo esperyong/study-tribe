@@ -60,9 +60,9 @@ def signup(request, signup_form=SignupForm,
 
     if request.method == 'POST':
         form = signup_form(request.POST, request.FILES)
+
         if form.is_valid():
             user = form.save()
-
             # Send the signup complete signal
             userena_signals.signup_complete.send(sender=None,
                                                  user=user)
@@ -78,6 +78,7 @@ def signup(request, signup_form=SignupForm,
 
     if not extra_context: extra_context = dict()
     extra_context[formname] = form
+    print template_name
     return ExtraContextTemplateView.as_view(template_name=template_name,
                                             extra_context=extra_context)(request)
 

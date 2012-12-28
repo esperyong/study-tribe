@@ -5,13 +5,13 @@ register = template.Library()
 def include_js(context,jsname,path='assets/studytribe/js/'):
     return {'jsname':jsname,
             'STATIC_URL':context['STATIC_URL'],
-            'debug':context['debug'],
+            'debug':('debug' in context),
             'path':path}
 
-def include_css(context,jsname,path='assets/studytribe/css/'):
-    return {'cssname':jsname,
+def include_css(context,cssname,path='assets/studytribe/css/'):
+    return {'cssname':cssname,
             'STATIC_URL':context['STATIC_URL'],
-            'debug':context['debug'],
+            'debug':('debug' in context),
             'path':path}
 
 
