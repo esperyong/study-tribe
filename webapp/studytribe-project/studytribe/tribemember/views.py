@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
+from django.utils.translation import ugettext as _
 
 from userena.decorators import secure_required
 from userena.views import ExtraContextTemplateView

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block body-block %}
+<div class="container hero-unit">
+  <div class="row">
+      <div class="span6">
+        <h2>{% trans "Your account could not be activated..." %}</h2>
+        <dl>
+          <dt>你的账号无法被激活,原因可能是:</dt>
+          <dd>你的激活链接过期了,超过了允许的{{userena_activation_days}}天.</dd>
+          <dd>你的激活链接失效了,已经使用过了.</dd>
+          <dt>{% trans "Please try signing up again or contact us if you think something went wrong." %}</dt>
+          <dd>
+            <address>
+              <a href="mailto:service@esperyong.com">
+                  service@esperyong.com
+              </a>
+            </address>
+          </dd>
+        </dl>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer-block %}
+{% endblock %}

@@ -17,20 +17,24 @@ urlpatterns = patterns('studytribe',
        memberviews.signup_or_signin,
        name='studytribe_sign_main'),
 
+    #signup or signin
     url(r'^$',
        memberviews.signup_or_signin,
        name='studytribe_sign_main'),
 
-    # Activate
-    # url(r'^activate/(?P<activation_key>\w+)/$',
-    #     userena_views.activate,
-    #     {'success_url':"/accounts/%(username)s/"},
-    #     name='tribemember_activate'),
-
+    # Activate user
     url(r'^activate/(?P<activation_key>\w+)/$',
-       userena_views.activate,
-       name='userena_activate'),
+        userena_views.activate,
+        {
+          'template_name':"studytribe/tribemember/activate_fail.html",
+          'success_url':userena_settings.USERENA_SIGNIN_REDIRECT_URL,
+          'extra_context':{'title_text':_("Account activation failed."),
+                           'userena_activation_days':userena_settings.USERENA_ACTIVATION_DAYS,
+                          },
+        },
+        name='userena_activate'),
 
+    #signup complete render this view
     url(r'^(?P<username>[\.\w]+)/signup/complete/$',
        userena_views.direct_to_user_template,
        {'template_name': 'studytribe/tribemember/signup_complete.html',
@@ -40,7 +44,7 @@ urlpatterns = patterns('studytribe',
                           }},
        name='userena_signup_complete'),
 
-    # Disabled account
+    # Disabled account login will redirect to this view
     url(r'^(?P<username>[\.\w]+)/disabled/$',
        userena_views.direct_to_user_template,
        { 
