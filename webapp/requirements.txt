@@ -32,4 +32,6 @@ django-sekizai
 #Rest
 djangorestframework
 markdown
+#For test
+beautifulsoup4
 
