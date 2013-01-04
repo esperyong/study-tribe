@@ -6,6 +6,7 @@ from studytribe.tribemember import forms
 from studytribe.tribemember import views as memberviews
 from userena import settings as userena_settings
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 urlpatterns = patterns('studytribe',  
 
@@ -22,11 +23,16 @@ urlpatterns = patterns('studytribe',
        memberviews.signup_or_signin,
        name='studytribe_sign_main'),
 
+    #signout
+    url(r'^signout/$',
+        userena_views.signout,
+        name='studytribe_signout'),
+
     # Activate user
     url(r'^activate/(?P<activation_key>\w+)/$',
         userena_views.activate,
         {
-          'template_name':"studytribe/tribemember/activate_fail.html",
+          'template_name':settings.USER_ACTIVATE_FAIL_TEMPLATE,
           'success_url':userena_settings.USERENA_SIGNIN_REDIRECT_URL,
           'extra_context':{'title_text':_("Account activation failed."),
                            'userena_activation_days':userena_settings.USERENA_ACTIVATION_DAYS,
@@ -52,6 +58,8 @@ urlpatterns = patterns('studytribe',
          'extra_context': {'title_text':_("Disabled account")},
         },
        name='userena_disabled'),
+
+    url(r'^usertribes/',memberviews.user_tribes_list,name='usertribes'),
 
 
 )

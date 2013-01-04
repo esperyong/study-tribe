@@ -17,6 +17,7 @@ from userena import signals as userena_signals
 from userena.utils import signin_redirect, get_profile_model
 from userena.forms import (SignupForm, SignupFormOnlyEmail, AuthenticationForm,
                            ChangeEmailForm, EditProfileForm)
+from guardian.shortcuts import get_objects_for_user
 
 from studytribe.tribemember import forms
 
@@ -46,13 +47,17 @@ def signup_or_signin(request,sign_type='signup'):
                 template_name=template_name,
                 extra_context={'signupform':signup_form,'signin':True} )
 
-#几乎原样照抄userena的signup和login,view的代码,加上可以定制form在context中名字的代码
-#因为在首页当中需要在一个页面中打印两个form表单,分别是loginform和signupform;
 @secure_required
 def signup(request, signup_form=SignupForm,
-           template_name='studytribe/tribemember/signup_form.html', success_url=None,
+           template_name='studytribe/tribemember/signup_form.html', 
+           success_url=None,
            formname=SIGNUP_FORM_NAME,extra_context=None):
-
+    """
+    几乎原样照抄userena的signup和login,view的代码,
+    加上可以定制form在context中名字的代码。
+    因为在首页当中需要在一个页面中打印两个form表单,
+    分别是loginform和signupform;
+    """
     if userena_settings.USERENA_WITHOUT_USERNAMES and (signup_form == SignupForm):
         signup_form = SignupFormOnlyEmail
 
@@ -78,7 +83,6 @@ def signup(request, signup_form=SignupForm,
 
     if not extra_context: extra_context = dict()
     extra_context[formname] = form
-    print template_name
     return ExtraContextTemplateView.as_view(template_name=template_name,
                                             extra_context=extra_context)(request)
 
@@ -126,4 +130,21 @@ def signin(request,
     })
     return ExtraContextTemplateView.as_view(template_name=template_name,
                                             extra_context=extra_context)(request)
+
+@login_required
+def user_tribes_list(request):
+    """
+    列出当前登陆用户所有拥有进入权限的tribe
+    """
+    can_entered_tribes = get_objects_for_user(request.user,'studygroup.enter_tribe')
+    extra_context = {'can_entered_tribes':can_entered_tribes}
+    return ExtraContextTemplateView.as_view(template_name="studytribe/tribemember/studytribe_list.html",
+                                            extra_context=extra_context)(request)
+
+
+
+
+
+
+
 

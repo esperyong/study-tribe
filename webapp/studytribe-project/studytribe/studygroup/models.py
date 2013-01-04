@@ -1,8 +1,9 @@
 # coding: utf-8
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group,Permission
 from userena.signals import activation_complete
 from django.dispatch import receiver
+from guardian.shortcuts import assign as assign_perm
 
 # Create your models here.
 
@@ -22,8 +23,21 @@ class StudyTribe(models.Model):
 @receiver(activation_complete)
 def after_activation_complete_will_happen(sender,**kwargs):
     user = kwargs['user']
-    print user
+    owned_tribe = StudyTribe.objects.create(owner=user,name=(u"%s的学习部落" % user.username))
 
+    tribe_owner_group = Group.objects.create(name='tribe_owner')
+    assign_perm('studygroup.enter_tribe',tribe_owner_group,owned_tribe)
+    assign_perm('studygroup.remove_tribe',tribe_owner_group,owned_tribe)
+    assign_perm('studygroup.change_tribe_grade',tribe_owner_group,owned_tribe)
+
+    tribe_admin_group = Group.objects.create(name='tribe_admin')
+    assign_perm('studygroup.enter_tribe',tribe_admin_group,owned_tribe)
+    assign_perm('studygroup.remove_tribe',tribe_admin_group,owned_tribe)
+
+    tribe_member_group = Group.objects.create(name='tribe_member')
+    assign_perm('studygroup.enter_tribe',tribe_member_group,owned_tribe)
+
+    user.groups.add(tribe_owner_group) 
 
 class StudyGroup(models.Model):
     """
