@@ -1,3 +1,4 @@
+{% load i18n %}
 {% url study-calendar as study_calendar %}
 {% url study-footmark as study_footmark %}
 {% url study-group-list as study_group_list %}
@@ -10,16 +11,11 @@
         <a href="#">日程</a>
         <a href="#">故事</a>
         <a href="#">进展</a>
-        <a href="#">团队</a>
+        <a href="{% url studytribe_signout%}">{% trans "sign out" %}</a>
     </div>
 	<div style="position: static;" class="navbar">
        <div class="navbar-inner">
          <div class="container">
-           <a data-target=".navbar-inverse-collapse" data-toggle="collapse" class="btn btn-navbar">
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-           </a>
            <a href="#" class="brand" style="padding:0 20px;"><img src="{{ STATIC_URL }}assets/studytribe/img/logo.png"/>学习部落</a>
            <div class="nav-collapse collapse navbar-inverse-collapse">
                <ul class="nav">

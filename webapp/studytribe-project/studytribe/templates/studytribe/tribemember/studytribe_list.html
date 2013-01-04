@@ -12,7 +12,9 @@
       <div class="tribes-nav span3 offset4">
         <ul class="nav nav-tabs nav-stacked">
           {% for tribe in can_entered_tribes %}
-            <li><a href="">{{ tribe.name }}</a></li>
+              <li>
+                <a href="{% url study-group-list tribe.id %}">{{ tribe.name }}</a>
+              </li>
           {% endfor %}
         </ul>
       </div>

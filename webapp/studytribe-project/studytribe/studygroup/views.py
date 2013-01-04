@@ -11,10 +11,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
+from guardian.decorators import permission_required
 
 
-@csrf_protect
-def study_group_list(request):
+@permission_required('studygroup.enter_tribe',
+                     (models.StudyTribe,'id','tribe_id'))
+def study_group_list(request,tribe_id):
     context = {}
     return render_to_response("studytribe/studygroup/base.html",
                               context,

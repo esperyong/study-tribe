@@ -25,16 +25,16 @@ def after_activation_complete_will_happen(sender,**kwargs):
     user = kwargs['user']
     owned_tribe = StudyTribe.objects.create(owner=user,name=(u"%s的学习部落" % user.username))
 
-    tribe_owner_group = Group.objects.create(name='tribe_owner')
+    tribe_owner_group = Group.objects.create(name='tribe_owner:%d' % owned_tribe.id)
     assign_perm('studygroup.enter_tribe',tribe_owner_group,owned_tribe)
     assign_perm('studygroup.remove_tribe',tribe_owner_group,owned_tribe)
     assign_perm('studygroup.change_tribe_grade',tribe_owner_group,owned_tribe)
 
-    tribe_admin_group = Group.objects.create(name='tribe_admin')
+    tribe_admin_group = Group.objects.create(name='tribe_admin:%d' % owned_tribe.id)
     assign_perm('studygroup.enter_tribe',tribe_admin_group,owned_tribe)
     assign_perm('studygroup.remove_tribe',tribe_admin_group,owned_tribe)
 
-    tribe_member_group = Group.objects.create(name='tribe_member')
+    tribe_member_group = Group.objects.create(name='tribe_member:%d' % owned_tribe.id)
     assign_perm('studygroup.enter_tribe',tribe_member_group,owned_tribe)
 
     user.groups.add(tribe_owner_group) 
