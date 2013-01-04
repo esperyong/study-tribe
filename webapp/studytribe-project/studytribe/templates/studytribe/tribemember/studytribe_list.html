@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load sekizai_tags %}
+{% load includetags %}
+
+{% block head-block %}
+  {% include "studytribe/tribemember/tparts/simple_header.html" %}
+{% endblock %}
+
+{% block body-block %}
+  <div class="container block">
+    <div class="row">
+      <div class="tribes-nav span3 offset4">
+        <ul class="nav nav-tabs nav-stacked">
+          {% for tribe in can_entered_tribes %}
+            <li><a href="">{{ tribe.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div><!-- /row -->
+  </div>
+  
+  {% addtoblock "css" %}
+    {% include_css 'signin_or_signup' %}
+  {% endaddtoblock %}
+{% endblock %}
+
+{% block footer-block %}
+{% endblock %}
+
