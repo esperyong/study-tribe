@@ -32,7 +32,7 @@ def tribe_member(request,mid=None):
                               context_instance=RequestContext(request))
 
 @secure_required
-def signup_or_signin(request,sign_type='signup'):
+def signup_or_signin(request,sign_type='signin'):
     signup_form = forms.StudyTribeSignupForm
     signin_form = forms.StudyTribeSigninForm
     if sign_type == 'signup':

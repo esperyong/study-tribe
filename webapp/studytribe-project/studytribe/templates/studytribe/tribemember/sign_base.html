@@ -17,10 +17,11 @@
   
   <div class="row">
     <div class="span6">
-        {% include "studytribe/tribemember/tparts/signinform.html" %}
-        {% include "studytribe/tribemember/tparts/signupform.html" %}
+      {% block sign-form-block %}
+      {% endblock %}
     </div>
-    {% include "studytribe/tribemember/tparts/main_promote.html" with spanwidth="span6" %}
+      {% block main-promote-block %}
+      {% endblock %}
   </div>
 
   <p class="footerstyle" style="font-size:12px;">

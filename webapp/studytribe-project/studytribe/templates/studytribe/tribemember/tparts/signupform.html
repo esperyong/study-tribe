@@ -1,9 +1,12 @@
 {% load i18n %}
 {% url studytribe_sign_main 'signup' as signup_view %}
+{% url studytribe_sign_main 'signin' as signin_view %}
 <div class="well">
     <form id="signupform" action="{{ signup_view }}" method="post" class="form-horizontal">
       {% csrf_token %}
-      <legend>{% trans "Join StudyTribe Now!" %}</legend>
+      <legend>
+          现在就加入学习部落!
+      </legend>
       <fieldset>
         {{ signupform.non_field_errors }}
         {% for field in signupform %}
@@ -16,11 +19,12 @@
               {% endif %}
           </div>
         {% endfor %}
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary btn-large">
-                {% trans "Join StudyTribe Now!" %}
-            </button>
+        <div class="sign-button">
+          <button type="submit" class="btn btn-success btn-large btn-block">
+              现在就加入学习部落! 
+          </button>
         </div>
+        <a href="{{ signin_view }}" class="pull-right label label-warning">已经是部落成员了?直接登录学习部落>></a>
       </fieldset>
     </form>
 </div>

@@ -1,9 +1,12 @@
 {% load i18n %}
 {% url studytribe_sign_main 'signin' as signin_view %}
+{% url studytribe_sign_main 'signup' as signup_view %}
 <div class="well">
     <form id="signinform" action="{{ signin_view }}" method="post" class="form-horizontal">
       {% csrf_token %}
-      <legend>{% trans "Enter Your Tribes,Study with teacher and other family!" %}</legend>
+      <legend>
+          登陆学习部落,和老师和其他家庭一起学习! 
+      </legend>
       <fieldset>
         {{ signinform.non_field_errors }}
         {% for field in signinform %}
@@ -22,11 +25,14 @@
               {% endif %}
           </div>
         {% endfor %}
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary btn-large">
-                {% trans "Enter StudyTribe Now!" %}
-            </button>
+        <div class="sign-button">
+          <button type="submit" class="btn btn-success btn-large btn-block">
+              登陆学习部落
+          </button>
         </div>
+        <a href="{{ signup_view }}" class="pull-right label label-warning">
+            还不是部落成员?花2分钟时间就可以注册一个>>
+        </a>
       </fieldset>
     </form>
 </div>

@@ -1,40 +1,8 @@
-{% extends "base.html" %}
-{% load sekizai_tags %}
-{% load i18n %}
-{% load includetags %}
-
-{% block head-block %}
+{% extends "studytribe/tribemember/sign_base.html" %}
+{% block sign-form-block %}
+  {% include "studytribe/tribemember/tparts/signinform.html" %}
 {% endblock %}
-
-{% block body-block %}
-<div class="container hero-unit">
-  <div class="row">
-      <div class="span6">
-          <h1>欢迎来到学习部落</h1>
-          <p>成长源自关注</p>
-      </div>
-  </div>
-  
-  <div class="row">
-    <div class="span6">
-        {% include "studytribe/tribemember/tparts/signinform.html" %}
-    </div>
-    {% include "studytribe/tribemember/tparts/main_promote.html" with spanwidth="span6" %}
-  </div>
-
-  <p class="footerstyle" style="font-size:12px;">
-      &copy; Esperyong 2012-2013
-  </p>
-
-</div>
-
-{% addtoblock "css" %}
-  {% include_css 'signin_or_signup' %}
-{% endaddtoblock %}
-
+{% block main-promote-block %}
+  {% include "studytribe/tribemember/tparts/main_promote.html" with spanwidth="span6" %}
 {% endblock %}
-
-{% block footer-block %}
-{% endblock %}
-
 
