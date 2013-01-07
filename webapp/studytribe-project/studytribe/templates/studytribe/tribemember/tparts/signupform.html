@@ -1,25 +1,26 @@
 {% load i18n %}
 {% url studytribe_sign_main 'signup' as signup_view %}
-<form id="signupform" action="{{ signup_view }}" method="post" class="form-horizontal">
-  {% csrf_token %}
-  <legend>{% trans "Join StudyTribe Now!" %}</legend>
-  <fieldset>
-    {{ signupform.non_field_errors }}
-    {% for field in signupform %}
-      <div class="control-group">
-          {{ field }}
-          {% if field.errors %}
-              {% for error in field.errors %}
-                {{ error }}
-              {% endfor %}
-          {% endif %}
-      </div>
-    {% endfor %}
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary btn-large">
-            {% trans "Join StudyTribe Now!" %}
-        </button>
-    </div>
-  </fieldset>
-</form>
-
+<div class="well">
+    <form id="signupform" action="{{ signup_view }}" method="post" class="form-horizontal">
+      {% csrf_token %}
+      <legend>{% trans "Join StudyTribe Now!" %}</legend>
+      <fieldset>
+        {{ signupform.non_field_errors }}
+        {% for field in signupform %}
+          <div class="control-group">
+              {{ field }}
+              {% if field.errors %}
+                  {% for error in field.errors %}
+                    {{ error }}
+                  {% endfor %}
+              {% endif %}
+          </div>
+        {% endfor %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">
+                {% trans "Join StudyTribe Now!" %}
+            </button>
+        </div>
+      </fieldset>
+    </form>
+</div>

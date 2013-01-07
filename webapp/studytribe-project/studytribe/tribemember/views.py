@@ -35,21 +35,18 @@ def tribe_member(request,mid=None):
 def signup_or_signin(request,sign_type='signup'):
     signup_form = forms.StudyTribeSignupForm
     signin_form = forms.StudyTribeSigninForm
-    template_name = 'studytribe/tribemember/signin_or_signup.html'
     if sign_type == 'signup':
         return signup( request,
                 signup_form=signup_form,
-                template_name=template_name,
                 extra_context={'signinform':signin_form,'signup':True} )
     else:
         return signin( request,
                 auth_form=signin_form,
-                template_name=template_name,
                 extra_context={'signupform':signup_form,'signin':True} )
 
 @secure_required
 def signup(request, signup_form=SignupForm,
-           template_name='studytribe/tribemember/signup_form.html', 
+           template_name='studytribe/tribemember/signup.html', 
            success_url=None,
            formname=SIGNUP_FORM_NAME,extra_context=None):
     """
@@ -89,7 +86,7 @@ def signup(request, signup_form=SignupForm,
 @secure_required
 def signin(request, 
            auth_form=AuthenticationForm,
-           template_name='studytribe/tribemember/signin_form.html',
+           template_name='studytribe/tribemember/signin.html',
            redirect_field_name=REDIRECT_FIELD_NAME,
            redirect_signin_function=signin_redirect, 
            formname=SIGNIN_FORM_NAME,
