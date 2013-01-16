@@ -6,7 +6,7 @@ from django.forms import widgets
 from rest_framework import permissions
 
 class StudyTribeSerializer(serializers.ModelSerializer):
-    groups = fields.ManyPrimaryKeyRelatedField()
+    #groups = fields.ManyPrimaryKeyRelatedField()
 
     class Meta:
         model = models.StudyTribe

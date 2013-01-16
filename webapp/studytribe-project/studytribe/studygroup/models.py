@@ -4,6 +4,7 @@ from django.contrib.auth.models import User,Group,Permission
 from userena.signals import activation_complete
 from django.dispatch import receiver
 from guardian.shortcuts import assign as assign_perm
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
@@ -19,6 +20,7 @@ class StudyTribe(models.Model):
           ('remove_tribe', 'Can Remove Tribe.'),
           ('change_tribe_grade', 'Can Change Tribe Grade,Upgrade or Downgrade.'),
         )
+        verbose_name = _('StudyTribe') 
 
 @receiver(activation_complete)
 def after_activation_complete_will_happen(sender,**kwargs):

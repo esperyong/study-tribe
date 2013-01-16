@@ -16,6 +16,7 @@ from guardian.shortcuts import get_perms,get_objects_for_user
 
 
 class SignupTest(TestCase):
+
     def setUp(self):
         UserenaSignup.objects.check_permissions()
 

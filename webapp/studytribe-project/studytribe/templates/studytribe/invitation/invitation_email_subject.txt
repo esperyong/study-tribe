@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans with invitation.target.name as target_name  %}
+You're invited to the {{ target_name }}.
+{% endblocktrans %}

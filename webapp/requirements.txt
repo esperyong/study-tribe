@@ -1,4 +1,5 @@
 Django==1.4.2
+pytz==2012j
 
 #psycopg2==2.4.5
 

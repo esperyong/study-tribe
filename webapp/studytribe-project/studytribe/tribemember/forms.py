@@ -3,6 +3,8 @@ from userena.forms import SignupForm,AuthenticationForm
 from captcha.fields import CaptchaField
 from django.utils.translation import ugettext as _
 from django import forms
+from django.conf import settings
+from userena.models import UserenaSignup
 
 USERNAME_RE= r'^\S+$'
 
@@ -41,6 +43,20 @@ class StudyTribeSignupForm(SignupForm):
                                          attrs={'placeholder':_("Repeat password")},
                                          render_value=False),
                                          label=_("Repeat password"))
+
+    def save(self,activate_required=settings.USERENA_ACTIVATION_REQUIRED):
+        """ Creates a new user and account. Returns the newly created user. """
+        username, email, password = (self.cleaned_data['username'],
+                                     self.cleaned_data['email'],
+                                     self.cleaned_data['password1'])
+
+        new_user = UserenaSignup.objects.create_user(username,
+                                                     email,
+                                                     password,
+                                                     not activate_required,
+                                                     activate_required)
+        return new_user
+
 
 def identification_field_factory(label, error_required):
     """

@@ -1,0 +1,16 @@
+{% load i18n %}{% autoescape off %}
+{{ invitation.user.username }} {% trans "invited you to " %}{{ invitation.target_content_type.name }}{% trans " named:" %}
+{{ invitation.target.name }}
+
+{% trans "Let's using studytribe to study with teacher and other families!" %}
+
+{% trans "Accept this invitation to get started you should click on the link below:" %}
+
+{{ protocol }}://{{ site.domain }}{{ invitation.target.url }}
+
+{% trans "Question?" %}
+Contact {{ invitation.user.username }} at {{ invitation.user.email }}
+
+{% trans "Sincerely" %},
+{{ site.name }}
+{% endautoescape %}
