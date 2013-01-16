@@ -1,17 +1,23 @@
-from django.db import models
-from django.contrib.auth.models import User,Group
-from django.utils.translation import ugettext_lazy as _
-import datetime
-from django.utils.timezone import now
 import random
+import datetime
+
 from django.conf import settings
-from studytribe.invitation import signals
-from django.utils.hashcompat import sha_constructor
+
+from django.contrib.auth.models import User,Group
 from django.contrib.sites.models import Site, RequestSite
-from django.template.loader import render_to_string
-from django.core.mail import send_mail
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+
+from django.core.mail import send_mail
+from django.db import models
+from django.template.loader import render_to_string
+
+from django.utils.translation import ugettext_lazy as _
+from django.utils.timezone import now
+from django.utils.hashcompat import sha_constructor
+
+from userena.utils import get_protocol
+from studytribe.invitation import signals
 
 
 class InvitationManager(models.Manager):
@@ -103,7 +109,7 @@ class Invitation(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('invitation_register', (), {'invitation_key': self.key})
+        return ('accept_invitation', (), {'invitation_key': self.key})
 
     @property
     def _expires_at(self):
@@ -114,25 +120,22 @@ class Invitation(models.Model):
         if not hasattr(self,'_invite_user_type') or self._invite_user_type is None:
             users = User.objects.filter(email=self.email)
             if len(users) == 0:
-                return settings.INVITE_USER_TYPE_NOT_TRIBER
+                self._invite_user_type = settings.INVITE_USER_TYPE_NOT_TRIBER
             else:
                 user = users[0]
-                if user.is_activate:
-                    return settings.INVITE_USER_TYPE_TRIBER
+                if user.is_active:
+                    self._invite_user_type = settings.INVITE_USER_TYPE_TRIBER
                 else:
-                    return settings.INVITE_USER_TYPE_INACTIVE_TRIBER
+                    self._invite_user_type = settings.INVITE_USER_TYPE_INACTIVE_TRIBER
         return self._invite_user_type
 
     @property
     def invite_link(self):
         if not hasattr(self,'_invite_link') or self._invite_link is None:
-            if self.invite_user_type == settings.INVITE_USER_TYPE_NOT_TRIBER:
-                pass
-            elif self.invite_user_type == settings.INVITE_USER_TYPE_INACTIVE_TRIBER:
-                pass
+            if self.invite_user_type == settings.INVITE_USER_TYPE_TRIBER:
+                self._invite_link = self.target.get_absolute_url()
             else:
-                pass
-            self._invite_link = "http://www.sina.com.cn"
+                self._invite_link = self.get_absolute_url()
         return self._invite_link 
 
     def is_valid(self):
@@ -199,7 +202,8 @@ class Invitation(models.Model):
         message = render_to_string('studytribe/invitation/invitation_email_message.txt', 
                                   {'invitation': self,
                                   'expiration_days': settings.INVITATION_EXPIRE_DAYS,
-                                  'site': site})
+                                  'site': site,
+                                  'protocol':get_protocol()})
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
         signals.invitation_sent.send(sender=self)
 

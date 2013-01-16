@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from captcha.models import CaptchaStore,get_safe_now
 import re
 from userena.models import UserenaSignup
+from userena import signals as userena_signals
 
 
 class InvitationTest(TestCase):
@@ -15,30 +16,25 @@ class InvitationTest(TestCase):
     def setUp(self):
         UserenaSignup.objects.check_permissions()
 
-    def _sign_up_user(self):
+    def _sign_up_user(self,username,email,password):
         response = self.client.get(reverse('studytribe_sign_main',args=['signup']))
         soup = BeautifulSoup(response.content)
         ne = soup.find('input',{'id':'id_captcha_0'})
         hashkey_from_page = ne['value']
         csobj = CaptchaStore.objects.get(hashkey=hashkey_from_page)
         input_captcha = csobj.challenge
-        data = {'username':'someone',
-                'email':'someone@introns.cn',
-                'password1':'123456',
-                'password2':'123456',
+        data = {'username':username,
+                'email':email,
+                'password1':password,
+                'password2':password,
                 'captcha_0':hashkey_from_page,
                 'captcha_1':input_captcha,}
 
         response = self.client.post(reverse('studytribe_sign_main',args=['signup']),data)
-        mail_content = mail.outbox[0].body
-        match = re.search('activate/(.*)/' , mail_content)
-        activation_key = match.group(1)
-        response = self.client.get(reverse('userena_activate',
-                         kwargs={'activation_key' : activation_key}))
-
-        user = User.objects.get(username__exact='someone')
-        self.assertTrue(user.is_active,
-                        msg = "After user been activated,the user's is_active property should equals True.")
+        user = User.objects.get(username__exact=username)
+        user.is_active = True
+        user.save()
+        userena_signals.activation_complete.send(sender=None,user=user)
         return user
 
     def test_invite_tribe_member(self):
@@ -50,18 +46,18 @@ class InvitationTest(TestCase):
         比如邀请到某一个部落,
         一个班级,一个课程.
         """
-        user = self._sign_up_user()
-        email = 'othertest@xuexibuluo.com'
-        invitation_target = user.owned_tribe
-        invitation = Invitation.objects.invite(user,email,invitation_target)
+        user1 = self._sign_up_user('user1','user1@xuexibuluo.com','123456')
+        user2 = self._sign_up_user('user2','user2@xuexibuluo.com','123456')
+        invitation_target = user1.owned_tribe
+        invitation = Invitation.objects.invite(user1,user2.email,invitation_target)
         self.assertNotEquals(invitation,None)
-        invitation.send_invitation(user.email)
-        self.assertEquals(len(mail.outbox),1+1)#activation+invitation
-        mail_subject = mail.outbox[1].subject
-        mail_content = mail.outbox[1].body
+        invitation.send_invitation(user1.email)
+        self.assertEquals(len(mail.outbox),3)#activation+invitation
+        mail_subject = mail.outbox[2].subject
+        mail_content = mail.outbox[2].body
         print invitation.invite_link
         print mail_subject 
-        print mail_content 
+        print mail_content
 
     def test_invite_not_tribe_member(self):
         """
@@ -70,6 +66,8 @@ class InvitationTest(TestCase):
         直接引导到不需要激活的注册流程 
         创建active用户之后加入邀请的权限组
         """
+        user1 = self._sign_up_user('user1','user1@xuexibuluo.com','123456')
+        invitation_target = user1.owned_tribe
         #user = User.objects.create_user('test','test@xuexibuluo.com','test')
         #email = 'othertest@xuexibuluo.com'
         #invitation_target = user.owned_tribe

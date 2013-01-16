@@ -21,6 +21,13 @@ def study_group_list(request,tribe_id):
     return render_to_response("studytribe/studygroup/base.html",
                               context,
                               context_instance=RequestContext(request))
+
+def study_group_detail(request,study_tribe_id,study_group_id):
+    context = {}
+    return render_to_response("studytribe/studygroup/base.html",
+                              context,
+                              context_instance=RequestContext(request))
+
 """
 StudyTribe:学习部落
 """

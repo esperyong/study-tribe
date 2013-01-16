@@ -6,7 +6,7 @@
 
 {% trans "Accept this invitation to get started you should click on the link below:" %}
 
-{{ protocol }}://{{ site.domain }}{{ invitation.target.url }}
+{{ protocol }}://{{ site.domain }}{{ invitation.invite_link }}
 
 {% trans "Question?" %}
 Contact {{ invitation.user.username }} at {{ invitation.user.email }}

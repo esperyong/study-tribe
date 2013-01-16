@@ -14,6 +14,7 @@ class StudyTribe(models.Model):
     """
     name = models.CharField(max_length=100)
     owner = models.OneToOneField(User,related_name='owned_tribe')
+
     class Meta:
         permissions = (
           ('enter_tribe', 'Can Enter Tribe.'),
@@ -21,6 +22,16 @@ class StudyTribe(models.Model):
           ('change_tribe_grade', 'Can Change Tribe Grade,Upgrade or Downgrade.'),
         )
         verbose_name = _('StudyTribe') 
+
+    def __unicode__(self):
+        return _('study tribe %(name)s,owner is %(username)s.') % {
+            'username': self.user.username,
+            'name': self.name,
+        }
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('study_tribe_detail',(),{'study_tribe_id':str(self.id)})
 
 @receiver(activation_complete)
 def after_activation_complete_will_happen(sender,**kwargs):
@@ -53,6 +64,20 @@ class StudyGroup(models.Model):
         permissions = (
                 ('remove_studygroup','Delete StudyGroup'),
         )
+
+    def __unicode__(self):
+        return _('study tribe %(name)s,owner is %(username)s.') % {
+            'username': self.user.username,
+            'name': self.name,
+        }
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('study_group_detail',(),
+                {'study_tribe_id':str(self.tribe.id),
+                 'study_group_id':str(self.id)}
+                )
+
 
 class Topic(models.Model):
     """
