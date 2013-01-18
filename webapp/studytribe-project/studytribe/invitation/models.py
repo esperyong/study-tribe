@@ -32,7 +32,12 @@ class InvitationManager(models.Manager):
             # It is possible that there is more than one invitation fitting
             # the criteria. Normally this means some older invitations are
             # expired or an email is invited consequtively.
-            invitation = self.filter(user=user, email=email)[0]
+            ctype = ContentType.objects.get_for_model(target)
+            invitation = self.filter(user=user,
+                                     email=email,
+                                     target_content_type=ctype,
+                                     target_object_id=target.id,
+                                     )[0]
             if not invitation.is_valid():
                 invitation = None
         except (Invitation.DoesNotExist, IndexError):
@@ -133,6 +138,7 @@ class Invitation(models.Model):
     def invite_link(self):
         if not hasattr(self,'_invite_link') or self._invite_link is None:
             if self.invite_user_type == settings.INVITE_USER_TYPE_TRIBER:
+                #print self.target
                 self._invite_link = self.target.get_absolute_url()
             else:
                 self._invite_link = self.get_absolute_url()

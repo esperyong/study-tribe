@@ -48,14 +48,36 @@ class InvitationTest(TestCase):
         """
         user1 = self._sign_up_user('user1','user1@xuexibuluo.com','123456')
         user2 = self._sign_up_user('user2','user2@xuexibuluo.com','123456')
+        #邀请到部落
         invitation_target = user1.owned_tribe
         invitation = Invitation.objects.invite(user1,user2.email,invitation_target)
         self.assertNotEquals(invitation,None)
         invitation.send_invitation(user1.email)
-        self.assertEquals(len(mail.outbox),3)#activation+invitation
-        mail_subject = mail.outbox[2].subject
-        mail_content = mail.outbox[2].body
-        print invitation.invite_link
+        self.assertEquals(invitation.invite_link,
+                          reverse('study_tribe_detail',
+                                  None,None,
+                                  {'study_tribe_id':invitation_target.id})
+                          )
+        #邀请到班级
+        invitation_target = user1.owned_tribe.create_study_group(u'小二班')
+        invitation = Invitation.objects.invite(user1,user2.email,invitation_target)
+        #print 'sdljfs==>',invitation.target
+        self.assertNotEquals(invitation,None)
+        invitation.send_invitation(user1.email)
+        self.assertEquals(invitation.invite_link,
+                          reverse('study_group_detail',
+                                  None,None,
+                                  {
+                                    'study_tribe_id':str(user1.owned_tribe.id),
+                                    'study_group_id':str(invitation_target.id),
+                                  })
+                          )
+
+
+
+        #self.assertEquals(len(mail.outbox),4)#activation+invitation
+        mail_subject = mail.outbox[3].subject
+        mail_content = mail.outbox[3].body
         print mail_subject 
         print mail_content
 

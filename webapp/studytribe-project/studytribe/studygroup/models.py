@@ -5,8 +5,13 @@ from userena.signals import activation_complete
 from django.dispatch import receiver
 from guardian.shortcuts import assign as assign_perm
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import post_save
 
-# Create your models here.
+TRIBE_OWNER_NAME_PATTERN='tribe_owner:%d'
+TRIBE_ADMIN_NAME_PATTERN='tribe_admin:%d'
+TRIBE_MEMBER_NAME_PATTERN='tribe_member:%d'
+GROUP_ADMIN_NAME_PATTERN='group_admin:%d' 
+GROUP_MEMBER_NAME_PATTERN='group_member:%d' 
 
 class StudyTribe(models.Model):
     """
@@ -17,15 +22,22 @@ class StudyTribe(models.Model):
 
     class Meta:
         permissions = (
-          ('enter_tribe', 'Can Enter Tribe.'),
-          ('remove_tribe', 'Can Remove Tribe.'),
-          ('change_tribe_grade', 'Can Change Tribe Grade,Upgrade or Downgrade.'),
+          ('enter_studytribe', 'Can Enter Tribe.'),
+          ('change_studytribe_grade', 'Can Change Tribe Grade,Upgrade or Downgrade.'),
         )
         verbose_name = _('StudyTribe') 
 
+    def create_study_group(self,name):
+        """
+        You must use this method to create study group,not use StudyGroup.objects.create
+        method
+        """
+        study_group = StudyGroup.objects.create(tribe=self,name=name)
+        return study_group
+
     def __unicode__(self):
         return _('study tribe %(name)s,owner is %(username)s.') % {
-            'username': self.user.username,
+            'username': self.owner.username,
             'name': self.name,
         }
 
@@ -33,41 +45,95 @@ class StudyTribe(models.Model):
     def get_absolute_url(self):
         return ('study_tribe_detail',(),{'study_tribe_id':str(self.id)})
 
+    def get_tribe_owner_auth_group(self):
+        return Group.objects.get(name=TRIBE_OWNER_NAME_PATTERN % self.id)
+
+    def get_tribe_admin_auth_group(self):
+        return Group.objects.get(name=TRIBE_ADMIN_NAME_PATTERN % self.id)
+
+    def get_tribe_member_auth_group(self):
+        return Group.objects.get(name=TRIBE_MEMBER_NAME_PATTERN % self.id)
+
+    def add_user_to_owners(self,user):
+        """
+        让用户成为该学习部落的拥有者,即加入该用户到这个部落的拥有者权限组
+        """
+        tribe_owner_auth_group = self.get_tribe_owner_auth_group()
+        tribe_owner_auth_group.user_set.add(user) 
+
+    def add_user_to_admins(self,user):
+        """
+        让用户成为该学习部落的管理员,即加入该用户到这个部落的管理员权限组
+        """
+        tribe_admin_auth_group = self.get_tribe_admin_auth_group()
+        tribe_admin_auth_group.user_set.add(user)
+            
+    def add_user_to_members(self,user):
+        """
+        让用户成为该学习部落的成员,即加入该用户到这个部落的成员权限组
+        """
+        tribe_member_auth_group = self.get_tribe_member_auth_group()
+        tribe_member_auth_group.user_set.add(user) 
+
+    def get_owners(self):
+        """
+        return all users has owner permissions
+        """
+        return self.get_tribe_owner_auth_group().user_set.all()
+
+    def get_admins(self):
+        """
+        return all users has admin permissions
+        """
+        return self.get_tribe_admin_auth_group().user_set.all()
+
+    def get_members(self):
+        """
+        return all users has member permissions
+        """
+        return self.get_tribe_member_auth_group().user_set.all()
+
+def _create_owned_tribe(user):
+    owned_tribe = StudyTribe.objects.create(owner=user,name=(u"%s的学习部落" % user.username))
+
+    tribe_owner_group = Group.objects.create(name=TRIBE_OWNER_NAME_PATTERN % owned_tribe.id)
+    assign_perm('studygroup.enter_studytribe',tribe_owner_group,owned_tribe)
+    assign_perm('studygroup.delete_studytribe',tribe_owner_group,owned_tribe)
+    assign_perm('studygroup.change_studytribe',tribe_owner_group,owned_tribe)
+    assign_perm('studygroup.change_studytribe_grade',tribe_owner_group,owned_tribe)
+
+    tribe_admin_group = Group.objects.create(name=TRIBE_ADMIN_NAME_PATTERN % owned_tribe.id)
+    assign_perm('studygroup.enter_studytribe',tribe_admin_group,owned_tribe)
+    assign_perm('studygroup.delete_studytribe',tribe_admin_group,owned_tribe)
+    assign_perm('studygroup.change_studytribe',tribe_owner_group,owned_tribe)
+
+    tribe_member_group = Group.objects.create(name=TRIBE_MEMBER_NAME_PATTERN % owned_tribe.id)
+    assign_perm('studygroup.enter_studytribe',tribe_member_group,owned_tribe)
+
+    user.groups.add(tribe_owner_group) 
+
 @receiver(activation_complete)
 def after_activation_complete_will_happen(sender,**kwargs):
     user = kwargs['user']
-    owned_tribe = StudyTribe.objects.create(owner=user,name=(u"%s的学习部落" % user.username))
-
-    tribe_owner_group = Group.objects.create(name='tribe_owner:%d' % owned_tribe.id)
-    assign_perm('studygroup.enter_tribe',tribe_owner_group,owned_tribe)
-    assign_perm('studygroup.remove_tribe',tribe_owner_group,owned_tribe)
-    assign_perm('studygroup.change_tribe_grade',tribe_owner_group,owned_tribe)
-
-    tribe_admin_group = Group.objects.create(name='tribe_admin:%d' % owned_tribe.id)
-    assign_perm('studygroup.enter_tribe',tribe_admin_group,owned_tribe)
-    assign_perm('studygroup.remove_tribe',tribe_admin_group,owned_tribe)
-
-    tribe_member_group = Group.objects.create(name='tribe_member:%d' % owned_tribe.id)
-    assign_perm('studygroup.enter_tribe',tribe_member_group,owned_tribe)
-
-    user.groups.add(tribe_owner_group) 
+    _create_owned_tribe(user)
 
 class StudyGroup(models.Model):
     """
     班级
     """
-    tribe = models.ForeignKey(StudyTribe,related_name='groups')
+    tribe = models.ForeignKey(StudyTribe,related_name='study_groups')
     name = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     class Meta:
         permissions = (
-                ('remove_studygroup','Delete StudyGroup'),
+            ('enter_studygroup','enter StudyGroup'),
         )
+        verbose_name = _('StudyGroup') 
 
     def __unicode__(self):
-        return _('study tribe %(name)s,owner is %(username)s.') % {
-            'username': self.user.username,
+        return _('study group %(name)s,tribe is %(tribename)s.') % {
+            'tribename': self.tribe.name,
             'name': self.name,
         }
 
@@ -78,6 +144,14 @@ class StudyGroup(models.Model):
                  'study_group_id':str(self.id)}
                 )
 
+@receiver(post_save,sender=StudyGroup)
+def after_study_group_create(sender, instance, created, **kwargs):
+    if created:
+        study_group = instance
+        study_group_admin_group = Group.objects.create(
+                                    name=GROUP_ADMIN_NAME_PATTERN % study_group.id)
+        study_group_member_group = Group.objects.create(
+                                    name=GROUP_MEMBER_NAME_PATTERN % study_group.id)
 
 class Topic(models.Model):
     """
