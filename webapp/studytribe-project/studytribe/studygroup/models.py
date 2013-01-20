@@ -13,12 +13,41 @@ TRIBE_MEMBER_NAME_PATTERN='tribe_member:%d'
 GROUP_ADMIN_NAME_PATTERN='group_admin:%d' 
 GROUP_MEMBER_NAME_PATTERN='group_member:%d' 
 
+class StudyTribeManager(models.Manager):
+
+    def user_create_tribe(self,user):
+        try:
+            owned_tribe = user.created_tribe
+        except StudyTribe.DoesNotExist, e:
+            owned_tribe = StudyTribe.objects.create(
+                                            created_by=user,
+                                            name=(u"%s的学习部落" % user.username))
+
+            owned_auth_group = Group.objects.create(
+                                      name=owned_tribe.get_owner_auth_group_name())
+            owned_tribe.assign_owner_perms(owned_auth_group)
+
+            admin_auth_group = Group.objects.create(
+                                      name=owned_tribe.get_admin_auth_group_name())
+            owned_tribe.assign_admin_perms(admin_auth_group)
+
+            member_auth_group = Group.objects.create(
+                                      name=owned_tribe.get_member_auth_group_name())
+            owned_tribe.assign_member_perms(member_auth_group)
+
+            user.groups.add(owned_auth_group) 
+        return owned_tribe
+
+
 class StudyTribe(models.Model):
     """
     学习部落
     """
     name = models.CharField(max_length=100)
-    owner = models.OneToOneField(User,related_name='owned_tribe')
+    created_by = models.OneToOneField(User,related_name='created_tribe')
+    created = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+    objects = StudyTribeManager()
 
     class Meta:
         permissions = (
@@ -45,77 +74,83 @@ class StudyTribe(models.Model):
     def get_absolute_url(self):
         return ('study_tribe_detail',(),{'study_tribe_id':str(self.id)})
 
-    def get_tribe_owner_auth_group(self):
-        return Group.objects.get(name=TRIBE_OWNER_NAME_PATTERN % self.id)
+    def get_owner_auth_group_name(self):
+        return TRIBE_OWNER_NAME_PATTERN % self.id
 
-    def get_tribe_admin_auth_group(self):
-        return Group.objects.get(name=TRIBE_ADMIN_NAME_PATTERN % self.id)
+    def get_admin_auth_group_name(self):
+        return TRIBE_ADMIN_NAME_PATTERN % self.id
 
-    def get_tribe_member_auth_group(self):
-        return Group.objects.get(name=TRIBE_MEMBER_NAME_PATTERN % self.id)
+    def get_member_auth_group_name(self):
+        return TRIBE_MEMBER_NAME_PATTERN % self.id
 
-    def add_user_to_owners(self,user):
+    def get_owner_auth_group(self):
+        return Group.objects.get(name=self.get_owner_auth_group_name())
+
+    def get_admin_auth_group(self):
+        return Group.objects.get(name=self.get_admin_auth_group_name())
+
+    def get_member_auth_group(self):
+        return Group.objects.get(name=self.get_member_auth_group_name())
+
+    def add_user_to_owner_group(self,user):
         """
         让用户成为该学习部落的拥有者,即加入该用户到这个部落的拥有者权限组
         """
-        tribe_owner_auth_group = self.get_tribe_owner_auth_group()
+        tribe_owner_auth_group = self.get_owner_auth_group()
         tribe_owner_auth_group.user_set.add(user) 
 
-    def add_user_to_admins(self,user):
+    def add_user_to_admin_group(self,user):
         """
         让用户成为该学习部落的管理员,即加入该用户到这个部落的管理员权限组
         """
-        tribe_admin_auth_group = self.get_tribe_admin_auth_group()
+        tribe_admin_auth_group = self.get_admin_auth_group()
         tribe_admin_auth_group.user_set.add(user)
             
-    def add_user_to_members(self,user):
+    def add_user_to_member_group(self,user):
         """
         让用户成为该学习部落的成员,即加入该用户到这个部落的成员权限组
         """
-        tribe_member_auth_group = self.get_tribe_member_auth_group()
+        tribe_member_auth_group = self.get_member_auth_group()
         tribe_member_auth_group.user_set.add(user) 
 
     def get_owners(self):
         """
-        return all users has owner permissions
+        return a queryset include all users has owner permissions
         """
         return self.get_tribe_owner_auth_group().user_set.all()
 
     def get_admins(self):
         """
-        return all users has admin permissions
+        return a queryset include  all users has admin permissions
         """
         return self.get_tribe_admin_auth_group().user_set.all()
 
     def get_members(self):
         """
-        return all users has member permissions
+        return a queryset include  all users has member permissions
         """
         return self.get_tribe_member_auth_group().user_set.all()
 
-def _create_owned_tribe(user):
-    owned_tribe = StudyTribe.objects.create(owner=user,name=(u"%s的学习部落" % user.username))
+    def assign_owner_perms(self,user_or_group):
+        group = user_or_group 
+        assign_perm('studygroup.enter_studytribe',user_or_group,self)
+        assign_perm('studygroup.delete_studytribe',user_or_group,self)
+        assign_perm('studygroup.change_studytribe',user_or_group,self)
+        assign_perm('studygroup.change_studytribe_grade',user_or_group,self)
 
-    tribe_owner_group = Group.objects.create(name=TRIBE_OWNER_NAME_PATTERN % owned_tribe.id)
-    assign_perm('studygroup.enter_studytribe',tribe_owner_group,owned_tribe)
-    assign_perm('studygroup.delete_studytribe',tribe_owner_group,owned_tribe)
-    assign_perm('studygroup.change_studytribe',tribe_owner_group,owned_tribe)
-    assign_perm('studygroup.change_studytribe_grade',tribe_owner_group,owned_tribe)
+    def assign_admin_perms(self,user_or_group):
+        assign_perm('studygroup.enter_studytribe',user_or_group,self)
+        assign_perm('studygroup.delete_studytribe',user_or_group,self)
+        assign_perm('studygroup.change_studytribe',user_or_group,self)
 
-    tribe_admin_group = Group.objects.create(name=TRIBE_ADMIN_NAME_PATTERN % owned_tribe.id)
-    assign_perm('studygroup.enter_studytribe',tribe_admin_group,owned_tribe)
-    assign_perm('studygroup.delete_studytribe',tribe_admin_group,owned_tribe)
-    assign_perm('studygroup.change_studytribe',tribe_owner_group,owned_tribe)
+    def assign_member_perms(self,user_or_group):
+        assign_perm('studygroup.enter_studytribe',user_or_group,self)
 
-    tribe_member_group = Group.objects.create(name=TRIBE_MEMBER_NAME_PATTERN % owned_tribe.id)
-    assign_perm('studygroup.enter_studytribe',tribe_member_group,owned_tribe)
-
-    user.groups.add(tribe_owner_group) 
 
 @receiver(activation_complete)
 def after_activation_complete_will_happen(sender,**kwargs):
     user = kwargs['user']
-    _create_owned_tribe(user)
+    StudyTribe.objects.user_create_tribe(user)
 
 class StudyGroup(models.Model):
     """

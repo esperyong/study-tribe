@@ -49,7 +49,7 @@ class InvitationTest(TestCase):
         user1 = self._sign_up_user('user1','user1@xuexibuluo.com','123456')
         user2 = self._sign_up_user('user2','user2@xuexibuluo.com','123456')
         #邀请到部落
-        invitation_target = user1.owned_tribe
+        invitation_target = user1.created_tribe
         invitation = Invitation.objects.invite(user1,user2.email,invitation_target)
         self.assertNotEquals(invitation,None)
         invitation.send_invitation(user1.email)
@@ -59,7 +59,7 @@ class InvitationTest(TestCase):
                                   {'study_tribe_id':invitation_target.id})
                           )
         #邀请到班级
-        invitation_target = user1.owned_tribe.create_study_group(u'小二班')
+        invitation_target = user1.created_tribe.create_study_group(u'小二班')
         invitation = Invitation.objects.invite(user1,user2.email,invitation_target)
         #print 'sdljfs==>',invitation.target
         self.assertNotEquals(invitation,None)
@@ -68,7 +68,7 @@ class InvitationTest(TestCase):
                           reverse('study_group_detail',
                                   None,None,
                                   {
-                                    'study_tribe_id':str(user1.owned_tribe.id),
+                                    'study_tribe_id':str(user1.created_tribe.id),
                                     'study_group_id':str(invitation_target.id),
                                   })
                           )
@@ -89,7 +89,7 @@ class InvitationTest(TestCase):
         创建active用户之后加入邀请的权限组
         """
         user1 = self._sign_up_user('user1','user1@xuexibuluo.com','123456')
-        invitation_target = user1.owned_tribe
+        invitation_target = user1.created_tribe
         #user = User.objects.create_user('test','test@xuexibuluo.com','test')
         #email = 'othertest@xuexibuluo.com'
         #invitation_target = user.owned_tribe
