@@ -19,9 +19,13 @@ from django.utils.hashcompat import sha_constructor
 from userena.utils import get_protocol
 from studytribe.invitation import signals
 
+INVITATION_PERM_TYPE_OWNER='owner'
+INVITATION_PERM_TYPE_ADMIN='admin'
+INVITATION_PERM_TYPE_MEMBER='member'
 
 class InvitationManager(models.Manager):
-    def invite(self, user, email,target):
+
+    def invite(self, user, email,target,perm_type=INVITATION_PERM_TYPE_MEMBER):
         """
         Get or create an invitation for ``email`` from ``user`` to ``target``
         This method doesn't an send email. You need to call ``send_invitation()``
@@ -37,6 +41,7 @@ class InvitationManager(models.Manager):
                                      email=email,
                                      target_content_type=ctype,
                                      target_object_id=target.id,
+                                     perm_type=perm_type
                                      )[0]
             if not invitation.is_valid():
                 invitation = None
@@ -52,7 +57,10 @@ class InvitationManager(models.Manager):
             invitation = self.create(user=user, 
                                      email=email, 
                                      key=key,
-                                     target=target)
+                                     target=target,
+                                     perm_type=perm_type)
+        if invitation.invite_user_type == settings.INVITE_USER_TYPE_TRIBER:
+            invitation.assign_perms()
         return invitation
     invite.alters_data = True
 
@@ -89,9 +97,8 @@ class Invitation(models.Model):
     user = models.ForeignKey(User, related_name='invitations')
     email = models.EmailField(_(u'e-mail'))
     key = models.CharField(_(u'invitation key'), max_length=40, unique=True)
-    date_invited = models.DateTimeField(_(u'date invited'),
-                                        default=now)
-    perm_groups = models.ManyToManyField(Group,related_name="invitations")
+    date_invited = models.DateTimeField(_(u'date invited'),default=now)
+    perm_type = models.CharField(max_length=10)
 
     target_content_type = models.ForeignKey(ContentType)
     target_object_id = models.PositiveIntegerField()
@@ -123,16 +130,25 @@ class Invitation(models.Model):
     @property
     def invite_user_type(self):
         if not hasattr(self,'_invite_user_type') or self._invite_user_type is None:
-            users = User.objects.filter(email=self.email)
-            if len(users) == 0:
+            if self.invitee is None:
                 self._invite_user_type = settings.INVITE_USER_TYPE_NOT_TRIBER
             else:
-                user = users[0]
+                user = self.invitee
                 if user.is_active:
                     self._invite_user_type = settings.INVITE_USER_TYPE_TRIBER
                 else:
                     self._invite_user_type = settings.INVITE_USER_TYPE_INACTIVE_TRIBER
         return self._invite_user_type
+
+    @property
+    def invitee(self):
+        if not hasattr(self,'_invitee') or self._invitee is None:
+            users = User.objects.filter(email=self.email)
+            if len(users) > 0:
+                self._invitee = users[0]
+            else:
+                self._invitee = None
+        return self._invitee
 
     @property
     def invite_link(self):
@@ -164,6 +180,15 @@ class Invitation(models.Model):
         """
         if method == settings.INVITATION_DEFAULT_INVITATION_METHOD:
             self.send_email(target,site,request)
+
+    def assign_perms(self):
+        if self.invitee is not None and self.invitee.is_active:
+            if self.perm_type == INVITATION_PERM_TYPE_OWNER: 
+                self.target.add_user_to_owner_group(self.invitee)
+            elif self.perm_type == INVITATION_PERM_TYPE_ADMIN:
+                self.target.add_user_to_admin_group(self.invitee)
+            else:
+                self.target.add_user_to_member_group(self.invitee)
 
     def send_email(self, email=None, site=None, request=None):
         """
@@ -224,6 +249,8 @@ class Invitation(models.Model):
         signals.invitation_accepted.send(sender=self,
                                          inviting_user=self.user,
                                          new_user=new_user)
+        if invitation.invite_user_type != settings.INVITE_USER_TYPE_TRIBER:
+            self.assign_perms()
         self.delete()
     mark_accepted.alters_data = True
 
