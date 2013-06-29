@@ -58,10 +58,34 @@ class InvitationTest(TestCase):
                                   None,None,
                                   {'study_tribe_id':invitation_target.id})
                           )
+        #user1将具有该tribe的owner权限
+        owners = user1.created_tribe.get_owners()
+        self.assertTrue(owners[0],user1)
+        self.assertTrue(user1.has_perm('studygroup.add_studytribe',
+                        user1.created_tribe))
+        self.assertTrue(user1.has_perm('studygroup.change_studytribe',
+                        user1.created_tribe))
+        self.assertTrue(user1.has_perm('studygroup.delete_studytribe',
+                        user1.created_tribe))
+        self.assertTrue(user1.has_perm('studygroup.change_studytribe_grade',
+                        user1.created_tribe))
+        self.assertTrue(user1.has_perm('studygroup.enter_studytribe',
+                        user1.created_tribe))
+        #user2将具有member权限
+        self.assertFalse(user2.has_perm('studygroup.add_studytribe',
+                        user1.created_tribe))
+        self.assertFalse(user2.has_perm('studygroup.change_studytribe',
+                        user1.created_tribe))
+        self.assertFalse(user2.has_perm('studygroup.delete_studytribe',
+                        user1.created_tribe))
+        self.assertFalse(user2.has_perm('studygroup.change_studytribe_grade',
+                        user1.created_tribe))
+        self.assertTrue(user2.has_perm('studygroup.enter_studytribe',
+                        user1.created_tribe))
+
         #邀请到班级
         invitation_target = user1.created_tribe.create_study_group(u'小二班')
         invitation = Invitation.objects.invite(user1,user2.email,invitation_target)
-        #print 'sdljfs==>',invitation.target
         self.assertNotEquals(invitation,None)
         invitation.send_invitation(user1.email)
         self.assertEquals(invitation.invite_link,
@@ -72,14 +96,24 @@ class InvitationTest(TestCase):
                                     'study_group_id':str(invitation_target.id),
                                   })
                           )
-
-
-
-        #self.assertEquals(len(mail.outbox),4)#activation+invitation
-        mail_subject = mail.outbox[3].subject
-        mail_content = mail.outbox[3].body
-        print mail_subject 
-        print mail_content
+        #user1将具有该班级的管理权限
+        self.assertTrue(user1.has_perm('studygroup.add_studygroup',
+                        invitation_target))
+        self.assertTrue(user1.has_perm('studygroup.change_studygroup',
+                        invitation_target))
+        self.assertTrue(user1.has_perm('studygroup.delete_studygroup',
+                        invitation_target))
+        self.assertTrue(user1.has_perm('studygroup.enter_studygroup',
+                        invitation_target))
+        #user2将具有该班级的成员权限
+        self.assertFalse(user2.has_perm('studygroup.add_studygroup',
+                        invitation_target))
+        self.assertFalse(user2.has_perm('studygroup.change_studygroup',
+                        invitation_target))
+        self.assertFalse(user2.has_perm('studygroup.delete_studygroup',
+                        invitation_target))
+        self.assertTrue(user2.has_perm('studygroup.enter_studygroup',
+                        invitation_target))
 
     def test_invite_not_tribe_member(self):
         """

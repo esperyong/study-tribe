@@ -80,15 +80,17 @@ class StudyTribe(models.Model,
         return TRIBE_MEMBER_NAME_PATTERN % self.id
 
     def assign_owner_perms(self,user_or_group):
-        assign_perm('studygroup.enter_studytribe',user_or_group,self)
-        assign_perm('studygroup.delete_studytribe',user_or_group,self)
+        assign_perm('studygroup.add_studytribe',user_or_group,self)
         assign_perm('studygroup.change_studytribe',user_or_group,self)
+        assign_perm('studygroup.delete_studytribe',user_or_group,self)
+        assign_perm('studygroup.enter_studytribe',user_or_group,self)
         assign_perm('studygroup.change_studytribe_grade',user_or_group,self)
 
     def assign_admin_perms(self,user_or_group):
-        assign_perm('studygroup.enter_studytribe',user_or_group,self)
-        assign_perm('studygroup.delete_studytribe',user_or_group,self)
+        assign_perm('studygroup.add_studytribe',user_or_group,self)
         assign_perm('studygroup.change_studytribe',user_or_group,self)
+        assign_perm('studygroup.delete_studytribe',user_or_group,self)
+        assign_perm('studygroup.enter_studytribe',user_or_group,self)
 
     def assign_member_perms(self,user_or_group):
         assign_perm('studygroup.enter_studytribe',user_or_group,self)
@@ -108,6 +110,7 @@ class StudyTribe(models.Model,
         study_group_member_group = Group.objects.create(
                                     name=study_group.get_member_auth_group_name())
         study_group.assign_member_perms(study_group_member_group)
+        study_group.add_user_to_admin_group(creator)
         return study_group
 
 
