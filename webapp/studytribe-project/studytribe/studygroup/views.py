@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_protect
 from guardian.decorators import permission_required
 
 
-@permission_required('studygroup.enter_tribe',
+@permission_required('studygroup.enter_studytribe',
                      (models.StudyTribe,'id','tribe_id'))
 def study_group_list(request,tribe_id):
     context = {}

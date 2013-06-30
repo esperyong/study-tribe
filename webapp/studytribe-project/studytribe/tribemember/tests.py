@@ -109,25 +109,35 @@ class SignupTest(TestCase):
         permission_group = Group.objects.all()
         self.assertEquals(len(permission_group),3,
                          msg="After user been activated,three permission groups should be created.")
-        tribe_owner_name = "tribe_owner:%d" % user.owned_tribe.id
+        tribe_owner_name = "tribe_owner:%d" % user.created_tribe.id
         towner = Group.objects.get(name=tribe_owner_name)
-        tadmin = Group.objects.get(name="tribe_admin:%d" % user.owned_tribe.id)
-        tmember = Group.objects.get(name="tribe_member:%d" % user.owned_tribe.id)
-        owner_permissions = ['enter_tribe','remove_tribe','change_tribe_grade']
-        admin_permissions = ['enter_tribe','remove_tribe']
-        member_permissions = ['enter_tribe']
+        tadmin = Group.objects.get(name="tribe_admin:%d" % user.created_tribe.id)
+        tmember = Group.objects.get(name="tribe_member:%d" % user.created_tribe.id)
 
-        owner_group_permissions = get_perms(towner,user.owned_tribe)
-        self.assertEquals(len(owner_group_permissions),3)
+        owner_permissions = ['enter_studytribe',
+                             'add_studytribe',
+                             'delete_studytribe',
+                             'change_studytribe',
+                             'change_studytribe_grade']
+
+        admin_permissions = ['enter_studytribe',
+                             'add_studytribe',
+                             'delete_studytribe',
+                             'change_studytribe']
+
+        member_permissions = ['enter_studytribe']
+
+        owner_group_permissions = get_perms(towner,user.created_tribe)
+        self.assertEquals(len(owner_group_permissions),5)
         for perm_code in owner_group_permissions: 
             self.assertTrue(perm_code in owner_permissions)
 
-        admin_group_permissions = get_perms(tadmin,user.owned_tribe)
-        self.assertEquals(len(admin_group_permissions),2)
+        admin_group_permissions = get_perms(tadmin,user.created_tribe)
+        self.assertEquals(len(admin_group_permissions),4)
         for perm_code in admin_group_permissions: 
             self.assertTrue(perm_code in admin_permissions)
 
-        member_group_permissions = get_perms(tmember,user.owned_tribe)
+        member_group_permissions = get_perms(tmember,user.created_tribe)
         self.assertEquals(len(member_group_permissions),1)
         for perm_code in member_group_permissions: 
             self.assertTrue(perm_code in member_permissions)
@@ -135,13 +145,13 @@ class SignupTest(TestCase):
         self.assertEquals(len(user.groups.all()),1)
         self.assertTrue(user.groups.all()[0].name == tribe_owner_name)
 
-        tribe = user.owned_tribe
-        self.assertTrue(user.has_perm('studygroup.enter_tribe',tribe))
-        self.assertTrue(user.has_perm('studygroup.remove_tribe',tribe))
-        self.assertTrue(user.has_perm('studygroup.change_tribe_grade',tribe))
-        self.assertFalse(user.has_perm('studygroup.change_tribe_grade'))
+        tribe = user.created_tribe
+        self.assertTrue(user.has_perm('studygroup.enter_studytribe',tribe))
+        self.assertTrue(user.has_perm('studygroup.delete_studytribe',tribe))
+        self.assertTrue(user.has_perm('studygroup.change_studytribe_grade',tribe))
+        self.assertFalse(user.has_perm('studygroup.change_studytribe_grade'))
 
-        self.assertEquals(len(get_objects_for_user(user,'studygroup.enter_tribe')),1)
+        self.assertEquals(len(get_objects_for_user(user,'studygroup.enter_studytribe')),1)
         #验证权限end
 
     def test_signin(self):

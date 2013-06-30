@@ -138,7 +138,7 @@ def user_tribes_list(request):
     """
     列出当前登陆用户所有拥有进入权限的tribe
     """
-    can_entered_tribes = get_objects_for_user(request.user,'studygroup.enter_tribe')
+    can_entered_tribes = get_objects_for_user(request.user,'studygroup.enter_studytribe')
     extra_context = {'can_entered_tribes':can_entered_tribes}
     return ExtraContextTemplateView.as_view(template_name="studytribe/tribemember/studytribe_list.html",
                                             extra_context=extra_context)(request)
