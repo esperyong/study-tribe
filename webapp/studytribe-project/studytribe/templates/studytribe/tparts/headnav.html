@@ -1,7 +1,7 @@
 {% load i18n %}
 {% url study-calendar as study_calendar %}
 {% url study-footmark as study_footmark %}
-{% url study-group-list as study_group_list %}
+{% url study-group-list tribe_id=user.created_tribe.id as study_group_list %}
 {% url everythings as everythings %}
 {% url member as member %}
 {% url me mid=1 as me %}
