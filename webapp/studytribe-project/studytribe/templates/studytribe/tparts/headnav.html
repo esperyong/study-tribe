@@ -6,13 +6,15 @@
 {% url member as member %}
 {% url me mid=1 as me %}
 <div class="container">
-    <div class="topnav">
-        <a href="#">项目</a>
-        <a href="#">日程</a>
-        <a href="#">故事</a>
-        <a href="#">进展</a>
+    <ul class="topnav">
+        <a {% ifequal request.path study_group_list %}tooltip="haha"{% endifequal %} href="{{study_group_list}}">我的班级</a>
+        <a href="{{study_calendar}}">教学日历</a>
+        <a href="{{everythings}}">一目了然</a>
+        <a href="{{study_footmark}}">学习足迹</a>
+        <a href="{{member}}">其他部落成员</a>
+        <a href="{{me}}">我</a>
         <a href="{% url studytribe_signout%}">{% trans "sign out" %}</a>
-    </div>
+    </ul>
 	<div style="position: static;" class="navbar">
        <div class="navbar-inner">
          <div class="container">
@@ -22,22 +24,6 @@
                  <li class=" divider-vertical"></li>	
                  <li {% ifequal request.path study_group_list %}class="active"{% endifequal %}>
                      <a href="{{study_group_list}}">我的班级</a>
-                 </li>
-                 <li {% ifequal request.path study_calendar %}class="active"{% endifequal %}>
-                     <a href="{{study_calendar}}">教学日历</a>
-                 </li>
-                 <li {% ifequal request.path everythings %}class="active"{% endifequal %}>
-                     <a href="{{everythings}}">一目了然</a>
-                 </li>
-                 <li {% ifequal request.path study_footmark %}class="active"{% endifequal %}>
-                     <a href="{{study_footmark}}">学习足迹</a>
-                 </li>
-                 <li class="divider-vertical"></li>
-                 <li {% ifequal request.path member %}class="active"{% endifequal %}>
-                     <a href="{{member}}">其他部落成员</a>
-                 </li>
-                 <li {% ifequal request.path me %}class="active"{% endifequal %}>
-                     <a href="{{me}}">我</a>
                  </li>
                </ul>
                <div class="btn-group pull-left">
