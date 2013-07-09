@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="refresh" content="8;{% url studytribe_sign_main %}">
+<title>Untitled Document</title>
+<style>
+	body,p,img,a{ margin:0; padding:0;}
+	.con{width:600px; margin:150px auto 0;}
+    .imgbox{ background:url({{STATIC_URL}}assets/img/404img.jpg) no-repeat; float:left; width:227px; height:220px;}
+	.textbox{ float:right; width:373px; font-size:12px;}
+	.textbox a{ font-size:12px; color:#93c600; text-decoration:none; }
+	.titletext{ font-size:18px; font-family:'黑体';}
+	.mar_left20{margin-left:20px;}
+	.mar_top10{ margin-top:10px;}
+	.mar_top50{ margin-top:50px;}
+	.lineH20{ line-height:20px;}
+	.b{ font-weight:bold;}
+	.textc{ text-align:center;}
+	.fcolor{ color:#999;}
+	.pbg{ background:url({{STATIC_URL}}assets/img/pbg.jpg) left center no-repeat;}
+	.textin{ text-indent:1em;}
+	.clear{ clear:both;}
+</style>
+</head>
+
+<body>
+<div class="con ">
+	<div class="imgbox"></div>
+    <div class="textbox">
+    	<p class="titletext">糟糕，您要找的页面不存在或已删除！</p>
+        <p class="mar_top50 b">您可以尝试以下操作：</p>
+        <p class="lineH20 mar_top10 fcolor pbg textin">等待约<a>8秒</a>钟后跳转到首页</p>
+        <p class="lineH20 fcolor pbg textin">自己手动转到<a href="{% url studytribe_sign_main %}" >学习部落</a></p>
+		<p class="lineH20 fcolor pbg textin">单击后退按钮，尝试其它链接</p>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>
+

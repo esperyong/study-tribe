@@ -31,7 +31,9 @@ class StudyTribeSignupForm(SignupForm):
                                 error_messages={'invalid': _('Username must contain only letters, numbers, dots and underscores.')})
 
     email = forms.EmailField(widget=forms.TextInput(
-                                         attrs={'placeholder':_("Email")}),
+                                         attrs={
+                                             'placeholder':_("Email")
+                                             }),
                                          label=_("Email"))
 
     password1 = forms.CharField(widget=forms.PasswordInput(

@@ -1,0 +1,67 @@
+{% extends "studytribe/base.html" %}
+{% load sekizai_tags %}
+{% load i18n %}
+{% block body-block-static %}
+{% url study-group-members tribe_id=user.created_tribe.id group_id=group_id as study_group_members %}
+<div class="tribemember">
+	<div class="row">
+    	<div id="add-member-btn" class="addpeople span2">
+        	<a href="#"><span>添加成员</span></a>
+        </div>
+        <div class="span7">
+        	<div class="row">
+                <section>
+                    {% for member in study_group.members.all %}
+                    <article>
+                        <a class="person" href="#">
+                            <img src="/static/assets/studytribe/img/logo.png">
+                            <p>{{member.username}}</p>
+                            <p>{{member.nickname}}</p>
+                        </a>
+                    </article>
+                    {% endfor %}
+                </section>
+            </div>
+        	<section class="companymain">
+                <form action="{{ study_group_members }}" method="post" class="form-horizontal invite invite-form" {%if not form_visible %}style="display:none;"{%endif%}>
+                    {% csrf_token %}
+                    <legend>增加一位成员到这个班级</legend>
+                    <fieldset>
+                        {{ form.non_field_errors }}
+                        {% for field in form %}
+                            <div class="control-group">
+                              <label class="control-label">{{field.label}}:</label>
+                              {{ field }}
+                              {% if field.errors %}
+                                 {% for error in field.errors %}
+                                   {{ error }}
+                                 {% endfor %}
+                              {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="control-group">
+                          <div class="controls span3">
+                              <button type="submit" class="btn btn-success btn-large btn-block">
+                                 增加 
+                              </button>
+                          </div>
+                        </div>
+                    </fieldset>
+                </form> 
+            </section>
+            <p class="superpowers"><a href="#">Grant admin and other superpowers</a></p>
+        </div>
+  </div>
+</div>
+{% addtoblock "jss" %}
+  <script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+	  $("#add-member-btn").bind("click",function(){
+		$(".invite-form").slideToggle();
+	  });
+	});
+  </script>
+{% endaddtoblock %}
+{% endblock %}
+
+

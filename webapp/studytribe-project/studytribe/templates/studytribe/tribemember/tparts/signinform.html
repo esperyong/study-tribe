@@ -11,11 +11,13 @@
         {{ signinform.non_field_errors }}
         {% for field in signinform %}
           <div class="control-group">
+
               {% if field.name == 'remember_me' %}
                 <label class="checkbox">
                   {{ field }}{{ field.label }}
                 <label>
               {% else %}
+                  <label class="control-label">{{field.label}}:</label>
                   {{ field }}
               {% endif %}
               {% if field.errors %}

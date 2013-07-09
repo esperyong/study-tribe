@@ -62,7 +62,7 @@ class StudyTribe(models.Model,
 
     def __unicode__(self):
         return _('study tribe %(name)s,owner is %(username)s.') % {
-            'username': self.owner.username,
+            'username': self.created_by.username,
             'name': self.name,
         }
 
@@ -119,6 +119,17 @@ def after_activation_complete(sender,**kwargs):
     user = kwargs['user']
     StudyTribe.objects.user_create_tribe(user)
 
+class StudyGroupManager(models.Manager):
+
+    def create_studygroup(self,user,**kwargs):
+        """
+        创建班级
+        """
+        kwargs['tribe'] = user.created_tribe
+        return self.create(**kwargs)
+
+
+
 class StudyGroup(models.Model,
                  mixins.AdminAuthGroupMixin,
                  mixins.MemberAuthGroupMixin):
@@ -130,6 +141,9 @@ class StudyGroup(models.Model,
     created_by = models.ForeignKey(User,related_name='created_groups')
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    description = models.CharField(max_length=500)
+    members = models.ManyToManyField(User,related_name='study_groups')
+    objects = StudyGroupManager()
     class Meta:
         permissions = (
             ('enter_studygroup','enter StudyGroup'),
@@ -163,6 +177,10 @@ class StudyGroup(models.Model,
 
     def assign_member_perms(self,user_or_group):
         assign_perm('studygroup.enter_studygroup',user_or_group,self)
+    
+    def add_member(self,user):
+        self.members.add(user)
+        self.assign_member_perms(user)
 
 class Topic(models.Model):
     """

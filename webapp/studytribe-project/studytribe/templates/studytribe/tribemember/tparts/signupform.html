@@ -11,6 +11,7 @@
         {{ signupform.non_field_errors }}
         {% for field in signupform %}
           <div class="control-group">
+              <label class="control-label">{{field.label}}:</label>
               {{ field }}
               {% if field.errors %}
                   {% for error in field.errors %}

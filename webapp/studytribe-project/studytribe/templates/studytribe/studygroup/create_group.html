@@ -1,0 +1,32 @@
+{% extends "studytribe/base.html" %}
+{% load i18n %}
+{% block body-block-static %}
+{% url study-group-list tribe_id=user.created_tribe.id as study_group_list %}
+<div id="addLinkModal" class="addclass" tabindex="-1" style="top:10%; left:30%;">
+    <form action="{{ study_group_list }}" method="post" class="bs-docs-example form-horizontal">
+        {% csrf_token %}
+        <legend>在这个学习部落中创建一个新的班级</legend>
+        <fieldset>
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="control-group">
+                  <label class="control-label">{{field.label}}:</label>
+                  {{ field }}
+                  {% if field.errors %}
+                     {% for error in field.errors %}
+                       {{ error }}
+                     {% endfor %}
+                  {% endif %}
+                </div>
+            {% endfor %}
+            <div class="control-group">
+              <div class="controls span3">
+                  <button type="submit" class="btn btn-success btn-large btn-block">
+                     创建 
+                  </button>
+              </div>
+            </div>
+        </fieldset>
+    </form> 
+</div>
+{% endblock %}

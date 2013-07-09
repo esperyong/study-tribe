@@ -26,6 +26,14 @@ urlpatterns += patterns('studytribe',
         'studygroup.views.study_group_list',
         name='study-group-list'),
 
+    url(r'^(?P<tribe_id>[0-9]+)/studygroups/create$',
+        'studygroup.views.study_group_create_ui',
+        name='study-group-create'),
+
+    url(r'^(?P<tribe_id>[0-9]+)/studygroups/(?P<group_id>[0-9]+)/members/$',
+        'studygroup.views.study_group_members',
+        name='study-group-members'),
+
     url(r'^(?P<study_tribe_id>[0-9]+)/studygroups/(?P<study_group_id>[0-9]+)/$',
         'studygroup.views.study_group_detail',
         name='study_group_detail'),

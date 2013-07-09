@@ -18,25 +18,27 @@
 	<div style="position: static;" class="navbar">
        <div class="navbar-inner">
          <div class="container">
-           <a href="#" class="brand" style="padding:0 20px;"><img src="{{ STATIC_URL }}assets/studytribe/img/logo.png"/>学习部落</a>
-           <div class="nav-collapse collapse navbar-inverse-collapse">
-               <ul class="nav">
-                 <li class=" divider-vertical"></li>	
-                 <li {% ifequal request.path study_group_list %}class="active"{% endifequal %}>
-                     <a href="{{study_group_list}}">我的班级</a>
-                 </li>
-               </ul>
-               <div class="btn-group pull-left">
-                 <form class="form-search" style="margin-bottom:0;">
-                   <div class="input-prepend">
-                       <button type="submit" class="btn btnaddstyle" style="border-radius:3px 0 0 3px; border-right:none;">
-                           <i class="icon-search"></i>
-                       </button>
-                       <input type="text" size="16" id="prependedInput" class="input-medium" placeholder="搜索"/>
-                   </div>
-                 </form>
-               </div>
-           </div><!-- /.nav-collapse -->
+             <a href="{{study_group_list}}" class="brand" style="padding:0 20px;">
+                 <img src="{{ STATIC_URL }}assets/studytribe/img/logo.png"/>学习部落
+             </a>
+             <div class="nav-collapse collapse navbar-inverse-collapse">
+                 <ul class="nav">
+                   <li class=" divider-vertical"></li>	
+                   <li {% ifequal request.path study_group_list %}class="active"{% endifequal %}>
+                       <a href="{{study_group_list}}">我的班级</a>
+                   </li>
+                 </ul>
+                 <div class="btn-group pull-left">
+                   <form class="form-search" style="margin-bottom:0;">
+                     <div class="input-prepend">
+                         <button type="submit" class="btn btnaddstyle" style="border-radius:3px 0 0 3px; border-right:none;">
+                             <i class="icon-search"></i>
+                         </button>
+                         <input type="text" size="16" id="prependedInput" class="input-medium" placeholder="搜索"/>
+                     </div>
+                   </form>
+                 </div>
+             </div><!-- /.nav-collapse -->
          </div>
        </div><!-- /navbar-inner -->
     </div>
