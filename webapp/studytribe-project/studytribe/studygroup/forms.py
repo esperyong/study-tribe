@@ -58,7 +58,9 @@ class StudyGroupMemberForm(forms.Form):
             print 'user not exist!'
             user = User.objects.create_user(username,email,'')
             user.first_name = nickname
+            user.is_active = False
             user.save()
+        print 'user is activate:',user.is_active
         group.add_member(user)
         
 
