@@ -33,6 +33,10 @@ urlpatterns += patterns('studytribe',
     url(r'^(?P<tribe_id>[0-9]+)/studygroups/(?P<group_id>[0-9]+)/members/$',
         'studygroup.views.study_group_members',
         name='study-group-members'),
+    
+    url(r'^studygroups/(?P<group_id>[0-9]+)/members/(?P<member_id>[0-9]+)/study-logs/$',
+        'studygroup.views.student_study_log_input',
+        name='student-study-log-input'),
 
     url(r'^(?P<study_tribe_id>[0-9]+)/studygroups/(?P<study_group_id>[0-9]+)/$',
         'studygroup.views.study_group_detail',

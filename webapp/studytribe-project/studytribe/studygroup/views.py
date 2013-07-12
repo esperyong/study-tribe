@@ -59,12 +59,20 @@ def study_group_create_ui(request,tribe_id):
                                   context_instance=RequestContext(request))
 
 
+def get_study_group_members_view():
+    """
+    获得班级成员界面
+    """
+    pass
+    
+
 def study_group_members(request,tribe_id,group_id):
     """
     班级成员主界面
     """
     context = {}
     context['form'] = None
+    context['study_log_form'] = forms.StudentStudyLogForm()
     if request.method == 'GET':
         context['form'] = forms.StudyGroupMemberForm()
         context['group_id'] = group_id
@@ -82,6 +90,19 @@ def study_group_members(request,tribe_id,group_id):
     return render_to_response("studytribe/studygroup/study_group_members.html",
                               context,
                               context_instance=RequestContext(request))
+
+def student_study_log_input(request,member_id):
+    if request.method == 'POST':
+        context['study_log_form'] = forms.StudentStudyLogForm(request.POST)
+        if context['study_log_form'].is_valid():
+            pass
+        else:
+            pass
+    context['study_group'] = study_group
+    return render_to_response("studytribe/studygroup/study_group_members.html",
+                              context,
+                              context_instance=RequestContext(request))
+
 
 def study_group_detail(request,study_tribe_id,study_group_id):
     context = {}

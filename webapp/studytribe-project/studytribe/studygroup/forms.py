@@ -63,5 +63,57 @@ class StudyGroupMemberForm(forms.Form):
         print 'user is activate:',user.is_active
         group.add_member(user)
         
+HOMEWORK_EVALUATE_CHOICES = (
+    ('A', u'优'),
+    ('B', u'良好'),
+    ('C', u'一般'),
+    ('D', u'未完成'),
+)
+
+DISCIPLINE_EVALUATE_CHOICES = (
+    ('A', u'优'),
+    ('B', u'良好'),
+    ('C', u'一般'),
+)
+
+class StudentStudyLogForm(forms.Form):
+    """
+    学生的教学日志,每日一评
+    """
+    teach_date = forms.DateField(widget=forms.TextInput(
+                                         attrs={
+                                             'id':u"datepicker",
+                                             'placeholder':u"教学时间"
+                                             }),label=u"教学时间")
+    attend_time = forms.DateTimeField(label=u"到达时间")
+    home_work_desc = forms.CharField(label=u"家庭作业")
+    knowledge_essential = forms.CharField(label=u"知识要点")
+    after_school_reading = forms.CharField(label=u"课外阅读")
+    after_school_video = forms.CharField(label=u"课外中英文视频")
+    homework_evaluate = forms.ChoiceField(label=u"作业完成情况",
+                                          choices=HOMEWORK_EVALUATE_CHOICES)
+    discipline_evaluate = forms.ChoiceField(label=u"纪律情况",
+                                          choices=DISCIPLINE_EVALUATE_CHOICES)
+    handcraft = forms.CharField(label=u"手工制作")
+    overall_remark = forms.CharField(widget=forms.Textarea(
+                                            attrs={'placeholder':_(u"总体评价")}),
+                                            label=u"总体评价")
+    send_email = forms.BooleanField(label=u"同时发送电子邮件")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

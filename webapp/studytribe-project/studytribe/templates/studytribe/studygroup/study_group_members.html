@@ -12,18 +12,64 @@
         	<div class="row">
                 <section>
                     {% for member in study_group.members.all %}
-                    <article>
-                        <a class="person" href="#">
+                    <article class="person">
                             <img src="/static/assets/studytribe/img/logo.png">
-                            <p>{{member.username}}</p>
-                            <p>{{member.nickname}}</p>
-                        </a>
+                            <p>
+                            <div class="student-ops btn-group">
+                              <button class="btn btn-success">{{member.username}}</button>
+                              <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                  <span class="caret"></span>
+                              </button>
+                              <ul student_id="{{member.id}}" class="student-ops dropdown-menu">
+                                <li>
+                                    <a class="pop-write-study-log-btn" 
+                                        study-log-url="{% url student-study-log-input group_id=study_group.id member_id=member.id %}">
+                                        填写教学日志
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#">将用户移出班级</a></li>
+                              </ul>
+                            </div><!-- /btn-group -->
+                           </p>
                     </article>
                     {% endfor %}
                 </section>
             </div>
-        	<section class="companymain">
-                <form action="{{ study_group_members }}" method="post" class="form-horizontal invite invite-form" {%if not form_visible %}style="display:none;"{%endif%}>
+            <div id="study-log-modal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">撰写教学日记</h3>
+              </div>
+              <div class="modal-body">
+                <form id="study-log-form" class="form-horizontal" >
+                    {% csrf_token %}
+                    <fieldset>
+                        {{ study_log_form.non_field_errors }}
+                        {% for field in study_log_form %}
+                            <div class="control-group">
+                              <label class="control-label">{{field.label}}:</label>
+                              {{ field }}
+                              {% if field.errors %}
+                                 {% for error in field.errors %}
+                                   {{ error }}
+                                 {% endfor %}
+                              {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="control-group">
+                          <div class="controls span3">
+                              <a id="submit-study-log-form-btn" class="btn btn-success btn-large btn-block">
+                                确认 
+                              </a>
+                          </div>
+                        </div>
+                    </fieldset>
+                </form> 
+              </div><!-- end of modal body -->
+            </div><!-- end of modal -->
+        	<div class="invite-form" {%if not form_visible %}style="display:none;"{%endif%}>
+                <form action="{{ study_group_members }}" method="post" class="form-horizontal" >
                     {% csrf_token %}
                     <legend>增加一位成员到这个班级</legend>
                     <fieldset>
@@ -48,19 +94,95 @@
                         </div>
                     </fieldset>
                 </form> 
-            </section>
+            </div>
             <p class="superpowers"><a href="#">Grant admin and other superpowers</a></p>
         </div>
   </div>
 </div>
+{% addtoblock "css" %}
+    <link href="{{ STATIC_URL }}assets/jquery-ui/themes/base/jquery.ui.all.css" rel="stylesheet">
+{% endaddtoblock %}
+
 {% addtoblock "jss" %}
-  <script type="text/javascript" charset="utf-8">
+<script src="{{ STATIC_URL }}assets/jquery-ui/ui/jquery.ui.core.js"></script>
+<script src="{{ STATIC_URL }}assets/jquery-ui/ui/jquery.ui.widget.js"></script>
+<script src="{{ STATIC_URL }}assets/jquery-ui/ui/jquery.ui.datepicker.js"></script>
+<script src="{{ STATIC_URL }}assets/jquery-ui/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+{% endaddtoblock %}
+
+{% addtoblock "jss" %}
+<script type="text/javascript" charset="utf-8">
+    /**
+     * 采用Ajax方式提交一个form,失败和成功都显示相应过来的body内容;
+     */
+    function submit_form(form_id,url_str){
+        //console.log($("#"+form_id+" input"));
+        var sendData = {};
+        $("#"+form_id+" input[type!='checkbox'],"+
+          "#"+form_id+" select,"+
+          "#"+form_id+" textarea"
+          ).each(function(i){
+            var input_comp = $(this);
+            sendData [input_comp.attr("name")] = input_comp.val();
+          });
+        $("#"+form_id+" input[type='checkbox']").each(function(i){
+            var input_comp = $(this);
+            sendData [input_comp.attr("name")] = input_comp.is(':checked');
+         });
+
+
+        $.ajax({
+            type: "POST",
+            url: url_str,
+            contentType: "application/x-www-form-urlencoded",
+            data: sendData,
+            processData: true,
+            beforeSend: function(request){
+              httpClient = request;
+            },
+            cache:false,
+            async:false,
+            error: function (request, textStatus, errorThrown) {
+              var errorMessage = request.responseText;
+              try{
+                var errorJson = eval("("+errorMessage+")");
+                if(errorJson){
+                  var content = errorJson["content"];
+                  fn_setReportFieldError(content);
+                  fn_showProgressBar(false);
+                }
+              }catch(e){
+                fn_showErrorBox("用户自定义报表", i18nGlobalMessage.sys_error, function(data){
+                  fn_showProgressBar(false);
+                }, null);
+              }
+            },
+            success: function(msg){
+              result = true;
+            }
+        });
+
+    }
+
 	$(document).ready(function(){
+      $("#datepicker").datepicker( $.datepicker.regional[ "zh-CN" ] );
 	  $("#add-member-btn").bind("click",function(){
-		$(".invite-form").slideToggle();
+          $(".invite-form").slideToggle();
 	  });
+      $(".pop-write-study-log-btn").bind("click",function(e){
+          e.preventDefault();
+          var url_var = $(this).attr("study-log-url");
+          $("#study-log-modal").attr("study-log-url",url_var).modal("show");
+      });
+      $("#submit-study-log-form-btn").bind("click",function(e){
+        e.preventDefault();
+        var form_id = "study-log-form";
+        var url = $("#study-log-modal").attr("study-log-url");
+        alert(url);
+        submit_form(form_id,url);
+      });
 	});
-  </script>
+</script>
 {% endaddtoblock %}
 {% endblock %}
 
