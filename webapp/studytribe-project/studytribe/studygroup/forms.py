@@ -85,8 +85,17 @@ class StudentStudyLogForm(forms.Form):
                                              'id':u"datepicker",
                                              'placeholder':u"教学时间"
                                              }),label=u"教学时间")
-    attend_time = forms.DateTimeField(label=u"到达时间")
-    home_work_desc = forms.CharField(label=u"家庭作业")
+
+    attend_time = forms.TimeField(widget=forms.TextInput(
+                                         attrs={
+                                             'id':u"attend-timepicker",
+                                             'placeholder':u"到达时间"
+                                             }),label=u"到达时间")
+
+    home_work_desc = forms.CharField(widget=forms.Textarea(
+                                            attrs={'placeholder':_(u"家庭作业")}),
+                                            label=u"家庭作业")
+
     knowledge_essential = forms.CharField(label=u"知识要点")
     after_school_reading = forms.CharField(label=u"课外阅读")
     after_school_video = forms.CharField(label=u"课外中英文视频")

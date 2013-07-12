@@ -100,7 +100,8 @@
   </div>
 </div>
 {% addtoblock "css" %}
-    <link href="{{ STATIC_URL }}assets/jquery-ui/themes/base/jquery.ui.all.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}assets/jquery-ui-ext/timepicker/jquery.timepicker.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}assets/jquery-ui/themes/base/jquery.ui.all.css" rel="stylesheet">
 {% endaddtoblock %}
 
 {% addtoblock "jss" %}
@@ -108,6 +109,7 @@
 <script src="{{ STATIC_URL }}assets/jquery-ui/ui/jquery.ui.widget.js"></script>
 <script src="{{ STATIC_URL }}assets/jquery-ui/ui/jquery.ui.datepicker.js"></script>
 <script src="{{ STATIC_URL }}assets/jquery-ui/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+<script src="{{ STATIC_URL }}assets/jquery-ui-ext/timepicker/jquery.timepicker.js"></script>
 {% endaddtoblock %}
 
 {% addtoblock "jss" %}
@@ -166,6 +168,7 @@
 
 	$(document).ready(function(){
       $("#datepicker").datepicker( $.datepicker.regional[ "zh-CN" ] );
+      $('#attend-timepicker').timepicker({'timeFormat':'H:i:s','step':10,'scrollDefaultNow':true});
 	  $("#add-member-btn").bind("click",function(){
           $(".invite-form").slideToggle();
 	  });
