@@ -107,7 +107,10 @@ class StudentStudyLogForm(forms.Form):
     overall_remark = forms.CharField(widget=forms.Textarea(
                                             attrs={'placeholder':_(u"总体评价")}),
                                             label=u"总体评价")
-    send_email = forms.BooleanField(label=u"同时发送电子邮件")
+    send_email = forms.BooleanField(widget=forms.CheckboxInput(
+                                           attrs={'checked':'true'}),
+                                           label=u"同时发送电子邮件",
+                                           required=False)
     
 
 

@@ -182,6 +182,33 @@ class StudyGroup(models.Model,
         self.members.add(user)
         self.assign_member_perms(user)
 
+from studytribe.studygroup.forms import (HOMEWORK_EVALUATE_CHOICES,
+                                        DISCIPLINE_EVALUATE_CHOICES)  
+class StudentStudyLog(models.Model):
+    """
+    学生学习日志
+    """
+    student = models.ForeignKey(User,related_name='study_logs')
+    study_group = models.ForeignKey(StudyGroup,related_name='study_logs')
+    teach_date = models.DateField()
+    attend_time = models.TimeField()
+    logger = models.ForeignKey(User,related_name='input_logs')
+    log_time = models.DateTimeField(auto_now_add=True)
+    home_work_desc = models.CharField(max_length=1000)
+    knowledge_essential = models.CharField(max_length=1000)
+    after_school_reading = models.CharField(max_length=1000)
+    after_school_video = models.CharField(max_length=1000)
+    homework_evaluate = models.CharField(
+                                    max_length=2, 
+                                    choices=HOMEWORK_EVALUATE_CHOICES)
+    discipline_evaluate = models.CharField(
+                                    max_length=2, 
+                                    choices=DISCIPLINE_EVALUATE_CHOICES)
+    handcraft = models.CharField(max_length=1000)
+    overall_remark = models.TextField(max_length=2000)
+
+
+
 class Topic(models.Model):
     """
     学习话题(讨论)

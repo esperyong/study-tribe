@@ -42,33 +42,10 @@
                 <h3 id="myModalLabel">撰写教学日记</h3>
               </div>
               <div class="modal-body">
-                <form id="study-log-form" class="form-horizontal" >
-                    {% csrf_token %}
-                    <fieldset>
-                        {{ study_log_form.non_field_errors }}
-                        {% for field in study_log_form %}
-                            <div class="control-group">
-                              <label class="control-label">{{field.label}}:</label>
-                              {{ field }}
-                              {% if field.errors %}
-                                 {% for error in field.errors %}
-                                   {{ error }}
-                                 {% endfor %}
-                              {% endif %}
-                            </div>
-                        {% endfor %}
-                        <div class="control-group">
-                          <div class="controls span3">
-                              <a id="submit-study-log-form-btn" class="btn btn-success btn-large btn-block">
-                                确认 
-                              </a>
-                          </div>
-                        </div>
-                    </fieldset>
-                </form> 
+                {% include "studytribe/studygroup/tparts/study_log_form.html" %}
               </div><!-- end of modal body -->
             </div><!-- end of modal -->
-        	<div class="invite-form" {%if not form_visible %}style="display:none;"{%endif%}>
+        	<div class="invite-form" {%if not form_visible%}style="display:none;"{%endif%}>
                 <form action="{{ study_group_members }}" method="post" class="form-horizontal" >
                     {% csrf_token %}
                     <legend>增加一位成员到这个班级</legend>
@@ -117,9 +94,9 @@
     /**
      * 采用Ajax方式提交一个form,失败和成功都显示相应过来的body内容;
      */
-    function submit_form(form_id,url_str){
-        //console.log($("#"+form_id+" input"));
+    function submit_form(form_id,url_str,error_func,success_func){
         var sendData = {};
+
         $("#"+form_id+" input[type!='checkbox'],"+
           "#"+form_id+" select,"+
           "#"+form_id+" textarea"
@@ -127,11 +104,13 @@
             var input_comp = $(this);
             sendData [input_comp.attr("name")] = input_comp.val();
           });
+
         $("#"+form_id+" input[type='checkbox']").each(function(i){
             var input_comp = $(this);
             sendData [input_comp.attr("name")] = input_comp.is(':checked');
          });
 
+        console.log(sendData);
 
         $.ajax({
             type: "POST",
@@ -144,31 +123,33 @@
             },
             cache:false,
             async:false,
-            error: function (request, textStatus, errorThrown) {
-              var errorMessage = request.responseText;
-              try{
-                var errorJson = eval("("+errorMessage+")");
-                if(errorJson){
-                  var content = errorJson["content"];
-                  fn_setReportFieldError(content);
-                  fn_showProgressBar(false);
-                }
-              }catch(e){
-                fn_showErrorBox("用户自定义报表", i18nGlobalMessage.sys_error, function(data){
-                  fn_showProgressBar(false);
-                }, null);
-              }
-            },
-            success: function(msg){
-              result = true;
-            }
+            error:error_func,
+            success:success_func 
         });
 
     }
 
+    function bind_date_time_picker_to_studylog_form(){
+        $("#datepicker").datepicker( $.datepicker.regional[ "zh-CN" ] );
+        $('#attend-timepicker').timepicker({'timeFormat':'H:i:s',
+                                            'step':10,
+                                            'scrollDefaultNow':true});
+    }
+
+    function study_log_form_error(request, textStatus, errorThrown){
+        var res_text = request.responseText;
+        $('#study-log-form').replaceWith(res_text);
+        bind_date_time_picker_to_studylog_form();
+    }
+
+    function study_log_form_success(msg){
+        alert('保存成功!');
+        $('#study-log-form').replaceWith(msg);
+        bind_date_time_picker_to_studylog_form();
+        result = true;
+    }
+
 	$(document).ready(function(){
-      $("#datepicker").datepicker( $.datepicker.regional[ "zh-CN" ] );
-      $('#attend-timepicker').timepicker({'timeFormat':'H:i:s','step':10,'scrollDefaultNow':true});
 	  $("#add-member-btn").bind("click",function(){
           $(".invite-form").slideToggle();
 	  });
@@ -177,13 +158,13 @@
           var url_var = $(this).attr("study-log-url");
           $("#study-log-modal").attr("study-log-url",url_var).modal("show");
       });
-      $("#submit-study-log-form-btn").bind("click",function(e){
+      $("#submit-study-log-form-btn").live("click",function(e){
         e.preventDefault();
         var form_id = "study-log-form";
         var url = $("#study-log-modal").attr("study-log-url");
-        alert(url);
-        submit_form(form_id,url);
+        submit_form(form_id,url,study_log_form_error,study_log_form_success);
       });
+      bind_date_time_picker_to_studylog_form();
 	});
 </script>
 {% endaddtoblock %}

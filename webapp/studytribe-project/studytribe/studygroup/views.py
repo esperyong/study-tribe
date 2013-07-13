@@ -14,9 +14,10 @@ from django.views.generic import ListView
 #for template dev
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import loader,RequestContext
 from django.views.decorators.csrf import csrf_protect
 from guardian.decorators import permission_required
+from django.http import HttpResponse,HttpResponseNotAllowed
 
 
 def get_study_group_list(request,tribe_id,context): 
@@ -83,7 +84,7 @@ def study_group_members(request,tribe_id,group_id):
             #save a student to tribe
             study_group = models.StudyGroup.objects.get(pk=group_id)
             context['form'].save(study_group)
-            context['form'] = forms.StudyGroupMemberForm()#new form for new student
+            context['form'] = forms.StudyGroupMemberForm()
         else:
             context['form_visible'] = True
     context['study_group'] = study_group
@@ -91,18 +92,24 @@ def study_group_members(request,tribe_id,group_id):
                               context,
                               context_instance=RequestContext(request))
 
-def student_study_log_input(request,member_id):
+def student_study_log_input(request,group_id,member_id):
+    context = {}
     if request.method == 'POST':
         context['study_log_form'] = forms.StudentStudyLogForm(request.POST)
         if context['study_log_form'].is_valid():
-            pass
-        else:
-            pass
-    context['study_group'] = study_group
-    return render_to_response("studytribe/studygroup/study_group_members.html",
+            #save a study log form and send a email to user
+            
+            return render_to_response("studytribe/studygroup/tparts/study_log_form.html",
                               context,
                               context_instance=RequestContext(request))
-
+        else:
+            return HttpResponse(loader.render_to_string(
+                                 "studytribe/studygroup/tparts/study_log_form.html",
+                                 context,
+                                 context_instance=RequestContext(request)
+                                ),status=400)
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 def study_group_detail(request,study_tribe_id,study_group_id):
     context = {}
