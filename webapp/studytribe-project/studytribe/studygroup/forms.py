@@ -2,8 +2,10 @@
 from django.utils.translation import ugettext as _
 from django import forms
 from django.conf import settings
-from studytribe.studygroup.models import StudyGroup
+from studytribe.studygroup.models import StudyGroup,StudentStudyLog
 from django.contrib.auth.models import User,Group,Permission
+from studytribe.studygroup.models import (HOMEWORK_EVALUATE_CHOICES,
+                                          DISCIPLINE_EVALUATE_CHOICES)  
 
 class StudyGroupForm(forms.Form):
     name = forms.CharField(label="班级名称")
@@ -63,18 +65,6 @@ class StudyGroupMemberForm(forms.Form):
         print 'user is activate:',user.is_active
         group.add_member(user)
         
-HOMEWORK_EVALUATE_CHOICES = (
-    ('A', u'优'),
-    ('B', u'良好'),
-    ('C', u'一般'),
-    ('D', u'未完成'),
-)
-
-DISCIPLINE_EVALUATE_CHOICES = (
-    ('A', u'优'),
-    ('B', u'良好'),
-    ('C', u'一般'),
-)
 
 class StudentStudyLogForm(forms.Form):
     """
@@ -111,21 +101,58 @@ class StudentStudyLogForm(forms.Form):
                                            attrs={'checked':'true'}),
                                            label=u"同时发送电子邮件",
                                            required=False)
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def save_or_update(self,student,study_group,logger):
+        (teach_date,attend_time,home_work_desc,
+         knowledge_essential,after_school_reading,
+         after_school_video,homework_evaluate,
+         discipline_evaluate,handcraft,
+         overall_remark,send_email,
+        ) = (self.cleaned_data['teach_date'],
+             self.cleaned_data['attend_time'],
+             self.cleaned_data['home_work_desc'],
+             self.cleaned_data['knowledge_essential'],
+             self.cleaned_data['after_school_reading'],
+             self.cleaned_data['after_school_video'],
+             self.cleaned_data['homework_evaluate'],
+             self.cleaned_data['discipline_evaluate'],
+             self.cleaned_data['handcraft'],
+             self.cleaned_data['overall_remark'],
+             self.cleaned_data['send_email'])
+        
+        log = StudentStudyLog.objects.filter(
+                                       student=student,
+                                       study_group=study_group,
+                                       teach_date=teach_date)
+        if log:
+            log = log[0]
+            log.logger=logger
+            log.teach_date=teach_date
+            log.attend_time=attend_time
+            log.home_work_desc=home_work_desc
+            log.knowledge_essential=knowledge_essential
+            log.after_school_reading=after_school_reading
+            log.after_school_video=after_school_video
+            log.homework_evaluate=homework_evaluate
+            log.discipline_evaluate=discipline_evaluate
+            log.handcraft=handcraft
+            log.overall_remark=overall_remark
+            log.save()
+        else:
+            log = StudentStudyLog.objects.create(
+                                       student=student,
+                                       study_group=study_group,
+                                       logger=logger,
+                                       teach_date=teach_date,
+                                       attend_time=attend_time,
+                                       home_work_desc=home_work_desc,
+                                       knowledge_essential=knowledge_essential,
+                                       after_school_reading=after_school_reading,
+                                       after_school_video=after_school_video,
+                                       homework_evaluate=homework_evaluate,
+                                       discipline_evaluate=discipline_evaluate,
+                                       handcraft=handcraft,
+                                       overall_remark=overall_remark
+                                       )
+        return log
 
 
