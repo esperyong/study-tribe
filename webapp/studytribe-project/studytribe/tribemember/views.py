@@ -27,7 +27,7 @@ SIGNIN_FORM_NAME = 'signinform'
 @csrf_protect
 def tribe_member(request,mid=None):
     context = {}
-    return render_to_response("studytribe/tribemember/base.html",
+    return render_to_response("studytribe/tribemember/member_main.html",
                               context,
                               context_instance=RequestContext(request))
 
