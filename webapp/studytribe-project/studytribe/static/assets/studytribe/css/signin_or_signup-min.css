@@ -1,0 +1,44 @@
+.footerstyle{ 
+    position:absolute; 
+    margin-top:80px; 
+    margin-left:-60px;
+}
+.shadowly{
+    background-color:#FFFFFF; 
+    -moz-opacity:0.8;/* Moz + FF 透明度20%*/ 
+    opacity: 0.8; /* 支持CSS3的浏览器（FF 1.5也支持）透明度20%*/
+}
+.main-promote{
+    padding:0 0 0 10%;
+}
+
+.block {
+  text-align: center;
+  margin: 20px;
+}
+ 
+.block:before {
+  content: '';
+  display: inline-block;
+  height: 100%; 
+  vertical-align: middle;
+  margin-right: -0.25em; /* Adjusts for spacing */
+    
+  /* For visualization 
+  background: #808080; width: 5px;
+  */
+ }
+ 
+.tribes-nav{
+  display: inline-block;
+  vertical-align: middle;
+  width: 300px;
+  padding: 10px 15px;
+  margin-top: 200px;
+  border: #a0a0a0 solid 1px;
+  background: #f5f5f5;
+}
+
+.sign-button{
+  margin-bottom:20px;
+}
