@@ -81,9 +81,9 @@ def study_group_members(request,tribe_id,group_id):
         study_group = get_object_or_404(models.StudyGroup,pk=group_id)
     if request.method == 'POST':
         context['form'] = forms.StudyGroupMemberForm(request.POST)
+        study_group = models.StudyGroup.objects.get(pk=group_id)
         if context['form'].is_valid():
             #save a student to tribe
-            study_group = models.StudyGroup.objects.get(pk=group_id)
             context['form'].save(study_group)
             context['form'] = forms.StudyGroupMemberForm()
         else:
