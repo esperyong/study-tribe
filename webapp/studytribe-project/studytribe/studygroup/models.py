@@ -199,24 +199,26 @@ class StudentStudyLog(models.Model):
     """
     学生学习日志
     """
-    student = models.ForeignKey(User,related_name='study_logs')
-    study_group = models.ForeignKey(StudyGroup,related_name='study_logs')
-    logger = models.ForeignKey(User,related_name='input_logs')
-    teach_date = models.DateField()
-    attend_time = models.TimeField()
-    log_time = models.DateTimeField(auto_now_add=True)
-    home_work_desc = models.CharField(max_length=1000)
-    knowledge_essential = models.CharField(max_length=1000)
-    after_school_reading = models.CharField(max_length=1000)
-    after_school_video = models.CharField(max_length=1000)
+    student = models.ForeignKey(User,related_name='study_logs',verbose_name=u"学生")
+    study_group = models.ForeignKey(StudyGroup,related_name='study_logs',verbose_name=u"班级")
+    logger = models.ForeignKey(User,related_name='input_logs',verbose_name=u"记录人")
+    teach_date = models.DateField(u"教学日期")
+    attend_time = models.TimeField(u"到达时间")
+    log_time = models.DateTimeField(u"日志创建时间",auto_now_add=True)
+    home_work_desc = models.CharField(u"作业",max_length=1000)
+    knowledge_essential = models.CharField(u"知识要点",max_length=1000)
+    after_school_reading = models.CharField(u"课外知识阅读",max_length=1000)
+    after_school_video = models.CharField(u"课外教学视频短片",max_length=1000)
     homework_evaluate = models.CharField(
+                                    u"家庭作业完成情况",
                                     max_length=2, 
                                     choices=HOMEWORK_EVALUATE_CHOICES)
     discipline_evaluate = models.CharField(
+                                    u"纪律表现",
                                     max_length=2, 
                                     choices=DISCIPLINE_EVALUATE_CHOICES)
-    handcraft = models.CharField(max_length=1000)
-    overall_remark = models.TextField(max_length=2000)
+    handcraft = models.CharField(u"手工创作",max_length=1000)
+    overall_remark = models.TextField(u"奖评与建议",max_length=2000)
 
 
 

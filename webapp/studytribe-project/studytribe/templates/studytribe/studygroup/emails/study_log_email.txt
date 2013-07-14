@@ -1,0 +1,18 @@
+{% load includetags %}
+{{student.first_name}}学习个人情况表
+{{ study_log|field_verbose_name:"student" }}:{{study_log.student.username}}
+{{ study_log|field_verbose_name:"study_group" }}:{{study_log.study_group.name}}
+{{ study_log|field_verbose_name:"logger" }}:{{study_log.logger.username}}
+{{ study_log|field_verbose_name:"teach_date" }}:{{study_log.teach_date|date:"Y-m-d"}}
+{{ study_log|field_verbose_name:"attend_time" }}:{{study_log.attend_time|time:"H:i"}}
+{{ study_log|field_verbose_name:"log_time" }}:{{study_log.log_time|date:"Y-m-d H:i:s"}}
+{{ study_log|field_verbose_name:"home_work_desc" }}:{{study_log.home_work_desc}}
+{{ study_log|field_verbose_name:"knowledge_essential" }}:{{study_log.knowledge_essential}}
+{{ study_log|field_verbose_name:"after_school_reading" }}:{{study_log.after_school_reading}}
+{{ study_log|field_verbose_name:"after_school_video" }}:{{study_log.after_school_video}}
+{{ study_log|field_verbose_name:"homework_evaluate" }}:{{study_log.homework_evaluate}}
+{{ study_log|field_verbose_name:"discipline_evaluate" }}:{{study_log.discipline_evaluate}}
+{{ study_log|field_verbose_name:"handcraft" }}:{{study_log.handcraft}}
+{{ study_log|field_verbose_name:"overall_remark" }}:{{study_log.overall_remark}}
+
+{% include "studytribe/studygroup/emails/contact_footer.txt" %}

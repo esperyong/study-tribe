@@ -1,11 +1,14 @@
 # coding: utf-8
 from django.utils.translation import ugettext as _
+from django.core.mail import send_mail as send_mail_func
+from django.template.loader import render_to_string
 from django import forms
 from django.conf import settings
 from studytribe.studygroup.models import StudyGroup,StudentStudyLog
 from django.contrib.auth.models import User,Group,Permission
 from studytribe.studygroup.models import (HOMEWORK_EVALUATE_CHOICES,
                                           DISCIPLINE_EVALUATE_CHOICES)  
+from django.core.mail import EmailMultiAlternatives
 
 class StudyGroupForm(forms.Form):
     name = forms.CharField(label="班级名称")
@@ -101,7 +104,32 @@ class StudentStudyLogForm(forms.Form):
                                            attrs={'checked':'true'}),
                                            label=u"同时发送电子邮件",
                                            required=False)
-    def save_or_update(self,student,study_group,logger):
+
+    def send_studylog_mail(self,student,studylog,logger):
+        ctx_dict = {'student':student,'study_log':studylog}
+        subject = render_to_string(
+                        'studytribe/studygroup/emails/study_log_email_subject.txt',
+                        ctx_dict)
+        txt_message = render_to_string(
+                        'studytribe/studygroup/emails/study_log_email.txt',
+                        ctx_dict)
+        html_message = render_to_string(
+                        'studytribe/studygroup/emails/study_log_email.html',
+                        ctx_dict)
+        email_sender = EmailMultiAlternatives(u"每日学习日志",
+                                              txt_message,
+                                              settings.DEFAULT_FROM_EMAIL,
+                                              [student.email])
+        email_sender.attach_alternative(html_message, "text/html")  
+        email_sender.send()
+
+
+
+
+    def save_log_sendmail(self,student,study_group,logger):
+        """
+        保存教学日志,同时根据情况发送邮件
+        """
         (teach_date,attend_time,home_work_desc,
          knowledge_essential,after_school_reading,
          after_school_video,homework_evaluate,
@@ -153,6 +181,8 @@ class StudentStudyLogForm(forms.Form):
                                        handcraft=handcraft,
                                        overall_remark=overall_remark
                                        )
+        if send_email:
+            self.send_studylog_mail(student,log,logger)
         return log
 
 

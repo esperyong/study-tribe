@@ -21,3 +21,7 @@ register.inclusion_tag('inclusion_tags/include_js.html',
 register.inclusion_tag('inclusion_tags/include_css.html', 
                        takes_context=True)(include_css)
 
+def get_field_verbose_name(object,arg): 
+    return object._meta.get_field(arg).verbose_name
+
+register.filter('field_verbose_name', get_field_verbose_name)

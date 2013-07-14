@@ -1,0 +1,84 @@
+{% load includetags %}
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <title>{{student.first_name}}学习个人情况表</title>
+     <link href="{{ STATIC_URL }}assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}assets/studytribe/css/main.css" rel="stylesheet">
+   
+</head>
+
+<body>
+    
+<table class="table table-bordered">
+  <caption>{{student.first_name}}学习个人情况表</caption>
+  <tbody>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"student" }}</td>
+        <td>{{ study_log.student.username }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"study_group" }}</td>
+        <td>{{ study_log.study_group.name }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"logger" }}</td>
+        <td>{{ study_log.logger.username }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"teach_date" }}</td>
+        <td>{{ study_log.teach_date|date:"Y-m-d" }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"attend_time" }}</td>
+        <td>{{study_log.attend_time|time:"H:i"}}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"log_time" }}</td>
+        <td>{{study_log.log_time|date:"Y-m-d H:i:s"}}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"home_work_desc" }}</td>
+        <td>{{study_log.home_work_desc}}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"knowledge_essential" }}</td>
+        <td>{{study_log.knowledge_essential}}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"after_school_reading" }}</td>
+        <td>{{ study_log.after_school_reading }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"after_school_video" }}</td>
+        <td>{{study_log.after_school_video}}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"homework_evaluate" }}</td>
+        <td>{{ study_log.homework_evaluate }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"discipline_evaluate" }}</td>
+        <td>{{ study_log.discipline_evaluate }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"handcraft" }}</td>
+        <td>{{ study_log.handcraft }}</td>
+    </tr>
+    <tr>
+        <td>{{ study_log|field_verbose_name:"overall_remark" }}</td>
+        <td>{{ study_log.overall_remark }}</td>
+    </tr>
+  </tbody>
+</table>
+<div>
+{% include "studytribe/studygroup/emails/contact_footer.txt" %}
+</div>
+<script src="{{ STATIC_URL }}assets/jquery/jquery.js"></script>
+<script src="{{ STATIC_URL }}assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}assets/backbone/js/underscore-min.js"></script>
+<script src="{{ STATIC_URL }}assets/backbone/js/backbone-min.js"></script>
+</body>
+</html>

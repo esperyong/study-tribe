@@ -10,6 +10,7 @@ from rest_framework import permissions
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
+from django.contrib.auth.models import User
 
 #for template dev
 from django.contrib.auth.decorators import login_required
@@ -98,7 +99,12 @@ def student_study_log_input(request,group_id,member_id):
         context['study_log_form'] = forms.StudentStudyLogForm(request.POST)
         if context['study_log_form'].is_valid():
             #save a study log form and send a email to user
-            
+            study_group = models.StudyGroup.objects.get(pk=group_id)
+            student = User.objects.get(pk=member_id)
+            logger = request.user
+            log = context['study_log_form'].save_log_sendmail(student,
+                                                              study_group,
+                                                              logger)
             return render_to_response("studytribe/studygroup/tparts/study_log_form.html",
                               context,
                               context_instance=RequestContext(request))
