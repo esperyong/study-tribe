@@ -34,11 +34,6 @@ class StudyGroupMemberForm(forms.Form):
                                              'placeholder':u"用户名"
                                              }),label=u"用户名")
 
-    nickname = forms.CharField(widget=forms.TextInput(
-                                         attrs={
-                                             'placeholder':u"昵称"
-                                             }),label=u"昵称")
-
     email = forms.EmailField(widget=forms.TextInput(
                                          attrs={
                                              'placeholder':_("Email")
@@ -53,7 +48,6 @@ class StudyGroupMemberForm(forms.Form):
         用户已经存在并在班级中为错误情况,TODO form validate;
         """
         username,nickname,email = (self.cleaned_data['username'],
-                                   self.cleaned_data['nickname'],
                                    self.cleaned_data['email'])
         user = None
         try:
