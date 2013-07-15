@@ -47,7 +47,7 @@ class StudyGroupMemberForm(forms.Form):
         用户不存在,创建用户为没有激活状态,并生成激活码,加入班级;
         用户已经存在并在班级中为错误情况,TODO form validate;
         """
-        username,nickname,email = (self.cleaned_data['username'],
+        username,email = (self.cleaned_data['username'],
                                    self.cleaned_data['email'])
         user = None
         try:
@@ -56,7 +56,6 @@ class StudyGroupMemberForm(forms.Form):
             #user not exist
             print 'user not exist!'
             user = User.objects.create_user(username,email,'')
-            user.first_name = nickname
             user.is_active = False
             user.save()
         print 'user is activate:',user.is_active
