@@ -114,7 +114,7 @@ class StudentStudyLogForm(forms.Form):
                                               settings.DEFAULT_FROM_EMAIL,
                                               [student.email])
         email_sender.attach_alternative(html_message, "text/html")  
-        email_sender.send()
+        email_sender.send(True)
 
 
 
