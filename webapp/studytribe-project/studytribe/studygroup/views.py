@@ -54,7 +54,9 @@ def study_group_list(request,tribe_id):
 @permission_required('studygroup.change_studytribe',
                      (models.StudyTribe,'id','tribe_id'))
 def study_group_create_ui(request,tribe_id):
-    context = {'form':forms.StudyGroupForm()}
+    form = forms.StudyGroupForm()
+    form.initial["tribe_id"] = tribe_id
+    context = {'form':form}
     if request.method == 'GET':
         return render_to_response("studytribe/studygroup/create_group.html",
                                   context,

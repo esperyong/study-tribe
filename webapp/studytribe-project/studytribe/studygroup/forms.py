@@ -4,13 +4,14 @@ from django.core.mail import send_mail as send_mail_func
 from django.template.loader import render_to_string
 from django import forms
 from django.conf import settings
-from studytribe.studygroup.models import StudyGroup,StudentStudyLog
+from studytribe.studygroup.models import StudyTribe,StudyGroup,StudentStudyLog
 from django.contrib.auth.models import User,Group,Permission
 from studytribe.studygroup.models import (HOMEWORK_EVALUATE_CHOICES,
                                           DISCIPLINE_EVALUATE_CHOICES)  
 from django.core.mail import EmailMultiAlternatives
 
 class StudyGroupForm(forms.Form):
+    tribe_id = forms.CharField(widget=forms.HiddenInput())
     name = forms.CharField(label="班级名称")
     description = forms.CharField(label="班级描述")
 
@@ -27,6 +28,17 @@ class StudyGroupForm(forms.Form):
                                                     description=description
                                                     )
         return new_study_group
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        tribe_id = self.cleaned_data['tribe_id']
+        tribe = StudyTribe.objects.get(pk=tribe_id)
+        same_name_groups = tribe.study_groups.filter(name=name)
+        if same_name_groups:
+            raise forms.ValidationError(u"该学习部落中有一样名字的班级了,请另选名称。")
+    
+        return name
+
 
 class StudyGroupMemberForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(
