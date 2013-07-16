@@ -14,7 +14,7 @@ class StudyGroupForm(forms.Form):
     tribe_id = forms.CharField(widget=forms.HiddenInput())
     name = forms.CharField(label="班级名称")
     description = forms.CharField(widget=forms.Textarea(
-                                         attrs={'placeholder':_(u"家庭作业")}),
+                                         attrs={'placeholder':_(u"班级描述")}),
                                          label="班级描述")
 
     def save(self,user,tribe):
