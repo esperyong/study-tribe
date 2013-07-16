@@ -13,7 +13,9 @@ from django.core.mail import EmailMultiAlternatives
 class StudyGroupForm(forms.Form):
     tribe_id = forms.CharField(widget=forms.HiddenInput())
     name = forms.CharField(label="班级名称")
-    description = forms.CharField(label="班级描述")
+    description = forms.CharField(widget=forms.Textarea(
+                                         attrs={'placeholder':_(u"家庭作业")}),
+                                         label="班级描述")
 
     def save(self,user,tribe):
         """
@@ -36,7 +38,6 @@ class StudyGroupForm(forms.Form):
         same_name_groups = tribe.study_groups.filter(name=name)
         if same_name_groups:
             raise forms.ValidationError(u"该学习部落中有一样名字的班级了,请另选名称。")
-    
         return name
 
 
