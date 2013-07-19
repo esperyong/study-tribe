@@ -51,7 +51,10 @@
                     <legend>增加一位成员到这个班级</legend>
                     <fieldset>
                         {{ form.non_field_errors }}
-                        {% for field in form %}
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        {% for field in form.visible_fields %}
                             <div class="control-group">
                               <label class="control-label">{{field.label}}:</label>
                               {{ field }}

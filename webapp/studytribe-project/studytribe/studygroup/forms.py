@@ -42,6 +42,7 @@ class StudyGroupForm(forms.Form):
 
 
 class StudyGroupMemberForm(forms.Form):
+    group_id = forms.CharField(widget=forms.HiddenInput())
     username = forms.CharField(widget=forms.TextInput(
                                          attrs={
                                              'placeholder':u"用户名"
@@ -53,12 +54,43 @@ class StudyGroupMemberForm(forms.Form):
                                              }),
                                          label=_("Email"))
 
+    def clean(self):
+        cleaned_data = super(StudyGroupMemberForm, self).clean()
+        return cleaned_data
+
+    #def clean(self):
+    #    """
+    #    clean the form
+    #    """
+    #    cleaned_data = super(ResetPasswordForm, self).clean()
+    #    self._validate_old_password(cleaned_data)
+    #    self._validate_confirm_password(cleaned_data)
+    #    return cleaned_data
+
+    #def _validate_old_password(self,cleaned_data):
+    #    old_password = cleaned_data.get('old_password')
+    #    if old_password:
+    #        userid = cleaned_data.get('userid')
+    #        user = IntrendUser.objects.get(id=userid)
+    #        if not user.check_password(old_password):
+    #            msg = _(u"The old password is wrong.")
+    #            self._errors["old_password"] = self.error_class([msg])
+
+
+    #def _validate_confirm_password(self,cleaned_data):
+    #    password = cleaned_data.get("new_password")
+    #    confirm_password = cleaned_data.get("confirm_password")
+    #    if not password == confirm_password:
+    #        # We know these are not in self._errors now.
+    #        msg = _(u"Password don't equals the ConfirmPassword.")
+    #        self._errors["confirm_password"] = self.error_class([msg])
+
     def save(self,group):
         """
         create a normal user to a group
         用户已经存在,但不在班级中,加入班级;
         用户不存在,创建用户为没有激活状态,并生成激活码,加入班级;
-        用户已经存在并在班级中为错误情况,TODO form validate;
+        用户已经存在并在班级中提示用户;
         """
         username,email = (self.cleaned_data['username'],
                                    self.cleaned_data['email'])
