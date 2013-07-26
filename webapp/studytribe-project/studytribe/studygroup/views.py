@@ -79,6 +79,7 @@ def study_group_members(request,tribe_id,group_id):
     context['study_log_form'] = forms.StudentStudyLogForm()
     if request.method == 'GET':
         context['form'] = forms.StudyGroupMemberForm()
+        context['form'].initial["group_id"] = group_id
         context['group_id'] = group_id
         study_group = get_object_or_404(models.StudyGroup,pk=group_id)
     if request.method == 'POST':

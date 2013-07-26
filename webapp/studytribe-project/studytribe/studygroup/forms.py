@@ -56,6 +56,19 @@ class StudyGroupMemberForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(StudyGroupMemberForm, self).clean()
+        group_id = cleaned_data['group_id']
+        if cleaned_data.has_key('username'):
+            username = cleaned_data["username"]
+            user = User.objects.filter(username=username)
+            if user:
+                print dir(self.fields['email'])
+                #去掉email的必要输入的校验
+                pass
+            group = StudyGroup.objects.get(pk=group_id)
+            same_name_users = group.members.filter(username=username)
+            if same_name_users:
+                msg = u"该用户%s已经加入到这个班级了。" % username
+                self._errors["username"] = self.error_class([msg])
         return cleaned_data
 
     #def clean(self):
